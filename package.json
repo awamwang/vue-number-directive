@@ -1,0 +1,86 @@
+{
+  "name": "vue-number-directive",
+  "version": "0.0.1",
+  "description": "Vue directive plugin to assure number to be number",
+  "main": "src/index.js",
+  "scripts": {
+    "init-commitizen": "commitizen init cz-conventional-changelog --save",
+    "init-storybook": "npx sb init",
+    "commit": "git-cz",
+    "dev": "parcel watch src/index.js --public-url ./dist/",
+    "dev-example": "parcel serve examples/native-input/index.html --open",
+    "build": "parcel build src/index.js",
+    "cy:open": "cypress open -C cypress.json",
+    "cy:run": "cypress run",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook -o ./dist/stories",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keepgoingwm/vue-number-directive.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/keepgoingwm/vue-number-directive/issues"
+  },
+  "homepage": "https://github.com/keepgoingwm/vue-number-directive#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.0.21",
+    "@storybook/addon-links": "^6.0.21",
+    "@storybook/cli": "^6.0.21",
+    "babel-eslint": "^10.1.0",
+    "cypress": "^5.1.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.8.1",
+    "parcel-bundler": "^1.12.4"
+  },
+  "browserslist": {
+    "production": [
+      "> 1%",
+      "last 2 versions",
+      "not ie <= 8"
+    ],
+    "modern": [
+      "last 1 chrome version",
+      "last 1 firefox version"
+    ],
+    "ssr": [
+      "node 8"
+    ]
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "es6": true,
+      "node": true,
+      "browser": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "sourceType": "module",
+      "allowImportExportEverywhere": false
+    },
+    "rules": {}
+  },
+  "prettier": {
+    "trailingComma": "none",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "endOfLine": "auto"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

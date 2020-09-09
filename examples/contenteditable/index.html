@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../libs/vue.min-2.6.10.js"></script>
+  <!-- <script src="../../dist/vue-autonumeric-directive.js"></script> -->
+  <script src="../../dist/vue-autonumeric-directive.min.js"></script>
+</head>
+
+<body>
+  <div id="demo">
+    <section>
+      <!-- <p>{{}}</p> -->
+    </section>
+
+    <p>Default options: float, decimalPlaces(presion) = 2 ; Options: {{config1}}</p>
+    <label for="input1">input1: </label><p name="input1" id="input1" v-number="config1" contenteditable>{{input1}}</p>
+    <p>Modified value in Vue data:  {{input1}}</p>
+    <br />
+    <p>local option: FR ; Options: {{config2}}</p>
+    <label for="input2">input2: </label><p name="input2" id="input2" v-number="config2" contenteditable>{{input2.num}}</p>
+    <p>Modified value in Vue data:  {{input2}}</p>
+    <br />
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+
+</html>

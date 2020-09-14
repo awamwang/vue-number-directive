@@ -64,7 +64,7 @@ function optimizeOptions(options) {
     options.precision = 0
   }
   if (options.minimum < 0 && options.positive) {
-    warn('minimum of positive number must be 0')
+    warn('minimum of positive number must >= 0')
     options.minimum = 0
   }
 
@@ -98,7 +98,7 @@ export default function (el, binding, vnode, globalOptions) {
           integer,
           positive,
           sientific: config.sientific,
-          precision: config.precision || 2,
+          precision: config.precision !== void 0 ? config.precision : 2,
           flag: config.flag,
           minimum,
           maximum,

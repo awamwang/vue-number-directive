@@ -1,16 +1,31 @@
 import { action } from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
-import AMd from './A.md'
+import note from './note.md'
 
-let story = () => ({
+let story = ({ text }) => ({
   render(h) {
-    return <my-button onClick={this.action}>With JSX</my-button>
+    return <input />
   },
-  methods: { action: linkTo('clicked') }
+  data() {
+    return {
+      input1: '',
+      config1: { model: this.input1 }
+    }
+  },
+  methods: { action: action('clicked') }
 })
 story.story = {
   parameters: {
-    notes: { AMd }
+    notes: { note }
+  }
+}
+story.args = {
+  text: 'With JSX',
+  table: {
+    type: Object,
+    default() {
+      return { a: 1 }
+    }
   }
 }
 

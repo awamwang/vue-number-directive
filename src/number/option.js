@@ -43,12 +43,12 @@ function getMinMax(config, type) {
 }
 
 function mergeOptions(options, schema, globalOptions) {
-  Object.keys(schema).forEach((key) => {
+  Object.keys(schema).forEach(key => {
     if (schema[key] !== void 0 && schema[key] !== null) {
       options[key] = schema[key]
     }
   })
-  Object.keys(globalOptions).forEach((key) => {
+  Object.keys(globalOptions).forEach(key => {
     if (options[key] === void 0 && options[key] === null) {
       options[key] = globalOptions[key]
     }
@@ -71,7 +71,7 @@ function optimizeOptions(options) {
   return options
 }
 
-export default function (el, binding, vnode, globalOptions) {
+export default function(el, binding, vnode, globalOptions) {
   const { value: config, expression, modifiers } = binding
 
   let modelPropPath = getModelPath(expression)

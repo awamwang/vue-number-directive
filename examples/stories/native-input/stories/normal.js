@@ -1,14 +1,17 @@
 import { action } from '@storybook/addon-actions'
+import Com from './Input'
 import note from './normal.md'
 
-const Story = () => ({
+const Story = ({ options }) => ({
+  // components: { Com },
+  // <Com :options="options"/>
   template: `
-    <input v-model="input1" v-number="{model: input1}" @click="action" />
-    <input v-model="input1" v-number="{model: input1}" @click="action" />
+    <div></div>
   `,
   data() {
     return {
-      input1: '123.00'
+      input1: '123.00',
+      options
     }
   },
   methods: {
@@ -17,10 +20,11 @@ const Story = () => ({
     }
   }
 })
-Story.story = {
-  parameters: {
-    notes: { note }
-  }
+Story.arg = {
+  options: {}
+}
+Story.parameters = {
+  notes: { note }
 }
 
 export default Story

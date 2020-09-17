@@ -1,0 +1,4 @@
+.storybook/
+examples/
+.travis/
+test/

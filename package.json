@@ -28,6 +28,7 @@
   "homepage": "https://github.com/keepgoingwm/vue-number-directive#readme",
   "dependencies": {},
   "devDependencies": {
+    "@babel/core": "^7.11.6",
     "@storybook/addon-actions": "^6.0.21",
     "@storybook/addon-essentials": "^6.0.21",
     "@storybook/addon-knobs": "^6.0.21",

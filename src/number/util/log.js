@@ -1,15 +1,15 @@
 let type
 // type = 'debug'
 
-export let debug =
+export const debug =
   type === 'debug'
     ? msg => {
         console.debug('[vue number] ' + msg)
       }
     : () => {}
-export let warn = msg => {
+export const warn = msg => {
   console.warn('[vue number] ' + msg)
 }
-export let error = msg => {
+export const error = msg => {
   throw new Error('[vue number] ' + msg)
 }

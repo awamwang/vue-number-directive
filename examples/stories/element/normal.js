@@ -1,22 +1,22 @@
 import { action } from '@storybook/addon-actions'
-import MyButton from './MyButton'
-import ButtonMd from './Button.md'
+import MyExample from './MyExample'
+import NoteMd from './Note.md'
 
-export const 基础 = arg => ({
+export const Story = arg => ({
   components: {
-    MyButton
+    MyExample
   },
   template: `
-    <my-button text="你哈${arg.text}" @btnClick="btnClick"/>
+    <my-example text="你哈${arg.text}" @btnClick="btnClick"/>
     `,
   methods: {
     btnClick: action('btnClick')
   }
 })
 
-基础.args = {
+Story.args = {
   text: '这是什么'
 }
-基础.parameters = {
-  notes: { ButtonMd }
+Story.parameters = {
+  notes: { NoteMd }
 }

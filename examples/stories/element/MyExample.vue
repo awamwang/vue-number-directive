@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'MyButton',
+  name: 'MyExample',
   props: {
     text: String
   },

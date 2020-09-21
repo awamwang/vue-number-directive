@@ -7,7 +7,6 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-links',
     '@storybook/addon-notes',
-    '@storybook/addon-knobs',
-    '@storybook/addon-storysource'
+    '@storybook/addon-knobs'
   ]
 }

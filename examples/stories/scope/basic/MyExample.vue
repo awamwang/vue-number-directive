@@ -8,7 +8,6 @@
           v-model="row.age"
           v-number="{
             scope: { row },
-            model: row.age,
             ...options,
             integer: int,
             positive: pos

@@ -1,5 +1,6 @@
 import { error, warn } from './log'
 
+const InputTagList = ['INPUT', 'TEXTAREA']
 const AllowedInputType = ['number', 'text', 'tel', 'hidden']
 const AllowedTagList = [
   'b',
@@ -38,10 +39,7 @@ const AllowedTagList = [
 const ElementUIClassList = ['el-input__inner']
 
 function isInputLike(el) {
-  return (
-    ['INPUT', 'TEXTAREA'].includes(el.tagName) ||
-    el.getAttribute('contenteditable')
-  )
+  return InputTagList.includes(el.tagName) || el.getAttribute('contenteditable')
 }
 
 function getChildInputs(el) {
@@ -79,7 +77,7 @@ function handleElementUI(inputDom, vnode) {
   }
 }
 
-export let getInputDom = (el, vnode) => {
+export const getInputDom = (el, vnode) => {
   let inputDom = getChildInputs(el)
   if (!inputDom.length) {
     error('no input like element found')
@@ -107,7 +105,7 @@ export let getInputDom = (el, vnode) => {
   return inputDom
 }
 
-export let unshiftEventHandler = (el, eventType, handler) => {
+export const unshiftEventHandler = (el, eventType, handler) => {
   el.addEventListener(eventType, handler)
   // let handlerArr = getEventListeners(el)[eventType]
   // console.log(handlerArr)
@@ -119,14 +117,12 @@ export let unshiftEventHandler = (el, eventType, handler) => {
   // }
 }
 
-export let getDomValue = ele => {
-  let res
+export const getDomValue = el => {
+  return InputTagList.includes(el.tagName) ? el.value : el.innerText
+}
 
-  if (ele.tagName === 'INPUT') {
-    res = ele.value
-  } else {
-    res = ele.innerText
-  }
-
-  return res
+export const setDomValue = (el, value) => {
+  InputTagList.includes(el.tagName)
+    ? (el.value = value)
+    : (el.innerText = value)
 }

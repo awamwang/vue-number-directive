@@ -1,4 +1,4 @@
-import { getInputDom } from './util/dom'
+import { getInputDom, getDomValue, setDomValue } from './util/dom'
 import { removeItem, cache, setProp } from './util/lang'
 import { debug } from './util/log'
 
@@ -94,7 +94,7 @@ export class Formatter {
     this.maxLength = getMaxLength(maxIntegerLength, options)
     this.validRegex = genValidRegex(maxIntegerLength, options)
 
-    this.oldValue = this.input.value
+    this.oldValue = getDomValue(this.input)
 
     this.initListenMethods()
     this.initValidateMethods()
@@ -102,7 +102,7 @@ export class Formatter {
 
   initListenMethods() {
     this.onKeydown = function(ev) {
-      this.oldValue = this.input.value
+      this.oldValue = getDomValue(this.input)
       if (!this.validCharRegex.test(ev.key)) {
         debug(`validCharRegex test: ${ev.key}, ${this.validCharRegex}`)
         ev.preventDefault()
@@ -156,7 +156,7 @@ export class Formatter {
 
   validateAndFixByInputEvent(ev) {
     let { modelPropPath, scope, vnode } = this.options
-    let value = (ev.target.value || '').toString()
+    let value = (getDomValue(ev.target) || '').toString()
     let oldValue = (this.oldValue || '').toString()
     console.log('value', value, oldValue)
 
@@ -171,7 +171,7 @@ export class Formatter {
         modelPropPath,
         oldValue
       )
-      ev.target.value = oldValue
+      setDomValue(ev.target, oldValue)
     }
   }
 

@@ -2,12 +2,12 @@
 import { warn } from './util/log'
 const ExpressionRegex = /model:([^,}]+),?/
 
-function getModelPath(expression) {
+function getModelPath(expression, vnode) {
   let matches = expression.replace(/\s|↵/g, '').match(ExpressionRegex)
   if (matches) {
     return matches[1]
   } else {
-    return expression
+    return vnode.data.model ? vnode.data.model.expression : expression
   }
 }
 
@@ -74,7 +74,7 @@ function optimizeOptions(options) {
 export default function(el, binding, vnode, globalOptions) {
   const { value: config, expression, modifiers } = binding
 
-  let modelPropPath = getModelPath(expression)
+  let modelPropPath = getModelPath(expression, vnode)
   let integer = modifiers.int || modifiers.integer || config.integer
   let positive = modifiers.pos || modifiers.positive || config.positive
   let minimum = getMinMax(config, 'min')

@@ -77,7 +77,12 @@ export const isSameOptions = function(obj1, obj2) {
   return Object.keys(obj1).every(key => {
     if (key === 'vnode') {
       return obj1[key].context._uid === obj2[key].context._uid
+    } else if (key === 'scope') {
+      return true
     } else {
+      // if (obj1[key] !== obj2[key]) {
+      //   console.log(obj1[key], obj2[key])
+      // }
       return obj1[key] === obj2[key]
     }
   })

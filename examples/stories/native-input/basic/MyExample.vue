@@ -1,13 +1,15 @@
 <template>
-  <Input v-model="input1" v-number="{ model: input1, ...options }"></Input>
+  <Input
+    v-model="input1"
+    data-cy
+    v-number="{ model: input1, ...options, integer: int, positive: pos }"
+  ></Input>
 </template>
 
 <script>
 export default {
   name: 'MyExample',
-  props: {
-    options: Object
-  },
+  props: ['int', 'pos', 'options'],
   data() {
     return {
       input1: '123'

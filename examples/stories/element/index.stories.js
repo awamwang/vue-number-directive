@@ -4,3 +4,4 @@ export default {
 }
 
 export { Story as BasicUsage } from './basic/index'
+export { Story as NumberInput } from './number-input/index'

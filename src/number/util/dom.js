@@ -1,7 +1,4 @@
-import {
-  error
-  // warn
-} from './log'
+import { error, warn } from './log'
 
 const AllowedInputType = ['number', 'text', 'tel', 'hidden']
 const AllowedTagList = [
@@ -38,22 +35,44 @@ const AllowedTagList = [
   'th',
   'u'
 ]
+const ElementUIClassList = ['el-input__inner']
 
-function getChildInput(el) {
-  if (el.children) {
-    for (let i = 0, len = el.children.length; i < len; i++) {
-      let child = el.children[i]
-      if (child.tagName === 'INPUT') {
-        return child
-      }
-    }
-  }
-
-  return el
+function isInputLike(el) {
+  return (
+    ['INPUT', 'TEXTAREA'].includes(el.tagName) ||
+    el.getAttribute('contenteditable')
+  )
 }
 
-function handleElementUI(el, inputDom, vnode) {
-  if (Array.prototype.includes.call(el.classList, 'el-input')) {
+function getChildInputs(el) {
+  let res = [],
+    child
+
+  if (isInputLike(el)) {
+    res.push(el)
+  }
+
+  if (el.children) {
+    res = res.concat(
+      Array.prototype.reduce.call(
+        el.children,
+        (arr, child) => {
+          return arr.concat(getChildInputs(child))
+        },
+        []
+      )
+    )
+  }
+
+  return res
+}
+
+function handleElementUI(inputDom, vnode) {
+  if (
+    ElementUIClassList.some(c =>
+      Array.prototype.includes.call(inputDom.classList, c)
+    )
+  ) {
     if (vnode.data.model && vnode.data.model.value !== undefined) {
       inputDom.value = vnode.data.model.value
     }
@@ -61,7 +80,13 @@ function handleElementUI(el, inputDom, vnode) {
 }
 
 export let getInputDom = (el, vnode) => {
-  let inputDom = getChildInput(el)
+  let inputDom = getChildInputs(el)
+  if (!inputDom.length) {
+    error('no input like element found')
+  } else if (inputDom.length > 1) {
+    warn('more than one input like element found, use first')
+  }
+  inputDom = inputDom[0]
   handleElementUI(el, inputDom, vnode)
 
   if (inputDom.tagName === 'INPUT') {
@@ -94,22 +119,7 @@ export let unshiftEventHandler = (el, eventType, handler) => {
   // }
 }
 
-export let getVNodeValue = (vnode, ele) => {
-  let res
-
-  if (vnode.data && vnode.data.model) {
-    res = vnode.data.model.value
-  } else if (vnode.data && vnode.data.domProps) {
-    res = vnode.data.domProps.value
-  } else if (ele && ele.tagName !== 'INPUT' && ele.innerText) {
-    res = ele.innerText
-  } else {
-    // warn('target vnode hasn\'t bound value, may cause bug')
-  }
-  return res
-}
-
-export let getElementValue = ele => {
+export let getDomValue = ele => {
   let res
 
   if (ele.tagName === 'INPUT') {

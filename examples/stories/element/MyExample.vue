@@ -1,25 +1,24 @@
 <template>
-  <div>
-    <button @click="btnClick">{{ text }}</button>
-    <Input v-model="input1" v-number="{ model: input1}"></Input>
-  </div>
+  <el-input
+    v-model="input1"
+    v-number="{ model: input1, ...options }"
+  ></el-input>
 </template>
 
 <script>
+import { Input } from 'element-ui'
+
 export default {
+  components: { elInput: Input },
   name: 'MyExample',
   props: {
-    text: String
+    options: Object
   },
   data() {
     return {
       input1: '123'
     }
   },
-  methods: {
-    btnClick() {
-      this.$emit('btnClick', this.text)
-    }
-  }
+  methods: {}
 }
 </script>

@@ -5,6 +5,7 @@
 + schema剩余特性
 + sientific
 + sep
++ 默认v-model，或代替v-model
 
 ## 思路
 

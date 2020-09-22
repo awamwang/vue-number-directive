@@ -60,11 +60,11 @@ function mergeOptions(options, schema, globalOptions) {
 function optimizeOptions(options) {
   options.flag = options.flag !== void 0 ? options.flag : !options.positive
   if (options.precision && options.integer) {
-    warn('precision of integer number must be 0')
+    // warn('precision of integer number must be 0')
     options.precision = 0
   }
   if (options.minimum < 0 && options.positive) {
-    warn('minimum of positive number must >= 0')
+    // warn('minimum of positive number must >= 0')
     options.minimum = 0
   }
 

@@ -84,7 +84,7 @@ function genValidRegex(
   return new RegExp(`^${regexStr}$`)
 }
 
-class Formatter {
+export class Formatter {
   constructor(options) {
     this.input = getInputDom(options.el, options.vnode)
     this.options = options
@@ -114,13 +114,13 @@ class Formatter {
       }
     }.bind(this)
 
-    if (this.options.vnode.componentInstance) {
-      this.validateAndFixInput = function(ev) {
-        // console.log(ev)
-      }.bind(this)
-    } else {
-      this.validateAndFixInput = this.validateAndFixByInputEvent.bind(this)
-    }
+    this.validateAndFixInput = this.validateAndFixByInputEvent.bind(this)
+    // if (this.options.vnode.componentInstance) {
+    //   this.validateAndFixInput = function(ev) {
+    //     // console.log(ev)
+    //   }.bind(this)
+    // } else {
+    // }
 
     this.onPaste = function(ev) {
       ev.preventDefault()
@@ -193,4 +193,14 @@ class Formatter {
   }
 }
 
-export default Formatter
+const setup = function(el, options) {
+  console.log(options)
+  el.numberDirOptions = options
+  if (el.formatter) {
+    el.formatter.unlisten()
+  }
+  el.formatter = new Formatter(options)
+  el.formatter.listen()
+}
+
+export default setup

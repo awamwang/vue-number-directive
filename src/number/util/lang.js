@@ -24,7 +24,7 @@ function transSquareBracketToDot(contextChain, str) {
   return str
 }
 
-export let getProp = function getProp(contextChain, path) {
+export const getProp = function getProp(contextChain, path) {
   path = transSquareBracketToDot(contextChain, path)
 
   let res
@@ -38,7 +38,7 @@ export let getProp = function getProp(contextChain, path) {
   return res
 }
 
-export let setProp = function setProp(contextChain, path, value) {
+export const setProp = function setProp(contextChain, path, value) {
   if (!Array.isArray(contextChain)) {
     contextChain = [contextChain]
   }
@@ -54,7 +54,7 @@ export let setProp = function setProp(contextChain, path, value) {
   })
 }
 
-export let removeItem = function(arr, item) {
+export const removeItem = function(arr, item) {
   let idx = arr.indexOf(item)
 
   if (idx > -1) {
@@ -62,7 +62,7 @@ export let removeItem = function(arr, item) {
   }
 }
 
-export let cache = function(fn) {
+export const cache = function(fn) {
   let cached = []
   return function(str) {
     if (cached[str]) {
@@ -71,4 +71,14 @@ export let cache = function(fn) {
       return (cached[str] = fn(str))
     }
   }
+}
+
+export const isSameOptions = function(obj1, obj2) {
+  return Object.keys(obj1).every(key => {
+    if (key === 'vnode') {
+      return obj1[key].context._uid === obj2[key].context._uid
+    } else {
+      return obj1[key] === obj2[key]
+    }
+  })
 }

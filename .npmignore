@@ -1,5 +1,5 @@
 .storybook/
-dist/storires
+dist/stories/
 examples/
 .travis/
 test/

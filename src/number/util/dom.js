@@ -39,7 +39,7 @@ const AllowedTagList = [
 const ElementUIClassList = ['el-input__inner']
 
 function isInputLike(el) {
-  return InputTagList.includes(el.tagName) || el.getAttribute('contenteditable')
+  return InputTagList.includes(el.tagName) || el.contentEditable
 }
 
 function getChildInputs(el) {
@@ -94,7 +94,9 @@ export const getInputDom = (el, vnode) => {
     ) {
       error('wrong INPUT element type')
     }
-  } else if (!inputDom.getAttribute('contenteditable')) {
+  } else if (inputDom.tagName === 'TEXTAREA') {
+
+  } else if (!inputDom.contentEditable) {
     if (AllowedTagList.includes(inputDom.tagName.toLowerCase)) {
       // warn('once use to format number')
     } else {

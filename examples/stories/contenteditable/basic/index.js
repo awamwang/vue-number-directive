@@ -1,4 +1,5 @@
-import { action } from '@storybook/addon-actions'
+
+import { basic } from '../../props'
 import MyExample from './MyExample'
 import NoteMd from './Note.md'
 
@@ -6,17 +7,13 @@ export const Story = arg => ({
   components: {
     MyExample
   },
+  props: basic(),
   template: `
-    <my-example text="你哈${arg.text}"/>
-    `,
-  methods: {
-    btnClick: action('btnClick')
-  }
+    <my-example v-bind="$props"/>
+    `
 })
 
-Story.args = {
-  text: '这是什么'
-}
+Story.args = {}
 Story.parameters = {
   notes: { NoteMd }
 }

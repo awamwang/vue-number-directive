@@ -1,5 +1,5 @@
 export default {
-  title: 'VueNumber/Options',
+  title: 'VueNumber/Scope',
   parameters: {}
 }
 

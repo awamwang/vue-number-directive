@@ -1,8 +1,6 @@
-import {
-  error
-  // warn
-} from './log'
+import { error, warn } from './log'
 
+const InputTagList = ['INPUT', 'TEXTAREA']
 const AllowedInputType = ['number', 'text', 'tel', 'hidden']
 const AllowedTagList = [
   'b',
@@ -38,30 +36,55 @@ const AllowedTagList = [
   'th',
   'u'
 ]
+const ElementUIClassList = ['el-input__inner']
 
-function getChildInput(el) {
-  if (el.children) {
-    for (let i = 0, len = el.children.length; i < len; i++) {
-      let child = el.children[i]
-      if (child.tagName === 'INPUT') {
-        return child
-      }
-    }
-  }
-
-  return el
+function isInputLike(el) {
+  return InputTagList.includes(el.tagName) || el.getAttribute('contenteditable')
 }
 
-function handleElementUI(el, inputDom, vnode) {
-  if (Array.prototype.includes.call(el.classList, 'el-input')) {
+function getChildInputs(el) {
+  let res = [],
+    child
+
+  if (isInputLike(el)) {
+    res.push(el)
+  }
+
+  if (el.children) {
+    res = res.concat(
+      Array.prototype.reduce.call(
+        el.children,
+        (arr, child) => {
+          return arr.concat(getChildInputs(child))
+        },
+        []
+      )
+    )
+  }
+
+  return res
+}
+
+function handleElementUI(inputDom, vnode) {
+  if (
+    ElementUIClassList.some(c =>
+      Array.prototype.includes.call(inputDom.classList, c)
+    )
+  ) {
     if (vnode.data.model && vnode.data.model.value !== undefined) {
       inputDom.value = vnode.data.model.value
     }
   }
 }
 
-export let getInputDom = (el, vnode) => {
-  let inputDom = getChildInput(el)
+export const getInputDom = (el, vnode) => {
+  let inputDom = getChildInputs(el)
+  if (!inputDom.length) {
+    error('no input like element found')
+  } else if (inputDom.length > 1) {
+    warn('more than one input like element found, use first')
+  }
+  inputDom = inputDom[0]
   handleElementUI(el, inputDom, vnode)
 
   if (inputDom.tagName === 'INPUT') {
@@ -82,7 +105,7 @@ export let getInputDom = (el, vnode) => {
   return inputDom
 }
 
-export let unshiftEventHandler = (el, eventType, handler) => {
+export const unshiftEventHandler = (el, eventType, handler) => {
   el.addEventListener(eventType, handler)
   // let handlerArr = getEventListeners(el)[eventType]
   // console.log(handlerArr)
@@ -94,29 +117,12 @@ export let unshiftEventHandler = (el, eventType, handler) => {
   // }
 }
 
-export let getVNodeValue = (vnode, ele) => {
-  let res
-
-  if (vnode.data && vnode.data.model) {
-    res = vnode.data.model.value
-  } else if (vnode.data && vnode.data.domProps) {
-    res = vnode.data.domProps.value
-  } else if (ele && ele.tagName !== 'INPUT' && ele.innerText) {
-    res = ele.innerText
-  } else {
-    // warn('target vnode hasn\'t bound value, may cause bug')
-  }
-  return res
+export const getDomValue = el => {
+  return InputTagList.includes(el.tagName) ? el.value : el.innerText
 }
 
-export let getElementValue = ele => {
-  let res
-
-  if (ele.tagName === 'INPUT') {
-    res = ele.value
-  } else {
-    res = ele.innerText
-  }
-
-  return res
+export const setDomValue = (el, value) => {
+  InputTagList.includes(el.tagName)
+    ? (el.value = value)
+    : (el.innerText = value)
 }

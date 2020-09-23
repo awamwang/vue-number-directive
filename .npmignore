@@ -1,5 +1,10 @@
 .storybook/
+dist/storires
 examples/
 .travis/
 test/
 .cache/
+.eslintignore
+.prettierrc.js
+cypress.json
+TODO.md

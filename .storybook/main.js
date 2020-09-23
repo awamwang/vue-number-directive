@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   stories: [
     '../examples/stories/element/**/*.stories.mdx',
@@ -7,6 +9,18 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-links',
     '@storybook/addon-notes',
-    '@storybook/addon-knobs'
+    '@storybook/addon-knobs',
+    {
+      name: '@storybook/addon-storysource',
+      // options: {
+      //   rule: {
+      //     test: [/\.stories\.jsx?$/],
+      //     include: [path.resolve(__dirname, '../examples/stories/')]
+      //   },
+      //   loaderOptions: {
+      //     prettierConfig: { printWidth: 80, singleQuote: false }
+      //   }
+      // }
+    }
   ]
 }

@@ -2,12 +2,12 @@
 import { warn } from './util/log'
 const ExpressionRegex = /model:([^,}]+),?/
 
-function getModelPath(expression) {
+function getModelPath(expression, vnode) {
   let matches = expression.replace(/\s|↵/g, '').match(ExpressionRegex)
   if (matches) {
     return matches[1]
   } else {
-    return expression
+    return vnode.data.model ? vnode.data.model.expression : expression
   }
 }
 
@@ -60,11 +60,11 @@ function mergeOptions(options, schema, globalOptions) {
 function optimizeOptions(options) {
   options.flag = options.flag !== void 0 ? options.flag : !options.positive
   if (options.precision && options.integer) {
-    warn('precision of integer number must be 0')
+    // warn('precision of integer number must be 0')
     options.precision = 0
   }
   if (options.minimum < 0 && options.positive) {
-    warn('minimum of positive number must >= 0')
+    // warn('minimum of positive number must >= 0')
     options.minimum = 0
   }
 
@@ -74,7 +74,7 @@ function optimizeOptions(options) {
 export default function(el, binding, vnode, globalOptions) {
   const { value: config, expression, modifiers } = binding
 
-  let modelPropPath = getModelPath(expression)
+  let modelPropPath = getModelPath(expression, vnode)
   let integer = modifiers.int || modifiers.integer || config.integer
   let positive = modifiers.pos || modifiers.positive || config.positive
   let minimum = getMinMax(config, 'min')

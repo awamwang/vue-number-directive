@@ -104,12 +104,12 @@ export class Formatter {
     this.onKeydown = function(ev) {
       this.oldValue = getDomValue(this.input)
       if (!this.validCharRegex.test(ev.key)) {
-        debug(`validCharRegex test: ${ev.key}, ${this.validCharRegex}`)
+        debug(`validCharRegex test fail: input key(${ev.key}), validCharRegex(${this.validCharRegex})`)
         ev.preventDefault()
       }
 
       if (UniqueTesters.some(tester => !tester(ev.key, getValue(ev)))) {
-        debug(`UniqueTesters: ${ev.key}, ${getValue(ev)}`)
+        debug(`UniqueTesters fail: input key(${ev.key}), value(${getValue(ev)})`)
         ev.preventDefault()
       }
     }.bind(this)
@@ -134,11 +134,11 @@ export class Formatter {
   initValidateMethods() {
     let validateValue = value => {
       if (value.length > this.maxLength) {
-        debug(`maxLength: value:${value}, maxLength:${this.maxLength}`)
+        debug(`maxLength: value(${value}), maxLength(${this.maxLength})`)
         return false
       }
       if (!this.validRegex.test(value)) {
-        debug(`validRegex test: value:${value}, validRegex:${this.validRegex}`)
+        debug(`validRegex test fail: value(${value}), validRegex(${this.validRegex})`)
         return false
       }
 
@@ -158,12 +158,11 @@ export class Formatter {
     let { modelPropPath, scope, vnode } = this.options
     let value = (getDomValue(ev.target) || '').toString()
     let oldValue = (this.oldValue || '').toString()
-    console.log('value', value, oldValue)
 
     debug(
-      `validateValue: value:${value}-${this.validateValue(
+      `validateValue: value(${value}-${this.validateValue(
         value
-      )} oldValue:${oldValue}-${this.validateValue(oldValue)}`
+      )}) oldValue(${oldValue}-${this.validateValue(oldValue)})`
     )
     if (!this.validateValue(value) && this.validateValue(oldValue)) {
       setProp(
@@ -194,7 +193,7 @@ export class Formatter {
 }
 
 const setup = function(el, options) {
-  console.log(options)
+  debug(`setup with options: `, options)
   el.numberDirOptions = options
   if (el.formatter) {
     el.formatter.unlisten()

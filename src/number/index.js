@@ -2,9 +2,8 @@ export const NAME = 'number'
 import parseOption from './option'
 import setupFormatter from './formatter'
 import { isSameOptions } from './util/lang'
-import { debug } from './util/log'
 
-export default function(globalOptions) {
+export default function(globalOptions = {}) {
   return {
     bind(el, binding, vnode) {
       const { options } = parseOption(el, binding, vnode, globalOptions)

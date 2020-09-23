@@ -1,5 +1,5 @@
 // todo 换TS，定义接口
-import { warn } from './util/log'
+import { configLog, warn } from './util/log'
 const ExpressionRegex = /model:([^,}]+),?/
 
 function getModelPath(expression, vnode) {
@@ -67,7 +67,8 @@ function optimizeOptions(options) {
     // warn('minimum of positive number must >= 0')
     options.minimum = 0
   }
-
+  configLog({ debug: options.debug })
+  
   return options
 }
 
@@ -92,6 +93,7 @@ export default function(el, binding, vnode, globalOptions) {
         {
           el,
           vnode,
+          debug: config.debug,
           modelPropPath,
           scope: config.scope,
 

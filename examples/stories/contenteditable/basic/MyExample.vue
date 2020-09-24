@@ -1,14 +1,23 @@
 <template>
   <div>
-    <label for="input1">input1: </label>
+    <label for="input1">input1: contenteditable</label>
     <p
       name="input1"
-      id="input1"
       v-model="input1"
       v-number="{ ...options, integer: int, positive: pos }"
       contenteditable
     >
       {{ input1 }}
+    </p>
+
+    <label for="input2">input2: contenteditable=true</label>
+    <p
+      name="input2"
+      v-model="input2"
+      v-number="{ ...options, integer: int, positive: pos }"
+      contenteditable="true"
+    >
+      {{ input2 }}
     </p>
     <!-- <p>Modified value in Vue data: {{ input1 }}</p>
     <br />
@@ -30,7 +39,8 @@ export default {
   props: ['int', 'pos', 'options'],
   data() {
     return {
-      input1: '123'
+      input1: '123',
+      input2: '123'
     }
   },
   methods: {}

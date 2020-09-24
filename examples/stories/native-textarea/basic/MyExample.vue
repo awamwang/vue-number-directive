@@ -1,9 +1,9 @@
 <template>
-  <input
+  <textarea
     v-model="input1"
     data-cy
     v-number="{ model: input1, ...options, integer: int, positive: pos }"
-  />
+  ></textarea>
 </template>
 
 <script>

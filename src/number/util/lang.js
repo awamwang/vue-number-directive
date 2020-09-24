@@ -77,7 +77,7 @@ export const cache = function(fn) {
   }
 }
 
-export const isSameOptions = function(obj1, obj2) {
+export const isSameOption = function(obj1, obj2) {
   return Object.keys(obj1).every(key => {
     if (key === 'vnode') {
       return obj1[key].context._uid === obj2[key].context._uid

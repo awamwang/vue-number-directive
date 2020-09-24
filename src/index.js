@@ -1,7 +1,7 @@
-import NumberDirective from './number/index'
+import NumberDirective, { NAME } from './number/index'
 
 export default {
   install(Vue, options = {}) {
-    Vue.directive('number', NumberDirective(options))
+    Vue.directive(options.name || NAME, NumberDirective(options))
   }
 }

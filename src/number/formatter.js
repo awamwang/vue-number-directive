@@ -160,7 +160,7 @@ export class Formatter {
     let oldValue = (this.oldValue || '').toString()
 
     debug(
-      `validateValue: value(${value}-${this.validateValue(
+      `## validateValue: value(${value}-${this.validateValue(
         value
       )}) oldValue(${oldValue}-${this.validateValue(oldValue)})`
     )

@@ -50,7 +50,7 @@ export default {
   methods: {
     onFocus(ev) {
       this.parsedOptions = ev.target.numberDirOptions
-      console.log(ev.target, ev.target.numberDirOptions)
+
       if (this.parsedOptions && this.$refs['wrap']) {
         this.$refs['wrap'].myOptions = this.shownOptions
         // console.log(this.parsedOptions)

@@ -13,12 +13,12 @@ export default function(globalOptions = {}) {
     update(el, binding, vnode) {
       const { options } = parseOption(el, binding, vnode, globalOptions)
 
-      if (!isSameOptions(options, el.numberDirOptions)) {
+      if (!el.formatter || !isSameOptions(options, el.formatter.input.numberDirOptions)) {
         setupFormatter(el, options)
       }
     },
     unbind(el) {
-      el.formatter.unlisten()
+      el.formatter && el.formatter.unlisten()
     }
   }
 }

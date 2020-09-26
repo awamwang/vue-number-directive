@@ -104,12 +104,16 @@ export class Formatter {
     this.onKeydown = function(ev) {
       this.oldValue = getDomValue(this.input)
       if (!this.validCharRegex.test(ev.key)) {
-        debug(`validCharRegex test fail: input key(${ev.key}), validCharRegex(${this.validCharRegex})`)
+        debug(
+          `validCharRegex test fail: input key(${ev.key}), validCharRegex(${this.validCharRegex})`
+        )
         ev.preventDefault()
       }
 
       if (UniqueTesters.some(tester => !tester(ev.key, getValue(ev)))) {
-        debug(`UniqueTesters fail: input key(${ev.key}), value(${getValue(ev)})`)
+        debug(
+          `UniqueTesters fail: input key(${ev.key}), value(${getValue(ev)})`
+        )
         ev.preventDefault()
       }
     }.bind(this)
@@ -138,7 +142,9 @@ export class Formatter {
         return false
       }
       if (!this.validRegex.test(value)) {
-        debug(`validRegex test fail: value(${value}), validRegex(${this.validRegex})`)
+        debug(
+          `validRegex test fail: value(${value}), validRegex(${this.validRegex})`
+        )
         return false
       }
 
@@ -194,11 +200,11 @@ export class Formatter {
 
 const setup = function(el, options) {
   debug(`setup with options: `, options)
-  el.numberDirOptions = options
   if (el.formatter) {
     el.formatter.unlisten()
   }
   el.formatter = new Formatter(options)
+  el.formatter.input.numberDirOptions = options
   el.formatter.listen()
 }
 

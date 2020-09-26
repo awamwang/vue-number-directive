@@ -1,7 +1,7 @@
 import { error, warn } from './log'
 
 const InputTagList = ['INPUT', 'TEXTAREA']
-const AllowedInputType = ['number', 'text', 'tel', 'hidden']
+const AllowedInputType = ['number', 'text', 'tel', 'hidden', 'password', 'search']
 const AllowedTagList = [
   'b',
   'caption',
@@ -39,7 +39,7 @@ const AllowedTagList = [
 const ElementUIClassList = ['el-input__inner']
 
 function isInputLike(el) {
-  return InputTagList.includes(el.tagName) || el.contentEditable
+  return InputTagList.includes(el.tagName) || el.getAttribute('contenteditable')
 }
 
 function getChildInputs(el) {
@@ -96,7 +96,7 @@ export const getInputDom = (el, vnode) => {
     }
   } else if (inputDom.tagName === 'TEXTAREA') {
 
-  } else if (!inputDom.contentEditable) {
+  } else if (!inputDom.getAttribute('contenteditable')) {
     if (AllowedTagList.includes(inputDom.tagName.toLowerCase)) {
       // warn('once use to format number')
     } else {

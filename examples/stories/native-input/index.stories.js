@@ -1,5 +1,8 @@
+import NumberDirectiveWrap from '../NumberDirectiveWrap'
+
 export default {
   title: 'VueNumber/NativeInput',
+  component: NumberDirectiveWrap,
   parameters: {}
 }
 

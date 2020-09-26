@@ -1,6 +1,12 @@
+import NumberDirectiveWrap from '../NumberDirectiveWrap'
+
 export default {
   title: 'VueNumber/NativeTextarea',
-  parameters: {}
+  component: NumberDirectiveWrap,
+  parameters: {},
+  argTypes: {
+    label: { control: 'text' }
+  }
 }
 
 export { Story as BasicUsage } from './basic/index'

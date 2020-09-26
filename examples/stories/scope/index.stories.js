@@ -1,5 +1,8 @@
+import MyExample from './basic/MyExample'
+
 export default {
   title: 'VueNumber/Scope',
+  component: MyExample,
   parameters: {}
 }
 

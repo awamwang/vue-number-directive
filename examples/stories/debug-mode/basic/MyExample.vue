@@ -1,24 +1,14 @@
 <template>
-  <Input
-    v-model="input1"
-    data-cy
-    v-number="{ model: input1, ...options, integer: int, positive: pos, debug }"
-  ></Input>
+  <NumberWrap ref="wrap">
+    <Input
+      v-model="input1"
+      data-cy
+      v-number="{ ...$props, model: input1 }"
+      @focus="onFocus"
+    ></Input>
+  </NumberWrap>
 </template>
 
 <script>
-export default {
-  name: 'MyExample',
-  props: ['int', 'pos', 'options', 'debug'],
-  data() {
-    return {
-      input1: '123'
-    }
-  },
-  methods: {
-    btnClick() {
-      this.$emit('btnClick', this.text)
-    }
-  }
-}
+export default {}
 </script>

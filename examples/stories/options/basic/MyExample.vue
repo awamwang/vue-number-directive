@@ -1,31 +1,40 @@
 <template>
-  <div>
+  <NumberWrap ref="wrap">
     <p>modifier: int</p>
     <input
       v-model="input1"
-      v-number.int="{ model: input1, ...options }"
-      @focus="(ev) => onOptions(ev.target.numberDirOptions)"
+      v-number.int="{ ...$props, model: input1, ...options }"
+      @focus="onFocus"
     />
 
     <p>modifier: pos</p>
     <input
       v-model="input2"
-      v-number.pos="{ model: input2, ...options }"
-      @focus="(ev) => onOptions(ev.target.numberDirOptions)"
+      v-number.pos="{ ...$props, model: input2, ...options }"
+      @focus="onFocus"
     />
 
     <p>modifier: int.pos</p>
-    <input v-model="input3" v-number.int.pos="{ model: input3, ...options }" @focus="(ev) => onOptions(ev.target.numberDirOptions)"/>
+    <input
+      v-model="input3"
+      v-number.int.pos="{ ...$props, model: input3, ...options }"
+      @focus="onFocus"
+    />
 
     <p>modifier: integer</p>
-    <input v-model="input4" v-number.integer="{ model: input4, ...options }" @focus="(ev) => onOptions(ev.target.numberDirOptions)"/>
+    <input
+      v-model="input4"
+      v-number.integer="{ ...$props, model: input4, ...options }"
+      @focus="onFocus"
+    />
 
     <p>modifier: positive</p>
-    <input v-model="input5" v-number.positive="{ model: input5, ...options }" @focus="(ev) => onOptions(ev.target.numberDirOptions)"/>
-<!-- 
-    <p>modifier: pos</p>
-    <input v-model="input6" v-number.pos="{ model: input6, ...options }" @focus="(ev) => onOptions(ev.target.numberDirOptions)"/> -->
-  </div>
+    <input
+      v-model="input5"
+      v-number.positive="{ ...$props, model: input5, ...options }"
+      @focus="onFocus"
+    />
+  </NumberWrap>
 </template>
 
 <script>
@@ -44,15 +53,6 @@ export default {
       input4: '123',
       input5: '123',
       input6: '123',
-      parsedOptions: {}
-    }
-  },
-  methods: {
-    onOptions: action('parsedOptions'),
-    onFocus(ev) {
-      this.parsedOptions = ev.target.numberDirOptions
-      console.log('parsedOptions', this.parsedOptions)
-      // action('options', this.parsedOptions)
     }
   }
 }

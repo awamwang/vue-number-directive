@@ -5,7 +5,7 @@ function runContextChain(contextChain, key, fn) {
   let context
 
   for (let i = 0, len = contextChain.length; i < len; i++) {
-    // first check scope, then context
+    // check scope first, then context
     if (contextChain[i][key] !== void 0) {
       context = contextChain[i]
       break
@@ -33,7 +33,11 @@ export const getProp = function getProp(contextChain, path) {
     while (arr.length > 1) {
       context = context[arr.shift()]
     }
-    res = context[arr[0]]
+
+    // HACK: 由于events顺序问题，需要在setImmediate设置值；副作用——一些浏览器中回闪现删除的过程
+    setImmediate(() => {
+      context[arr[0]] = value
+    })
   })
   return res
 }
@@ -73,7 +77,7 @@ export const cache = function(fn) {
   }
 }
 
-export const isSameOptions = function(obj1, obj2) {
+export const isSameOption = function(obj1, obj2) {
   return Object.keys(obj1).every(key => {
     if (key === 'vnode') {
       return obj1[key].context._uid === obj2[key].context._uid

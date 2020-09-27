@@ -29,8 +29,16 @@ npm install vue-number-directive --save
 ```js
 import Vue from 'vue'
 import NumberDirective from 'vue-number-directive'
+// 如果想用未打包的src
+// import NumberDirective from 'vue-number-directive/src/index'
 
 Vue.use(NumberDirective)
+```
+
+浏览器中
+
+```html
+
 ```
 
 在浏览器中插件的全局名称为`VueNumber`。

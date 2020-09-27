@@ -112,8 +112,8 @@ numricOptions [autoNumeric options](https://github.com/autoNumeric/autoNumeric#o
 
 ## Features
 
-1. 保留原事件响应
-2. 把 AutoNumeric 挂在了插件下
+1. 默认绑定v-model所绑定的值
+2. 选项变化动态更新
 3. 把 AutoNumeric 的实例挂在了对应的 element 下，方便调用它的方法
 
 [build badge]: https://travis-ci.com/keepgoingwm/vue-autonumeric-directive.svg?branch=master

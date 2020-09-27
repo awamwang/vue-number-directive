@@ -248,19 +248,18 @@ export class Formatter {
 
     return this
   }
+  destroy() {
+    delete this.input.numberDirOptions
+    this.unlisten()
+  }
 }
 
 const init = function(el, options) {
-  debug(`init with options: `, options)
-  destroy(el)
+  el.formatter && el.formatter.destroy()
 
-  el.numberDirOptions = options
   el.formatter = new Formatter(options).listen()
-}
-
-const destroy = function(el) {
-  delete el.numberDirOptions
-  el.formatter && el.formatter.unlisten()
+  el.formatter.input.numberDirOptions = options
+  debug(`setup with options: `, options)
 }
 
 export default init

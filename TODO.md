@@ -10,10 +10,10 @@
 + schema剩余特性
 + sientific
 + sep
++ 一次性检查-parseFloat/Int；在formatter建立后进行检查
 + maxlength
 + max/min
 + 默认v-model，或代替v-model
-+ 一次性检查；在formatter建立后进行检查
 + 更新AllowedTagList、
 + 转Ts
 

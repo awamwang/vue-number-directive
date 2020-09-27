@@ -1,6 +1,6 @@
 export const NAME = 'number'
 import parseOption from './option'
-import initFormatter from './formatter'
+import initFormatter, {destroy as dest} from './formatter'
 import { isSameOption } from './util/lang'
 
 export default function(globalOptions = {}) {
@@ -13,12 +13,15 @@ export default function(globalOptions = {}) {
     update(el, binding, vnode) {
       const { options } = parseOption(el, binding, vnode, globalOptions)
 
-      if (!isSameOption(options, el.numberDirOptions)) {
+      if (
+        !el.formatter ||
+        !isSameOption(options, el.formatter.input.numberDirOptions)
+      ) {
         initFormatter(el, options)
       }
     },
     unbind(el) {
-      
+      el.formatter && el.formatter.destroy()
     }
   }
 }

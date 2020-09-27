@@ -1,12 +1,10 @@
-import Vue from 'vue'
 import { storiesOf } from '@storybook/vue'
-import { withKnobs } from '@storybook/addon-knobs'
-import VueNumber from '../src/index'
-
-Vue.use(VueNumber)
+import NumberWrap from '../examples/stories/NumberDirectiveWrap'
+import './vue-config'
 
 export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' }
+  actions: { argTypesRegex: '^on[A-Z].*' },
+  component: NumberWrap,
+  controls: { expanded: true },
+  argTypes: {}
 }
-
-// export const decorators = [withKnobs]

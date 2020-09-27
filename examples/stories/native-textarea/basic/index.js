@@ -1,19 +1,11 @@
-
-import { basic } from '../../props'
 import MyExample from './MyExample'
 import NoteMd from './Note.md'
+import genStory from '../../basic-story'
 
-export const Story = arg => ({
-  components: {
-    MyExample
-  },
-  props: basic(),
-  template: `
-    <my-example v-bind="$props"/>
-    `
-})
-
-Story.args = {}
-Story.parameters = {
-  notes: { NoteMd }
-}
+export const Story = genStory(
+  MyExample,
+  {},
+  {
+    notes: { NoteMd }
+  }
+)

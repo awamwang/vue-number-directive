@@ -1,10 +1,14 @@
 .storybook/
+.cache/
+.vscode/
+.travis/
 dist/stories/
 examples/
-.travis/
 test/
-.cache/
+docs/
 .eslintignore
 .prettierrc.js
 cypress.json
 TODO.md
+travis.yml
+yarn.lock

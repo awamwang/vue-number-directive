@@ -6,7 +6,7 @@ function runContextChain(contextChain, key, fn) {
 
   for (let i = 0, len = contextChain.length; i < len; i++) {
     // check scope first, then context
-    if (contextChain[i][key] !== void 0) {
+    if (Object.prototype.hasOwnProperty.call(contextChain[i], key)) {
       context = contextChain[i]
       break
     }

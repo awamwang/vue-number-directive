@@ -6,7 +6,7 @@
   "scripts": {
     "build": "parcel build src/index.js",
     "lint": "vue-cli-service lint",
-    "build-storybook": "build-storybook -o ./dist/stories",
+    "build-storybook": "build-storybook -o ./docs",
     "cy:open": "cypress open -C cypress.json",
     "cy:run": "cypress run",
     "dev": "parcel watch src/index.js --public-url ./dist/",

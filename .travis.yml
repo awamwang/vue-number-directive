@@ -11,8 +11,9 @@ node_js:
 only:
 - master
 before_install:
+- npm install -g yarn
 install:
-- npm install
+- yarn
 before_script:
 script:
 - npm run test

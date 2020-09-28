@@ -17,7 +17,7 @@
     "init-storybook": "npx sb init",
     "coverage-nyc_setup": "nyc instrument --compact=false src test/coverage/instrumented",
     "coverage-nyc_report": "nyc report --reporter=text-summary",
-    "test": "npm run cy-run & npm run coverage-nyc_report"
+    "test": "npm run cy-run && npm run coverage-nyc_report"
   },
   "source": "src/index.js",
   "main": "dist/index.js",
@@ -40,8 +40,9 @@
     "@vue/babel-preset-app": "^4.5.6",
     "@vue/babel-preset-jsx": "^1.1.2",
     "babel-plugin-istanbul": "^6.0.0",
-    "cypress": "^5.1.0",
+    "cypress": "^5.2.0",
     "element-ui": "^2.13.2",
+    "nyc": "^15.1.0",
     "parcel": "^2.0.0-beta.1",
     "parcel-bundler": "^1.12.4",
     "prettier": "^1.19.1",

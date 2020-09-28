@@ -6,16 +6,18 @@
   "scripts": {
     "dev": "parcel watch src/index.js --public-url ./dist/",
     "storybook": "start-storybook -p 6006",
-    "cy:open": "cypress open -C cypress.json",
-    "build": "npm run build:cjs && npm run build:umd",
-    "build:cjs": "parcel build src/index.js -o dist/index.js",
-    "build:umd": "parcel build --global VueNumber src/index.js -o dist/index.umd.js",
+    "cy-open": "cypress open -C cypress.json",
+    "build": "npm run build-cjs && npm run build-umd",
+    "build-cjs": "parcel build src/index.js",
+    "build-umd": "parcel build --global VueNumber src/index.js",
     "lint": "vue-cli-service lint",
-    "cy:run": "cypress run",
+    "cy-run": "cypress run",
     "init-commitizen": "commitizen init cz-conventional-changelog --save",
     "init-storybook": "npx sb init",
     "build-storybook": "build-storybook -o ./docs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "coverage-nyc_setup": "nyc instrument --compact=false src test/coverage/instrumented",
+    "coverage-nyc_report": "nyc report --reporter=text-summary",
+    "test": "npm run cy-run & npm run coverage-nyc_report"
   },
   "source": "src/index.js",
   "main": "dist/index.js",
@@ -24,6 +26,7 @@
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.11.6",
+    "@cypress/code-coverage": "^3.8.1",
     "@storybook/addon-actions": "^6.0.21",
     "@storybook/addon-docs": "^6.1.0-alpha.14",
     "@storybook/addon-essentials": "^6.0.21",
@@ -36,6 +39,7 @@
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
     "@vue/babel-preset-app": "^4.5.6",
     "@vue/babel-preset-jsx": "^1.1.2",
+    "babel-plugin-istanbul": "^6.0.0",
     "cypress": "^5.1.0",
     "element-ui": "^2.13.2",
     "parcel": "^2.0.0-beta.1",
@@ -47,13 +51,6 @@
   },
   "peerDependencies": {
     "vue": "^2.6.12"
-  },
-  "prettier": {
-    "trailingComma": "none",
-    "tabWidth": 2,
-    "semi": false,
-    "singleQuote": true,
-    "endOfLine": "auto"
   },
   "browserslist": {
     "production": [

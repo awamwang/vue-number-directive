@@ -2,7 +2,7 @@
 import { configLog, warn } from './util/log'
 const ExpressionRegex = /model:([^,}]+),?/
 
-function getModelPath(expression, vnode) {
+export function getModelPath(expression, vnode) {
   let matches = expression.replace(/\s|↵/g, '').match(ExpressionRegex)
   if (matches) {
     return matches[1]
@@ -11,7 +11,7 @@ function getModelPath(expression, vnode) {
   }
 }
 
-function parseSchema(schema) {
+export function parseSchema(schema) {
   if (!schema) {
     return {}
   }
@@ -26,7 +26,7 @@ function parseSchema(schema) {
   }
 }
 
-function getMinMax(config, type) {
+export function getMinMax(config, type) {
   if (type === 'min') {
     return typeof config.min === 'number'
       ? config.min
@@ -57,7 +57,7 @@ function mergeOptions(options, schema, globalOptions) {
   return options
 }
 
-function optimizeOptions(options) {
+export function optimizeOptions(options) {
   options.flag = options.flag !== void 0 ? options.flag : !options.positive
   if (options.precision && options.integer) {
     // warn('precision of integer number must be 0')
@@ -68,7 +68,7 @@ function optimizeOptions(options) {
     options.minimum = 0
   }
   configLog({ debug: options.debug })
-  
+
   return options
 }
 

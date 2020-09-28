@@ -5,10 +5,11 @@
 dist/stories/
 examples/
 test/
-docs/
-.eslintignore
-.prettierrc.js
+.cache/
+\.nyc_output/
+\.eslintignore
+\.prettierrc.js
 cypress.json
-TODO.md
+babel.config.js
 travis.yml
 yarn.lock

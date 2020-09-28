@@ -2,7 +2,10 @@
   "name": "vue-number-directive",
   "version": "0.0.2",
   "description": "Vue directive plugin to assure number to be number",
-  "author": "",
+  "author": {
+    "name": "Awam M Wang",
+    "email": "keepgoingwm@gmail.com"
+  },
   "scripts": {
     "dev": "parcel watch src/index.js --public-url ./dist/",
     "storybook": "start-storybook -p 6006",
@@ -10,7 +13,7 @@
     "build": "npm run build-cjs && npm run build-umd && npm run build-storybook",
     "build-cjs": "parcel build src/index.js",
     "build-umd": "parcel build --global VueNumber src/index.js",
-    "build-storybook": "build-storybook -o ./docs",
+    "build-storybook": "build-storybook -o ./docs/storybook",
     "lint": "vue-cli-service lint",
     "cy-run": "cypress run",
     "init-commitizen": "commitizen init cz-conventional-changelog --save",

@@ -1,25 +1,30 @@
+branches:
+  only:
+    - master
+    - stable
+
 sudo: required
 dist: trusty
 language: node_js
 cache:
+  yarn: true
   directories:
-  - node_modules
+    - node_modules
 node_js:
-- lts/*
-- 8 
-###################
-only:
-- master
+  - lts/*
+  - 10
+
 before_install:
-- npm install -g yarn
+  - apt-get install jq -y
+  - npm install -g yarn
 install:
-- yarn
+  - yarn
 before_script:
 script:
-- npm run test
-- npm run build
+  - npm run test
+  - npm run build
 after_success:
-- chmod +x .travis/push.sh
-- .travis/push.sh
+  - chmod +x .travis/push.sh
+  - .travis/push.sh
 after_failure:
-- ls -a
+  - ls -a

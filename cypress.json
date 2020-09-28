@@ -1,5 +1,9 @@
 {
   "env": {},
-  "fileServerFolder": "test/cypress",
-  "ignoreTestFiles": []
+  "fileServerFolder": "cypress",
+  "ignoreTestFiles": [],
+  "coverage": false,
+  "codeCoverage": {
+    "url": "http://localhost:3001/__coverage__"
+  }
 }

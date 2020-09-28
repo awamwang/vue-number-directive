@@ -11,3 +11,4 @@ coverage
 RELEASE_NOTE*.md
 
 
+\.nyc_output/

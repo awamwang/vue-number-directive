@@ -7,19 +7,22 @@
     "build": "parcel build src/index.js",
     "lint": "vue-cli-service lint",
     "build-storybook": "build-storybook -o ./dist/stories",
-    "cy:open": "cypress open -C cypress.json",
-    "cy:run": "cypress run",
+    "cy-open": "cypress open -C cypress.json",
+    "cy-run": "cypress run",
     "dev": "parcel watch src/index.js --public-url ./dist/",
     "dev-example": "parcel serve examples/native-input/index.html --open",
     "init-commitizen": "commitizen init cz-conventional-changelog --save",
     "init-storybook": "npx sb init",
     "storybook": "start-storybook -p 6006",
+    "coverage-nyc_setup": "nyc instrument --compact=false src test/coverage/instrumented",
+    "coverage-nyc_report": "nyc report --reporter=text-summary",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "main": "src/index.js",
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.11.6",
+    "@cypress/code-coverage": "^3.8.1",
     "@storybook/addon-actions": "^6.0.21",
     "@storybook/addon-docs": "^6.1.0-alpha.14",
     "@storybook/addon-essentials": "^6.0.21",
@@ -32,6 +35,7 @@
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
     "@vue/babel-preset-app": "^4.5.6",
     "@vue/babel-preset-jsx": "^1.1.2",
+    "babel-plugin-istanbul": "^6.0.0",
     "cypress": "^5.1.0",
     "element-ui": "^2.13.2",
     "parcel-bundler": "^1.12.4",
@@ -42,13 +46,6 @@
   },
   "peerDependencies": {
     "vue": "^2.6.12"
-  },
-  "prettier": {
-    "trailingComma": "none",
-    "tabWidth": 2,
-    "semi": false,
-    "singleQuote": true,
-    "endOfLine": "auto"
   },
   "browserslist": {
     "production": [

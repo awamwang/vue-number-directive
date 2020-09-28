@@ -44,9 +44,9 @@ export function basic() {
       type: Boolean,
       default: boolean('Sientific', false)
     },
-    precision: {
+    fixed: {
       type: Number,
-      default: number('Precision', 2)
+      default: number('fixed', 2)
     },
     flag: {
       type: Boolean,

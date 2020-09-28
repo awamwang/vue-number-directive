@@ -14,7 +14,7 @@ export const OptionsToShow = [
   // 'posModifier',
 
   'sientific',
-  'precision',
+  'fixed',
   'flag',
   'minimum',
   'maximum',

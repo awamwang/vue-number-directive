@@ -59,9 +59,9 @@ function mergeOptions(options, schema, globalOptions) {
 
 export function optimizeOptions(options) {
   options.flag = options.flag !== void 0 ? options.flag : !options.positive
-  if (options.precision && options.integer) {
-    // warn('precision of integer number must be 0')
-    options.precision = 0
+  if (options.fixed && options.integer) {
+    // warn('fixed of integer number must be 0')
+    options.fixed = 0
   }
   if (options.minimum < 0 && options.positive) {
     // warn('minimum of positive number must >= 0')
@@ -81,10 +81,10 @@ export default function(el, binding, vnode, globalOptions) {
   let minimum = getMinMax(config, 'min')
   let maximum = getMinMax(config, 'max')
   if (!Number.isSafeInteger(minimum)) {
-    warn('minimum is unsafe, precision may be lost')
+    warn('minimum is unsafe, fixed may be lost')
   }
   if (!Number.isSafeInteger(maximum)) {
-    warn('maximum is unsafe, precision may be lost')
+    warn('maximum is unsafe, fixed may be lost')
   }
 
   return {
@@ -100,7 +100,7 @@ export default function(el, binding, vnode, globalOptions) {
           integer,
           positive,
           sientific: config.sientific,
-          precision: config.precision !== void 0 ? config.precision : 2,
+          fixed: config.fixed !== void 0 ? config.fixed : 2,
           flag: config.flag,
           minimum,
           maximum,

@@ -67,7 +67,7 @@ export default {
     sientific: {
       type: Boolean
     },
-    precision: {
+    fixed: {
       type: Number
     },
     flag: {

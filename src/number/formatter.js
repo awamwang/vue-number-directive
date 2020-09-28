@@ -39,7 +39,7 @@ function genValidCharRegex({
   flag,
   minimum,
   maximum,
-  precision,
+  fixed,
   sep,
   sepChar = []
 }) {
@@ -76,11 +76,11 @@ function getMaxIntegerLength({ minimum, maximum, sep, sepChar = [] }) {
  */
 function getMaxLength(
   integerLength,
-  { sientific, integer, flag, minimum, maximum, precision, sep, sepChar = [] }
+  { sientific, integer, flag, minimum, maximum, fixed, sep, sepChar = [] }
 ) {
   flag && integerLength++
   !integer && integerLength++
-  precision && (integerLength += precision)
+  fixed && (integerLength += fixed)
 
   return integerLength
 }
@@ -93,12 +93,12 @@ function getMaxLength(
  */
 function genValidRegex(
   integerLength,
-  { sientific, integer, flag, precision, sep, sepChar = [] }
+  { sientific, integer, flag, fixed, sep, sepChar = [] }
 ) {
   let regexStr = `([1-9]?)([0-9]{0,${integerLength - 1}})?`
 
   flag && (regexStr = '[+-]?' + regexStr)
-  !integer && (regexStr += `(\\.{0,1})?(\\.[0-9]{1,${precision}})?`)
+  !integer && (regexStr += `(\\.{0,1})?(\\.[0-9]{1,${fixed}})?`)
 
   return new RegExp(`^${regexStr}$`)
 }

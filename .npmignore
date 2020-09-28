@@ -1,7 +1,9 @@
 .storybook/
+.cache/
+.vscode/
+.travis/
 dist/stories/
 examples/
-.travis/
 test/
 .cache/
 \.nyc_output/
@@ -9,3 +11,5 @@ test/
 \.prettierrc.js
 cypress.json
 babel.config.js
+travis.yml
+yarn.lock

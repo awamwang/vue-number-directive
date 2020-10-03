@@ -1,6 +1,7 @@
-.idea/
-.cache/
+\.idea/
+\.cache/
 \.nyc_output/
+\.parcel-cache
 node_modules/
 .DS_Store
 *.log
@@ -10,3 +11,4 @@ dist/*
 coverage
 RELEASE_NOTE*.md
 cypress/videos/
+docs/

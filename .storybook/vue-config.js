@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import 'element-ui/lib/theme-chalk/index.css'
-import VueNumber from '../src/index'
+import VueNumber from '../dist/index'
 import NumberWrap from '../examples/stories/NumberDirectiveWrap'
 import ExampleMixins from '../examples/stories/example-mixins'
 

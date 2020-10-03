@@ -5,6 +5,7 @@
     "lang",
     "package",
     "common",
-    "git"
+    "git",
+    "travis"
   ]
 }

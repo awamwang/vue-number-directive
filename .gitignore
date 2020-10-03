@@ -1,0 +1,12 @@
+.idea/
+.cache/
+.DS_Store
+.vscode
+node_modules/
+*.log
+explorations
+TODOs.md
+dist/*
+RELEASE_NOTE*.md
+
+

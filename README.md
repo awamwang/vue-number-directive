@@ -1,6 +1,6 @@
 vue-number-directive
 
-[![npm Version][npm version badge]][npm page] [![Node.js][node version badge]][node page] [![GitHub License][license badge]][license page] [![Build Status][build badge]][build page]
+[![npm Version][npm version badge]][npm page] [![Node.js][node version badge]][node page] [![GitHub License][license badge]][license page] [![Build Status][build badge]][build page] [![Coverage Status][cover badge]][cover page]
 
 [examples & docs](https://awamwang.github.io/vue-number-directive/)
 
@@ -91,6 +91,9 @@ Vue.use(NumberDirective)
 - int // 整数
 - pos // 正数
 
+## ChangeLog
+
+see [CHANGELOG](./CHANGELOG.md)
 
 
 [build badge]: https://travis-ci.com/awamwang/vue-number-directive.svg?branch=master
@@ -101,3 +104,5 @@ Vue.use(NumberDirective)
 [node version badge]: https://img.shields.io/node/v/readme-md.svg?style=flat-square
 [npm page]: https://www.npmjs.com/package/vue-number-directive
 [npm version badge]: https://img.shields.io/npm/v/vue-number-directive.svg?style=flat-square
+[cover page]: https://coveralls.io/github/awamwang/vue-autonumeric-directive?branch=master
+[cover badge]: https://coveralls.io/repos/github/awamwang/vue-autonumeric-directive/badge.svg?branch=master

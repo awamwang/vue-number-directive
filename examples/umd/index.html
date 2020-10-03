@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+  <script src="../../dist/index.umd.js"></script>
+</head>
+
+<body>
+  <div id="demo">
+    <section>
+      <!-- <p>{{}}</p> -->
+    </section>
+
+    <p>Default options: </p>
+    <label for="input1">input1: </label>
+    <input name="input1" v-model="input1" v-number="{model: input1}">{{input1}}</input>
+    <p>Modified value in Vue data: {{input1}}</p>
+    <br />
+
+    <p>positive: true ; v-number.int</p>
+    <label for="input2">input2: </label>
+    <textarea name="input2" v-model="input2" v-number.int="{ model: input2, ...config2 }">{{input2}}</textarea>
+    <p>Modified value in Vue data: {{input2}}</p>
+    <br />
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+
+</html>

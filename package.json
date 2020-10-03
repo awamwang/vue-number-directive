@@ -21,7 +21,7 @@
     "cy-run": "cypress run",
     "init-commitizen": "commitizen init cz-conventional-changelog --save",
     "init-storybook": "npx sb init",
-    "coverage-nyc_setup": "nyc instrument --compact=false src test/coverage/instrumented",
+    "coverage-nyc_setup": "nyc instrument --compact=false src coverage/instrumented",
     "coverage-nyc_report": "nyc report --reporter=text-summary",
     "test": "npm run cy-run && npm run coverage-nyc_report"
   },
@@ -29,7 +29,9 @@
   "main": "dist/index.js",
   "module": "src/index.js",
   "browser": "dist/index.umd.js",
-  "dependencies": {},
+  "dependencies": {
+    "coveralls": "^3.1.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.11.6",
     "@cypress/code-coverage": "^3.8.1",

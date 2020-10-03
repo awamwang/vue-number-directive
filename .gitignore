@@ -1,12 +1,12 @@
 .idea/
 .cache/
-.DS_Store
-.vscode
+\.nyc_output/
 node_modules/
+.DS_Store
 *.log
 explorations
 TODOs.md
 dist/*
+coverage
 RELEASE_NOTE*.md
-
-
+cypress/videos/

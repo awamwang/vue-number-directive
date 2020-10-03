@@ -2,25 +2,39 @@
   "name": "vue-number-directive",
   "version": "0.0.1",
   "description": "Vue directive plugin to assure number to be number",
-  "author": "",
+  "author": {
+    "name": "Awam M Wang",
+    "email": "keepgoingwm@gmail.com"
+  },
   "scripts": {
-    "build": "parcel build src/index.js",
-    "lint": "vue-cli-service lint",
-    "build-storybook": "build-storybook -o ./dist/stories",
-    "cy:open": "cypress open -C cypress.json",
-    "cy:run": "cypress run",
     "dev": "parcel watch src/index.js --public-url ./dist/",
-    "dev-example": "parcel serve examples/native-input/index.html --open",
+    "storybook": "start-storybook -p 6006",
+    "cy-open": "cypress open -C cypress.json",
+    "version": "npm version patch",
+    "version-major": "npm version major",
+    "version-minor": "npm version minor",
+    "build": "npm run build-cjs && npm run build-umd && npm run build-storybook",
+    "build-cjs": "parcel build src/index.js",
+    "build-umd": "parcel build --global VueNumber src/index.umd.js",
+    "build-storybook": "build-storybook -o ./docs/storybook",
+    "lint": "vue-cli-service lint",
+    "cy-run": "cypress run",
     "init-commitizen": "commitizen init cz-conventional-changelog --save",
     "init-storybook": "npx sb init",
-    "storybook": "start-storybook -p 6006",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "coverage-nyc_setup": "nyc instrument --compact=false src test/coverage/instrumented",
+    "coverage-nyc_report": "nyc report --reporter=text-summary",
+    "test": "npm run cy-run && npm run coverage-nyc_report"
   },
-  "main": "src/index.js",
+  "source": "src/index.js",
+  "main": "dist/index.js",
+  "module": "src/index.js",
+  "browser": "dist/index.umd.js",
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.11.6",
+    "@cypress/code-coverage": "^3.8.1",
     "@storybook/addon-actions": "^6.0.21",
+    "@storybook/addon-docs": "^6.1.0-alpha.14",
     "@storybook/addon-essentials": "^6.0.21",
     "@storybook/addon-knobs": "^6.0.21",
     "@storybook/addon-links": "^6.0.21",
@@ -31,8 +45,11 @@
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
     "@vue/babel-preset-app": "^4.5.6",
     "@vue/babel-preset-jsx": "^1.1.2",
-    "cypress": "^5.1.0",
+    "babel-plugin-istanbul": "^6.0.0",
+    "cypress": "^5.2.0",
     "element-ui": "^2.13.2",
+    "nyc": "^15.1.0",
+    "parcel": "^2.0.0-beta.1",
     "parcel-bundler": "^1.12.4",
     "prettier": "^1.19.1",
     "vue": "^2.6.12",
@@ -41,13 +58,6 @@
   },
   "peerDependencies": {
     "vue": "^2.6.12"
-  },
-  "prettier": {
-    "trailingComma": "none",
-    "tabWidth": 2,
-    "semi": false,
-    "singleQuote": true,
-    "endOfLine": "auto"
   },
   "browserslist": {
     "production": [

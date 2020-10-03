@@ -1,7 +1,7 @@
 import { error, warn } from './log'
 
 const InputTagList = ['INPUT', 'TEXTAREA']
-const AllowedInputType = ['number', 'text', 'tel', 'hidden']
+const AllowedInputType = ['number', 'text', 'tel', 'hidden', 'password', 'search']
 const AllowedTagList = [
   'b',
   'caption',
@@ -94,6 +94,8 @@ export const getInputDom = (el, vnode) => {
     ) {
       error('wrong INPUT element type')
     }
+  } else if (inputDom.tagName === 'TEXTAREA') {
+
   } else if (!inputDom.getAttribute('contenteditable')) {
     if (AllowedTagList.includes(inputDom.tagName.toLowerCase)) {
       // warn('once use to format number')

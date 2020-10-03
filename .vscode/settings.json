@@ -6,6 +6,7 @@
     "package",
     "common",
     "git",
-    "travis"
+    "travis",
+    "lint"
   ]
 }

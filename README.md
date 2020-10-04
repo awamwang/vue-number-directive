@@ -29,7 +29,7 @@ npm install vue-number-directive --save
 ```js
 import Vue from 'vue'
 import NumberDirective from 'vue-number-directive'
-// 如果想用未打包的src
+// 如果想用未打包的src，适合项目有esm打包能力时
 // import NumberDirective from 'vue-number-directive/src/index'
 
 Vue.use(NumberDirective)

@@ -2,44 +2,41 @@ os: linux
 dist: trusty
 language: node_js
 cache: false
-# cache:
-#   npm: true
-#   directories:
-#     - node_modules
-#     - '/home/travis/.cache/Cypress'
 node_js:
-  - lts/*
-  - 10
+- lts/*
+- 10
 before_install:
-  - export TZ='Asia/Shanghai'
+- export TZ='Asia/Shanghai'
 install:
-  - npm install
-  - cypress install
+- npm install
+- cypress install
 script:
-  - npm run build
-  - npm run test
+- npm run build
+- npm run build-doc
+- npm run test
+after_script: cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js
 deploy:
-  - provider: pages
-    skip_cleanup: 'true'
-    github_token:
-      secure: fdBIUuTH1oB3B/EoW2w/EFQZFjN+oB5tE78OTgpxsO4yWe5Oi9Sppa4blx96wW8lEc9vT0xNas2E6mtKzaQiXAG7FNUn0ovh8wqxjeFQeNldBCzwSuz0ofkNs0kBw9jwIh1QEeAHv8Ona74aFO/KSUcC62I5XTrLJx58ymrRS7UrMxoe0hkUVjAHoR00Z9eEoxEVHK4jed/41G23ws78Ik7vxWxIENHzpLb3Q25kWK78CzrknuTemj785zt54qheAL9me85gqx4mwXHj97AefapzRce8H/7bTb/bkLCbn91VvuNIbPy2y+uvu7TVktlhHQtauI3wlbyV/qkWBqvUBFg3m5Ca2kYkr5r/SkKEgzya81o6hqSBbYmnr/enSnfEEVjDVK7AdMA48YMMCs4uu56MDnbwYYcXbV1GfbfltmNjpl5GAfNWJVVG3h/dL/HCG3gg3i3bWjTAwOC0WYMcd86/wxXWufQ1xXsKZlUqR2pFg5lF0tOjbDJdIjihlQaJEPVJBNGYS68RNpI4aAGwOv2YkxDVOw21fZVSkNozRpiruN0r9NE66o2N+DyxA5lQz/Kw+/aFgk3HBGv/L74N8Nen+NPofJKyFeqkqelYpVnMwvXAnjgMDZhqAV2Og/0Ku69uN2gZ5Y2+u/3/RsnWOLVl9ZNl++XZu4belG+T840=
-    local_dir: docs/*
-    on:
-      repo: awamwang/vue-number-directive
-      # branch: master
-  - provider: npm
-    skip_cleanup: 'true'
-    email: wangnew2013@126.com
-    api_key:
-      secure: W/BEK6eAEna6JVCZYgKIwyu2mqXa83oR/jDNEapt6i59Ajx/wyKLxuE6+W4Xl9Sl9hqgFb8XcLw6L6TUrAhr+uk0mipYj/yxBY2xAen/lkm+IAoMgl3p2XE99oLHCsf1iT3FEmDvN/t28sNLlrkyfqZROWPHGFBd5GzdMgbm86njFgEv1jmaGLpBVnUBrBHv4+5/eFiiKcaWMOoteF7vjHJRIMbsuf5yfBR7RnbcS2y8zdexKVAVUFqYUfaUTfuB+vG9+G5aNmPXVBExGx2H5obpM1b6qwizJMzw0UEwPDGmIdrpEWEiV6GyfWgP4CorOUnSgoJ0cqW0SLxfKQ60f6XOGamEUTZfuaAzFWnsy6R44s9P/MW11UTnpJ/AMMtRzitZL7GhAl61VtEuxQaIdbjg8Zw/A3TgbegjPFJMR9WJjd7i2ARImT+bxKzBdwn2thGLDHgh53BnP/J7V8BV8okPV2WY3C/nKSGs8ok5CpoEnRXJe/8ewRQMdtDmjk9kzhlZGVNLH5kYcBJmFaB0Rsjh85PR3ODIr3MVw9LMlIZmzSKVTogoLCodpfPKDF40lHNstHlWduwATOPo6uOqmg9Q8mXq59lqbedayn7j495i54LqdHlAQGbF+d6Ar8utAuf84L054aLUYys5l2W+EWZZ2lzHGe4fUeMBlSsgKig=
-    on:
-      tags: true
-      repo: awamwang/vue-number-directive
-  - provider: releases
-    Ískip_cleanup: 'true'
-    api_key:
-      secure: fdBIUuTH1oB3B/EoW2w/EFQZFjN+oB5tE78OTgpxsO4yWe5Oi9Sppa4blx96wW8lEc9vT0xNas2E6mtKzaQiXAG7FNUn0ovh8wqxjeFQeNldBCzwSuz0ofkNs0kBw9jwIh1QEeAHv8Ona74aFO/KSUcC62I5XTrLJx58ymrRS7UrMxoe0hkUVjAHoR00Z9eEoxEVHK4jed/41G23ws78Ik7vxWxIENHzpLb3Q25kWK78CzrknuTemj785zt54qheAL9me85gqx4mwXHj97AefapzRce8H/7bTb/bkLCbn91VvuNIbPy2y+uvu7TVktlhHQtauI3wlbyV/qkWBqvUBFg3m5Ca2kYkr5r/SkKEgzya81o6hqSBbYmnr/enSnfEEVjDVK7AdMA48YMMCs4uu56MDnbwYYcXbV1GfbfltmNjpl5GAfNWJVVG3h/dL/HCG3gg3i3bWjTAwOC0WYMcd86/wxXWufQ1xXsKZlUqR2pFg5lF0tOjbDJdIjihlQaJEPVJBNGYS68RNpI4aAGwOv2YkxDVOw21fZVSkNozRpiruN0r9NE66o2N+DyxA5lQz/Kw+/aFgk3HBGv/L74N8Nen+NPofJKyFeqkqelYpVnMwvXAnjgMDZhqAV2Og/0Ku69uN2gZ5Y2+u/3/RsnWOLVl9ZNl++XZu4belG+T840=
-    file: dist/*
-    on:
-      tags: true
-      repo: awamwang/vue-number-directive
+- provider: pages
+  skip_cleanup: 'true'
+  github_token:
+    secure: fdBIUuTH1oB3B/EoW2w/EFQZFjN+oB5tE78OTgpxsO4yWe5Oi9Sppa4blx96wW8lEc9vT0xNas2E6mtKzaQiXAG7FNUn0ovh8wqxjeFQeNldBCzwSuz0ofkNs0kBw9jwIh1QEeAHv8Ona74aFO/KSUcC62I5XTrLJx58ymrRS7UrMxoe0hkUVjAHoR00Z9eEoxEVHK4jed/41G23ws78Ik7vxWxIENHzpLb3Q25kWK78CzrknuTemj785zt54qheAL9me85gqx4mwXHj97AefapzRce8H/7bTb/bkLCbn91VvuNIbPy2y+uvu7TVktlhHQtauI3wlbyV/qkWBqvUBFg3m5Ca2kYkr5r/SkKEgzya81o6hqSBbYmnr/enSnfEEVjDVK7AdMA48YMMCs4uu56MDnbwYYcXbV1GfbfltmNjpl5GAfNWJVVG3h/dL/HCG3gg3i3bWjTAwOC0WYMcd86/wxXWufQ1xXsKZlUqR2pFg5lF0tOjbDJdIjihlQaJEPVJBNGYS68RNpI4aAGwOv2YkxDVOw21fZVSkNozRpiruN0r9NE66o2N+DyxA5lQz/Kw+/aFgk3HBGv/L74N8Nen+NPofJKyFeqkqelYpVnMwvXAnjgMDZhqAV2Og/0Ku69uN2gZ5Y2+u/3/RsnWOLVl9ZNl++XZu4belG+T840=
+  local_dir: docs
+  on:
+    repo: awamwang/vue-number-directive
+    branch: doc
+- provider: npm
+  skip_cleanup: 'true'
+  email: wangnew2013@126.com
+  api_key:
+    secure: W/BEK6eAEna6JVCZYgKIwyu2mqXa83oR/jDNEapt6i59Ajx/wyKLxuE6+W4Xl9Sl9hqgFb8XcLw6L6TUrAhr+uk0mipYj/yxBY2xAen/lkm+IAoMgl3p2XE99oLHCsf1iT3FEmDvN/t28sNLlrkyfqZROWPHGFBd5GzdMgbm86njFgEv1jmaGLpBVnUBrBHv4+5/eFiiKcaWMOoteF7vjHJRIMbsuf5yfBR7RnbcS2y8zdexKVAVUFqYUfaUTfuB+vG9+G5aNmPXVBExGx2H5obpM1b6qwizJMzw0UEwPDGmIdrpEWEiV6GyfWgP4CorOUnSgoJ0cqW0SLxfKQ60f6XOGamEUTZfuaAzFWnsy6R44s9P/MW11UTnpJ/AMMtRzitZL7GhAl61VtEuxQaIdbjg8Zw/A3TgbegjPFJMR9WJjd7i2ARImT+bxKzBdwn2thGLDHgh53BnP/J7V8BV8okPV2WY3C/nKSGs8ok5CpoEnRXJe/8ewRQMdtDmjk9kzhlZGVNLH5kYcBJmFaB0Rsjh85PR3ODIr3MVw9LMlIZmzSKVTogoLCodpfPKDF40lHNstHlWduwATOPo6uOqmg9Q8mXq59lqbedayn7j495i54LqdHlAQGbF+d6Ar8utAuf84L054aLUYys5l2W+EWZZ2lzHGe4fUeMBlSsgKig=
+  on:
+    tags: true
+    repo: awamwang/vue-number-directive
+- provider: releases
+  Ískip_cleanup: 'true'
+  api_key:
+    secure: fdBIUuTH1oB3B/EoW2w/EFQZFjN+oB5tE78OTgpxsO4yWe5Oi9Sppa4blx96wW8lEc9vT0xNas2E6mtKzaQiXAG7FNUn0ovh8wqxjeFQeNldBCzwSuz0ofkNs0kBw9jwIh1QEeAHv8Ona74aFO/KSUcC62I5XTrLJx58ymrRS7UrMxoe0hkUVjAHoR00Z9eEoxEVHK4jed/41G23ws78Ik7vxWxIENHzpLb3Q25kWK78CzrknuTemj785zt54qheAL9me85gqx4mwXHj97AefapzRce8H/7bTb/bkLCbn91VvuNIbPy2y+uvu7TVktlhHQtauI3wlbyV/qkWBqvUBFg3m5Ca2kYkr5r/SkKEgzya81o6hqSBbYmnr/enSnfEEVjDVK7AdMA48YMMCs4uu56MDnbwYYcXbV1GfbfltmNjpl5GAfNWJVVG3h/dL/HCG3gg3i3bWjTAwOC0WYMcd86/wxXWufQ1xXsKZlUqR2pFg5lF0tOjbDJdIjihlQaJEPVJBNGYS68RNpI4aAGwOv2YkxDVOw21fZVSkNozRpiruN0r9NE66o2N+DyxA5lQz/Kw+/aFgk3HBGv/L74N8Nen+NPofJKyFeqkqelYpVnMwvXAnjgMDZhqAV2Og/0Ku69uN2gZ5Y2+u/3/RsnWOLVl9ZNl++XZu4belG+T840=
+  file: dist/*
+  on:
+    tags: true
+    repo: awamwang/vue-number-directive

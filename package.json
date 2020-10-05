@@ -18,7 +18,7 @@
     "build-doc": "npm run build-storybook",
     "lint": "vue-cli-service lint",
     "cy-run": "cypress run",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1",
     "release-github": "conventional-github-releaser -p angular -r 1",
     "coverage-nyc_setup": "nyc instrument --compact=false src ./coverage/instrumented",
     "coverage-nyc_report": "nyc report --reporter=text-summary",
@@ -85,16 +85,16 @@
     ]
   },
   "bugs": {
-    "url": "https://github.com/keepgoingwm/vue-number-directive/issues"
+    "url": "https://github.com/awamwang/vue-number-directive/issues"
   },
   "engines": {
     "node": ">=8"
   },
-  "homepage": "https://github.com/keepgoingwm/vue-number-directive#readme",
+  "homepage": "https://github.com/awamwang/vue-number-directive#readme",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/keepgoingwm/vue-number-directive.git"
+    "url": "git+https://github.com/awamwang/vue-number-directive.git"
   },
   "commitlint": {
     "extends": [

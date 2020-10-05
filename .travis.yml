@@ -1,7 +1,11 @@
 os: linux
 dist: trusty
 language: node_js
-cache: false
+cache:
+  npm: true
+  directories:
+  - node_modules
+  - '/home/travis/.cache/Cypress' 
 node_js:
 - lts/*
 - 10

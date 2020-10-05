@@ -32,14 +32,15 @@ deploy:
   on:
     tags: true
     repo: awamwang/vue-number-directive
-- provider: releases
-  Ískip_cleanup: 'true'
-  api_key:
-    secure: fdBIUuTH1oB3B/EoW2w/EFQZFjN+oB5tE78OTgpxsO4yWe5Oi9Sppa4blx96wW8lEc9vT0xNas2E6mtKzaQiXAG7FNUn0ovh8wqxjeFQeNldBCzwSuz0ofkNs0kBw9jwIh1QEeAHv8Ona74aFO/KSUcC62I5XTrLJx58ymrRS7UrMxoe0hkUVjAHoR00Z9eEoxEVHK4jed/41G23ws78Ik7vxWxIENHzpLb3Q25kWK78CzrknuTemj785zt54qheAL9me85gqx4mwXHj97AefapzRce8H/7bTb/bkLCbn91VvuNIbPy2y+uvu7TVktlhHQtauI3wlbyV/qkWBqvUBFg3m5Ca2kYkr5r/SkKEgzya81o6hqSBbYmnr/enSnfEEVjDVK7AdMA48YMMCs4uu56MDnbwYYcXbV1GfbfltmNjpl5GAfNWJVVG3h/dL/HCG3gg3i3bWjTAwOC0WYMcd86/wxXWufQ1xXsKZlUqR2pFg5lF0tOjbDJdIjihlQaJEPVJBNGYS68RNpI4aAGwOv2YkxDVOw21fZVSkNozRpiruN0r9NE66o2N+DyxA5lQz/Kw+/aFgk3HBGv/L74N8Nen+NPofJKyFeqkqelYpVnMwvXAnjgMDZhqAV2Og/0Ku69uN2gZ5Y2+u/3/RsnWOLVl9ZNl++XZu4belG+T840=
-  file: dist/*
-  on:
-    tags: true
-    repo: awamwang/vue-number-directive
+    after_deploy: DEBUG=conventional-github-releaser conventional-github-releaser -p angular -r 1 -t $GH_TOKEN
+# - provider: releases
+#   Ískip_cleanup: 'true'
+#   api_key:
+#     secure: fdBIUuTH1oB3B/EoW2w/EFQZFjN+oB5tE78OTgpxsO4yWe5Oi9Sppa4blx96wW8lEc9vT0xNas2E6mtKzaQiXAG7FNUn0ovh8wqxjeFQeNldBCzwSuz0ofkNs0kBw9jwIh1QEeAHv8Ona74aFO/KSUcC62I5XTrLJx58ymrRS7UrMxoe0hkUVjAHoR00Z9eEoxEVHK4jed/41G23ws78Ik7vxWxIENHzpLb3Q25kWK78CzrknuTemj785zt54qheAL9me85gqx4mwXHj97AefapzRce8H/7bTb/bkLCbn91VvuNIbPy2y+uvu7TVktlhHQtauI3wlbyV/qkWBqvUBFg3m5Ca2kYkr5r/SkKEgzya81o6hqSBbYmnr/enSnfEEVjDVK7AdMA48YMMCs4uu56MDnbwYYcXbV1GfbfltmNjpl5GAfNWJVVG3h/dL/HCG3gg3i3bWjTAwOC0WYMcd86/wxXWufQ1xXsKZlUqR2pFg5lF0tOjbDJdIjihlQaJEPVJBNGYS68RNpI4aAGwOv2YkxDVOw21fZVSkNozRpiruN0r9NE66o2N+DyxA5lQz/Kw+/aFgk3HBGv/L74N8Nen+NPofJKyFeqkqelYpVnMwvXAnjgMDZhqAV2Og/0Ku69uN2gZ5Y2+u/3/RsnWOLVl9ZNl++XZu4belG+T840=
+#   file: dist/*
+#   on:
+#     tags: true
+#     repo: awamwang/vue-number-directive
 env:
   global:
     secure: M8H7nbnSKrGx3ZUjDR+QOPXzCSIFqneXPMyJ57V4tpvNyWUBqlxx7aXDqS0tVhCs+4aBwniQUE/kdgzas2VjhPpgszi7WCMGEPSO9B9LZKXhI620TKIPvfzKCNRoVeZ0Wej032BtXljw2lyJ6tqId/qp0uWz1mWn+EJ/1pAtC+AxAhobJpZP7MV0KzZOqdfMamEks1aTG93avz/3Ir5q5fMoLuGbw+D/czx1PX5Wa2Q9TQK7u3K85kpOtyUX692MTk3e99yzReqDqmTaLLyADckFLlDxImxjkiHm8xl0MPiHyyA2+mTa0C2r1JD/WRVW2h1cqEzNkBuuGdmzt0zuzfXp2aDPkHDXD/aFo/k8UdgAkag07w5rmWlZgex2SQVMNXqLDc8KTeODHH3XfrhDmdW/72ebPI322RKi+vx1NNafzEHO1SG14khmYEFKazswgKOSRwxkf7MNEKvY5Zgp/WRaidxbT0QfytdzzD9inIaVAds1nf8hD5ywVBKchL0mmptLFfl4gIved7uoDANuMapVy9PnbMykQ5KeYZrmXbEomyAjTOlsRx1oRNUSYVUDnHVHW9L/8v26n8DVxl4FPnRidEMuZulTE4CH0auSQgsRpqRDZyWhEjDd4ty0m8RwBdCX+gx6a/3deuA2JjdtheLeyE02kK7UyGUJ5K2WNYA=

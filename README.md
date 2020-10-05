@@ -1,30 +1,66 @@
-vue-number-directive
+# vue-number-directive
 
 [![npm Version][npm version badge]][npm page] [![Node.js][node version badge]][node page] [![GitHub License][license badge]][license page] [![Build Status][build badge]][build page] [![Coverage Status][cover badge]][cover page]
 
+> 一个 Vue 插件，用来让输入内容保持为符合要求的数字
+
 [examples & docs](https://awamwang.github.io/vue-number-directive/)
 
-<!--ts-->
-<!--te-->
+## Table of Contents
 
-## Introduction
+<!-- ts -->
+- [vue-number-directive](#vue-number-directive)
+  - [Table of Contents](#table-of-contents)
+  - [Install](#install)
+    - [Node(作为依赖引入打包系统)](#node作为依赖引入打包系统)
+    - [浏览器中](#浏览器中)
+  - [Usage](#usage)
+    - [全局插件方式](#全局插件方式)
+    - [指令方式](#指令方式)
+  - [API](#api)
+    - [Options](#options)
+    - [指令 modifiers](#指令-modifiers)
+      - [int 是否整数](#int-是否整数)
+      - [pos 是否正数](#pos-是否正数)
+  - [Features](#features)
+    - [支持的元素](#支持的元素)
+      - [\<input\>](#input)
+      - [\<textarea\>](#textarea)
+      - [contenteditable 的元素](#contenteditable-的元素)
+      - [包含上述元素的 Vue 组件](#包含上述元素的-vue-组件)
+  - [Maintainers](#maintainers)
+  - [Contributing](#contributing)
+  - [ChangeLog](#changelog)
+  - [License](#license)
+<!-- te -->
 
-`vue-number-directive`是一个Vue插件，用来让输入内容保持为数字。
+## Install
 
-## Use Guide
+### Node(作为依赖引入打包系统)
 
-### Installation
-
-```shell
+```sh
 # with `yarn` :
 yarn add vue-number-directive
 # or with `npm` :
 npm install vue-number-directive --save
 ```
 
-### How to use
+### 浏览器中
 
-按照 Vue 插件方式注册插件。
+引用 umd.js 包，参考[UMD example](examples/umd/index.html)
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script src="../../dist/index.umd.js"></script>
+在浏览器中插件的全局名称为`VueNumber`。
+<script>
+  Vue.use(VueNumber)
+</script>
+```
+
+## Usage
+
+### 全局插件方式
 
 ```js
 import Vue from 'vue'
@@ -35,21 +71,61 @@ import NumberDirective from 'vue-number-directive'
 Vue.use(NumberDirective)
 ```
 
-浏览器中
+### 指令方式
 
-```html
+```js
+import Vue from 'vue'
+import NumberDirective from 'vue-number-directive/src/number'
 
+Vue.directive('{{name}}', NumberDirective)
+// 或者局部指令方式
+export default {
+  directives: {
+    number: NumberDirective
+  }
+}
 ```
 
-在浏览器中插件的全局名称为`VueNumber`。
+## API
 
-```vue
-<input name="input1" id="input1" v-model="input1" v-number.int="{model: input1, positive: true}">
+### Options
+
+```js
+mergeOptions(
+  {
+    el,
+    vnode,
+    debug: config.debug,
+    modelPropPath,
+    scope: config.scope,
+
+    integer,
+    positive,
+    sientific: config.sientific,
+    fixed: config.fixed !== void 0 ? config.fixed : 2,
+    flag: config.flag,
+    minimum,
+    maximum,
+    // exclusiveMinimum,
+    // exclusiveMaximum,
+    sep: config.sep
+  },
+  parseSchema(config.schema),
+  globalOptions
+)
 ```
 
-## On which elements can it be used
+### 指令 modifiers
 
-### \<input\>
+#### int 是否整数
+
+#### pos 是否正数
+
+## Features
+
+### 支持的元素
+
+#### \<input\>
 
 只支持下列 input 类型
 
@@ -58,48 +134,38 @@ Vue.use(NumberDirective)
 - password
 - Search
 - hidden, or
-- no type specified at all
+- no type specified at al
 
-### \<textarea\>
+#### \<textarea\>
 
-### 支持 contenteditable 元素
+#### contenteditable 的元素
 
-### 支持一次性格式化
+#### 包含上述元素的 Vue 组件
 
-### 支持 Vue 组件
+- 例如 Element 的 Input 和 NumberInput
 
-支持 element-ui Input/NumberInput/组件
+## Maintainers
 
-理论支持其他UI库的Input
+[@Awam M Wang](https://github.com/awamwang)
 
-## Options
+## Contributing
 
-### 全局 Options
+See [the CONTRIBUTING file](CONTRIBUTING.md)
 
-```typescript
-
-```
-
-### 指令 Options
-
-```typescript
-
-```
-
-### 指令 modifiers
-
-- int // 整数
-- pos // 正数
+PRs accepted.
 
 ## ChangeLog
 
-see [CHANGELOG](./CHANGELOG.md)
+see [the CHANGELOG file](./CHANGELOG.md)
 
+## License
+
+MIT © 2020 Awam M Wang
 
 [build badge]: https://travis-ci.com/awamwang/vue-number-directive.svg?branch=master
 [build page]: https://travis-ci.com/awamwang/vue-number-directive
 [license badge]: https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat-square
-[license page]: https://github.com/awamwang/node-readme-md/blob/master/LICENSE
+[license page]: https://github.com/awamwang/vue-number-directive/blob/master/LICENSE
 [node page]: https://nodejs.org/
 [node version badge]: https://img.shields.io/node/v/readme-md.svg?style=flat-square
 [npm page]: https://www.npmjs.com/package/vue-number-directive

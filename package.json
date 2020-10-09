@@ -15,6 +15,7 @@
     "build-cjs": "parcel build src/index.js",
     "build-umd": "parcel build --global VueNumber src/index.umd.js",
     "build-storybook": "build-storybook -o ./docs/docs",
+    "build-readme": "gh-md-toc --insert README.md && gh-md-toc --insert README.zh_CN.md && rm README*.md.orig.* && rm README*.md.toc.*",
     "build-doc": "npm run build-storybook",
     "lint": "vue-cli-service lint",
     "cy-run": "cypress run",

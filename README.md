@@ -4,12 +4,39 @@
 
 > A Vue plug-in to keep the input content as Number string
 
+[English Doc](README.md)|[中文文档](README.zh_CN.md)
+
 [examples & docs](https://awamwang.github.io/vue-number-directive/)
 
 ## Table of Contents
 
-<!-- ts -->
-<!-- te -->
+<!--ts-->
+   * [vue-number-directive](#vue-number-directive)
+      * [Table of Contents](#table-of-contents)
+      * [Install](#install)
+         * [Node (use as a dependency in packaging system)](#node-use-as-a-dependency-in-packaging-system)
+      * [Usage](#usage)
+         * [Global plug-in](#global-plug-in)
+         * [Directive only](#directive-only)
+      * [API](#api)
+         * [Options](#options)
+         * [Directive modifiers](#directive-modifiers)
+            * [int](#int)
+            * [pos](#pos)
+      * [Features](#features)
+         * [supported element](#supported-element)
+            * [&lt;input&gt;](#input)
+            * [&lt;textarea&gt;](#textarea)
+            * [contenteditable element](#contenteditable-element)
+            * [Vue component](#vue-component)
+      * [Maintainers](#maintainers)
+      * [Contributing](#contributing)
+      * [ChangeLog](#changelog)
+      * [License](#license)
+
+<!-- Added by: wangmeng, at: 2020年10月 9日 星期五 22时26分13秒 CST -->
+
+<!--te-->
 
 ## Install
 

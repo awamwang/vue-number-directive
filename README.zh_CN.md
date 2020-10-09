@@ -4,35 +4,40 @@
 
 > 一个 Vue 插件，用来让输入内容保持为符合要求的数字
 
+[English Doc](README.md)|[中文文档](README.zh_CN.md)
+
 [examples & docs](https://awamwang.github.io/vue-number-directive/)
 
 ## Table of Contents
 
-<!-- ts -->
-- [vue-number-directive](#vue-number-directive)
-  - [Table of Contents](#table-of-contents)
-  - [Install](#install)
-    - [Node(作为依赖引入打包系统)](#node作为依赖引入打包系统)
-    - [浏览器中](#浏览器中)
-  - [Usage](#usage)
-    - [全局插件方式](#全局插件方式)
-    - [指令方式](#指令方式)
-  - [API](#api)
-    - [Options](#options)
-    - [指令 modifiers](#指令-modifiers)
-      - [int 是否整数](#int-是否整数)
-      - [pos 是否正数](#pos-是否正数)
-  - [Features](#features)
-    - [支持的元素](#支持的元素)
-      - [\<input\>](#input)
-      - [\<textarea\>](#textarea)
-      - [contenteditable 的元素](#contenteditable-的元素)
-      - [包含上述元素的 Vue 组件](#包含上述元素的-vue-组件)
-  - [Maintainers](#maintainers)
-  - [Contributing](#contributing)
-  - [ChangeLog](#changelog)
-  - [License](#license)
-<!-- te -->
+<!--ts-->
+   * [vue-number-directive](#vue-number-directive)
+      * [Table of Contents](#table-of-contents)
+      * [Install](#install)
+         * [Node(作为依赖引入打包系统)](#node作为依赖引入打包系统)
+         * [浏览器中](#浏览器中)
+      * [Usage](#usage)
+         * [全局插件方式](#全局插件方式)
+         * [指令方式](#指令方式)
+      * [API](#api)
+         * [Options](#options)
+         * [指令 modifiers](#指令-modifiers)
+            * [int 是否整数](#int-是否整数)
+            * [pos 是否正数](#pos-是否正数)
+      * [Features](#features)
+         * [支持的元素](#支持的元素)
+            * [&lt;input&gt;](#input)
+            * [&lt;textarea&gt;](#textarea)
+            * [contenteditable 的元素](#contenteditable-的元素)
+            * [包含上述元素的 Vue 组件](#包含上述元素的-vue-组件)
+      * [Maintainers](#maintainers)
+      * [Contributing](#contributing)
+      * [ChangeLog](#changelog)
+      * [License](#license)
+
+<!-- Added by: wangmeng, at: 2020年10月 9日 星期五 22时26分14秒 CST -->
+
+<!--te-->
 
 ## Install
 

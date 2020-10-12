@@ -5,7 +5,7 @@ cache:
   npm: true
   directories:
   - node_modules
-  - '/home/travis/.cache/Cypress' 
+  - "/home/travis/.cache/Cypress"
 node_js:
 - lts/*
 - 10
@@ -13,6 +13,8 @@ before_install:
 - export TZ='Asia/Shanghai'
 install:
 - npm install
+- npm install -g conventional-changelog-cli
+- npm install -g conventional-github-releaser
 - cypress install
 script:
 - npm run build
@@ -20,31 +22,24 @@ script:
 - npm run test
 after_script: cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js
 deploy:
-- provider: pages
-  skip_cleanup: 'true'
-  github_token:
-    secure: fdBIUuTH1oB3B/EoW2w/EFQZFjN+oB5tE78OTgpxsO4yWe5Oi9Sppa4blx96wW8lEc9vT0xNas2E6mtKzaQiXAG7FNUn0ovh8wqxjeFQeNldBCzwSuz0ofkNs0kBw9jwIh1QEeAHv8Ona74aFO/KSUcC62I5XTrLJx58ymrRS7UrMxoe0hkUVjAHoR00Z9eEoxEVHK4jed/41G23ws78Ik7vxWxIENHzpLb3Q25kWK78CzrknuTemj785zt54qheAL9me85gqx4mwXHj97AefapzRce8H/7bTb/bkLCbn91VvuNIbPy2y+uvu7TVktlhHQtauI3wlbyV/qkWBqvUBFg3m5Ca2kYkr5r/SkKEgzya81o6hqSBbYmnr/enSnfEEVjDVK7AdMA48YMMCs4uu56MDnbwYYcXbV1GfbfltmNjpl5GAfNWJVVG3h/dL/HCG3gg3i3bWjTAwOC0WYMcd86/wxXWufQ1xXsKZlUqR2pFg5lF0tOjbDJdIjihlQaJEPVJBNGYS68RNpI4aAGwOv2YkxDVOw21fZVSkNozRpiruN0r9NE66o2N+DyxA5lQz/Kw+/aFgk3HBGv/L74N8Nen+NPofJKyFeqkqelYpVnMwvXAnjgMDZhqAV2Og/0Ku69uN2gZ5Y2+u/3/RsnWOLVl9ZNl++XZu4belG+T840=
-  local_dir: docs
-  on:
-    repo: awamwang/vue-number-directive
-    branch: doc
-- provider: npm
-  skip_cleanup: 'true'
-  email: wangnew2013@126.com
-  api_key:
-    secure: W/BEK6eAEna6JVCZYgKIwyu2mqXa83oR/jDNEapt6i59Ajx/wyKLxuE6+W4Xl9Sl9hqgFb8XcLw6L6TUrAhr+uk0mipYj/yxBY2xAen/lkm+IAoMgl3p2XE99oLHCsf1iT3FEmDvN/t28sNLlrkyfqZROWPHGFBd5GzdMgbm86njFgEv1jmaGLpBVnUBrBHv4+5/eFiiKcaWMOoteF7vjHJRIMbsuf5yfBR7RnbcS2y8zdexKVAVUFqYUfaUTfuB+vG9+G5aNmPXVBExGx2H5obpM1b6qwizJMzw0UEwPDGmIdrpEWEiV6GyfWgP4CorOUnSgoJ0cqW0SLxfKQ60f6XOGamEUTZfuaAzFWnsy6R44s9P/MW11UTnpJ/AMMtRzitZL7GhAl61VtEuxQaIdbjg8Zw/A3TgbegjPFJMR9WJjd7i2ARImT+bxKzBdwn2thGLDHgh53BnP/J7V8BV8okPV2WY3C/nKSGs8ok5CpoEnRXJe/8ewRQMdtDmjk9kzhlZGVNLH5kYcBJmFaB0Rsjh85PR3ODIr3MVw9LMlIZmzSKVTogoLCodpfPKDF40lHNstHlWduwATOPo6uOqmg9Q8mXq59lqbedayn7j495i54LqdHlAQGbF+d6Ar8utAuf84L054aLUYys5l2W+EWZZ2lzHGe4fUeMBlSsgKig=
-  on:
-    tags: true
-    repo: awamwang/vue-number-directive
-    after_deploy: DEBUG=conventional-github-releaser conventional-github-releaser -p angular -r 1 -t $GH_TOKEN
-# - provider: releases
-#   Ískip_cleanup: 'true'
-#   api_key:
-#     secure: fdBIUuTH1oB3B/EoW2w/EFQZFjN+oB5tE78OTgpxsO4yWe5Oi9Sppa4blx96wW8lEc9vT0xNas2E6mtKzaQiXAG7FNUn0ovh8wqxjeFQeNldBCzwSuz0ofkNs0kBw9jwIh1QEeAHv8Ona74aFO/KSUcC62I5XTrLJx58ymrRS7UrMxoe0hkUVjAHoR00Z9eEoxEVHK4jed/41G23ws78Ik7vxWxIENHzpLb3Q25kWK78CzrknuTemj785zt54qheAL9me85gqx4mwXHj97AefapzRce8H/7bTb/bkLCbn91VvuNIbPy2y+uvu7TVktlhHQtauI3wlbyV/qkWBqvUBFg3m5Ca2kYkr5r/SkKEgzya81o6hqSBbYmnr/enSnfEEVjDVK7AdMA48YMMCs4uu56MDnbwYYcXbV1GfbfltmNjpl5GAfNWJVVG3h/dL/HCG3gg3i3bWjTAwOC0WYMcd86/wxXWufQ1xXsKZlUqR2pFg5lF0tOjbDJdIjihlQaJEPVJBNGYS68RNpI4aAGwOv2YkxDVOw21fZVSkNozRpiruN0r9NE66o2N+DyxA5lQz/Kw+/aFgk3HBGv/L74N8Nen+NPofJKyFeqkqelYpVnMwvXAnjgMDZhqAV2Og/0Ku69uN2gZ5Y2+u/3/RsnWOLVl9ZNl++XZu4belG+T840=
-#   file: dist/*
-#   on:
-#     tags: true
-#     repo: awamwang/vue-number-directive
+  - provider: pages 
+    cleanup: 'true'
+    github_token: $GH_TOKEN
+    local_dir: docs
+    on:
+      repo: awamwang/vue-number-directive
+      branch: doc
+  - provider: npm
+    cleanup: 'true'
+    email: wangnew2013@126.com
+    api_key:
+      secure: Fr102HkMeukqC+JIRxPRTBuCfPrRF66exJasSfJU3jGw8EnfzLbgUUvhnzK1HuwMvLWnv7ZiSyDn1EExV2ejpJG8iM9lWYSS1qeTZR3pruM7Ild0/lKZuraOPauvFLvaeaEeFPjX6csg9QTK6FNSqtQ5niVcLLbwYQXlocSM3dN11dWzxdI/z6OkJ2pQKZ2VsHZzQKr8bKlwuOV4ayLLzGKlFzp+YvEqS5cMjJGOEYijfovJIPEnBvfr6oqiHu+OCmsCFshNc9dx45+Vi1JzNJOcha+gu0iIQK+J9gnePGsmIcqpI698Y0szPCbDFfKjyusEengG37ae9bWn6exvMcFzZydUZZqy+zjsApTb4iTTAgbC15IYtL7/IdEI3uZ4ma9jm0Dj6W9M0KlzdJMjS2EYWwV1Rs3Vb9EAEofNRpvju0r2hrqJQd6IvAugoBzgyoh8DurfXxQFUyeAe3AhOXPVUoKI+Kz0pYWhucY0OFRRQstHK77OpzLkW6Jyo5SD2l1v/pw3f14cVTIyIwQwVbgS5K44C6UK9qyZpKMP0sIUqStEJtGpgOLndd3VYJXyFY3QcvDcYoIibWnOfT9pYTP6JAJY5r25WMOeHFHHQyoSdaq+cpH9hXZ2ytNRrm6g4CaTmlYDU+AgbsTKKvCH2ob2FDEd/WEmRAuh0kosSso=
+    on:
+      tags: true
+      repo: awamwang/vue-number-directive
+after_deploy:
+- export CONVENTIONAL_GITHUB_RELEASER_TOKEN=$GH_TOKEN
+- npm run release-github
 env:
   global:
     secure: M8H7nbnSKrGx3ZUjDR+QOPXzCSIFqneXPMyJ57V4tpvNyWUBqlxx7aXDqS0tVhCs+4aBwniQUE/kdgzas2VjhPpgszi7WCMGEPSO9B9LZKXhI620TKIPvfzKCNRoVeZ0Wej032BtXljw2lyJ6tqId/qp0uWz1mWn+EJ/1pAtC+AxAhobJpZP7MV0KzZOqdfMamEks1aTG93avz/3Ir5q5fMoLuGbw+D/czx1PX5Wa2Q9TQK7u3K85kpOtyUX692MTk3e99yzReqDqmTaLLyADckFLlDxImxjkiHm8xl0MPiHyyA2+mTa0C2r1JD/WRVW2h1cqEzNkBuuGdmzt0zuzfXp2aDPkHDXD/aFo/k8UdgAkag07w5rmWlZgex2SQVMNXqLDc8KTeODHH3XfrhDmdW/72ebPI322RKi+vx1NNafzEHO1SG14khmYEFKazswgKOSRwxkf7MNEKvY5Zgp/WRaidxbT0QfytdzzD9inIaVAds1nf8hD5ywVBKchL0mmptLFfl4gIved7uoDANuMapVy9PnbMykQ5KeYZrmXbEomyAjTOlsRx1oRNUSYVUDnHVHW9L/8v26n8DVxl4FPnRidEMuZulTE4CH0auSQgsRpqRDZyWhEjDd4ty0m8RwBdCX+gx6a/3deuA2JjdtheLeyE02kK7UyGUJ5K2WNYA=

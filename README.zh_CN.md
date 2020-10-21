@@ -1,6 +1,6 @@
 # vue-number-directive
 
-[![npm Version][npm version badge]][npm page] [![Node.js][node version badge]][node page] [![GitHub License][license badge]][license page] [![Build Status][build badge]][build page] [![Coverage Status][cover badge]][cover page]
+[![npm Version][npm version badge]][npm page] [![GitHub License][license badge]][license page] [![Build Status][build badge]][build page] [![Coverage Status][cover badge]][cover page]
 
 > 一个 Vue 插件，用来让输入内容保持为符合要求的数字
 

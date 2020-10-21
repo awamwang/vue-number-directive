@@ -1,6 +1,6 @@
 # vue-number-directive
 
-[![npm Version][npm version badge]][npm page] [![Node.js][node version badge]][node page] [![GitHub License][license badge]][license page] [![Build Status][build badge]][build page] [![Coverage Status][cover badge]][cover page]
+[![npm Version][npm version badge]][npm page] [![GitHub License][license badge]][license page] [![Build Status][build badge]][build page] [![Coverage Status][cover badge]][cover page]
 
 > A Vue plug-in to keep the input content as Number string
 
@@ -161,7 +161,7 @@ see [the CHANGELOG file](./CHANGELOG.md)
 [node version badge]: https://img.shields.io/node/v/readme-md.svg?style=flat-square
 [npm page]: https://www.npmjs.com/package/vue-number-directive
 [npm version badge]: https://img.shields.io/npm/v/vue-number-directive.svg?style=flat-square
-[cover page ]: https://coveralls.io/github/awamwang/vue-number-directive?branch=master
+[cover page]: https://coveralls.io/github/awamwang/vue-number-directive?branch=master
 [cover badge]: https://coveralls.io/repos/github/awamwang/vue-number-directive/badge.svg?branch=master
 
 

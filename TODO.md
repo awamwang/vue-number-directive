@@ -7,7 +7,7 @@
 
 ## 特性
 
-+ schema剩余特性
++ schema剩余特性, schema优先级更高
 + sientific
 + sep
 + 一次性检查-parseFloat/Int；在formatter建立后进行检查

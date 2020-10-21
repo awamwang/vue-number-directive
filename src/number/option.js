@@ -43,16 +43,27 @@ export function getMinMax(config, type) {
 }
 
 function mergeOptions(options, schema, globalOptions) {
-  Object.keys(schema).forEach(key => {
+  Object.keys(schema).forEach((key) => {
+    // schema的优先级高
     if (schema[key] !== void 0 && schema[key] !== null) {
       options[key] = schema[key]
     }
   })
-  Object.keys(globalOptions).forEach(key => {
-    if (options[key] === void 0 && options[key] === null) {
+  Object.keys(globalOptions).forEach((key) => {
+    if (options[key] === void 0 || options[key] === null) {
       options[key] = globalOptions[key]
     }
   })
+
+  options.minimum = getMinMax(options, 'min')
+  options.maximum = getMinMax(options, 'max')
+  options.fixed = options.fixed !== void 0 ? options.fixed : 2
+  if (!Number.isSafeInteger(options.minimum)) {
+    warn('minimum is unsafe, precision may be lost')
+  }
+  if (!Number.isSafeInteger(options.maximum)) {
+    warn('maximum is unsafe, precision may be lost')
+  }
 
   return options
 }
@@ -72,20 +83,12 @@ export function optimizeOptions(options) {
   return options
 }
 
-export default function(el, binding, vnode, globalOptions) {
+export default function (el, binding, vnode, globalOptions) {
   const { value: config, expression, modifiers } = binding
 
   let modelPropPath = getModelPath(expression, vnode)
   let integer = modifiers.int || modifiers.integer || config.integer
   let positive = modifiers.pos || modifiers.positive || config.positive
-  let minimum = getMinMax(config, 'min')
-  let maximum = getMinMax(config, 'max')
-  if (!Number.isSafeInteger(minimum)) {
-    warn('minimum is unsafe, fixed may be lost')
-  }
-  if (!Number.isSafeInteger(maximum)) {
-    warn('maximum is unsafe, fixed may be lost')
-  }
 
   return {
     options: optimizeOptions(
@@ -100,10 +103,12 @@ export default function(el, binding, vnode, globalOptions) {
           integer,
           positive,
           sientific: config.sientific,
-          fixed: config.fixed !== void 0 ? config.fixed : 2,
+          fixed: config.fixed,
           flag: config.flag,
-          minimum,
-          maximum,
+          min: config.min,
+          max: config.max,
+          minimum: config.minimum,
+          maximum: config.maximum,
           // exclusiveMinimum,
           // exclusiveMaximum,
           sep: config.sep

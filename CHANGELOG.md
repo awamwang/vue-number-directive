@@ -1,3 +1,12 @@
+## [0.0.4-0](https://github.com/awamwang/vue-number-directive/compare/v0.0.3...v0.0.4-0) (2020-10-21)
+
+
+### Bug Fixes
+
+* **options:** globalOptions不生效问题 ([47573ae](https://github.com/awamwang/vue-number-directive/commit/47573ae45c6dc7d175a66525893ff5cc03d73c68))
+
+
+
 ## [0.0.3-beta.1](https://.com/awamwang/vue-number-directive/compare/v0.0.3...v0.0.3-beta.1) (2020-10-04)
 
 ### Features

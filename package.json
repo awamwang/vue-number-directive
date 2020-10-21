@@ -1,6 +1,6 @@
 {
   "name": "vue-number-directive",
-  "version": "0.0.3",
+  "version": "0.0.4-0",
   "description": "Vue directive plugin to assure number to be number",
   "author": {
     "name": "Awam M Wang",

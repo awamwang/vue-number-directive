@@ -10,7 +10,7 @@
     "start": "concurrently \"npm run dev\" \"npm run storybook\"",
     "storybook": "start-storybook -p 6006",
     "cy-open": "cypress open -C cypress.json",
-    "test": "npm run coverage-nyc_setup && npm run cy-run && npm run coverage-nyc_report",
+    "test": "npm run cy-run && npm run coverage-nyc_report",
     "dev": "parcel watch src/index.js --public-url ./dist/",
     "version": "npm run build && npm run changelog && git add CHANGELOG.md",
     "build": "npm run build-cjs && npm run build-umd",

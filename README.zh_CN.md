@@ -8,36 +8,7 @@
 
 [examples & docs](https://awamwang.github.io/vue-number-directive/)
 
-## Table of Contents
-
-<!--ts-->
-   * [vue-number-directive](#vue-number-directive)
-      * [Table of Contents](#table-of-contents)
-      * [Install](#install)
-         * [Node(作为依赖引入打包系统)](#node作为依赖引入打包系统)
-         * [浏览器中](#浏览器中)
-      * [Usage](#usage)
-         * [全局插件方式](#全局插件方式)
-         * [指令方式](#指令方式)
-      * [API](#api)
-         * [Options](#options)
-         * [指令 modifiers](#指令-modifiers)
-            * [int 是否整数](#int-是否整数)
-            * [pos 是否正数](#pos-是否正数)
-      * [Features](#features)
-         * [支持的元素](#支持的元素)
-            * [&lt;input&gt;](#input)
-            * [&lt;textarea&gt;](#textarea)
-            * [contenteditable 的元素](#contenteditable-的元素)
-            * [包含上述元素的 Vue 组件](#包含上述元素的-vue-组件)
-      * [Maintainers](#maintainers)
-      * [Contributing](#contributing)
-      * [ChangeLog](#changelog)
-      * [License](#license)
-
-<!-- Added by: wangmeng, at: 2020年10月 9日 星期五 22时26分14秒 CST -->
-
-<!--te-->
+[TOC]
 
 ## Install
 
@@ -74,7 +45,7 @@ import NumberDirective from 'vue-number-directive'
 // 如果想用未打包的src，适合项目有esm打包能力时
 // import NumberDirective from 'vue-number-directive/src/index'
 
-Vue.use(NumberDirective)
+Vue.use(NumberDirective, globalOptions)
 ```
 
 ### 指令方式
@@ -97,27 +68,31 @@ export default {
 ### Options
 
 ```js
+optimizeOptions(
   mergeOptions(
-  {
-    el,
-    vnode,
-    debug: config.debug,
-    modelPropPath,
-    scope: config.scope,
+    {
+      el,
+      vnode,
+      debug: config.debug,
+      modelPropPath,
+      scope: config.scope,
 
-    integer,
-    positive,
-    sientific: config.sientific,
-    fixed: config.fixed !== void 0 ? config.fixed : 2,
-    flag: config.flag,
-    minimum,
-    maximum,
-    // exclusiveMinimum,
-    // exclusiveMaximum,
-    sep: config.sep
-  },
-  parseSchema(config.schema),
-  globalOptions
+      integer,
+      positive,
+      sientific: config.sientific,
+      fixed: config.fixed,
+      flag: config.flag,
+      min: config.min,
+      max: config.max,
+      minimum: config.minimum,
+      maximum: config.maximum,
+      // exclusiveMinimum,
+      // exclusiveMaximum,
+      sep: config.sep
+    },
+    parseSchema(config.schema),
+    globalOptions
+  )
 )
 ```
 

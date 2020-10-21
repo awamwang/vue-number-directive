@@ -8,35 +8,7 @@
 
 [examples & docs](https://awamwang.github.io/vue-number-directive/)
 
-## Table of Contents
-
-<!--ts-->
-   * [vue-number-directive](#vue-number-directive)
-      * [Table of Contents](#table-of-contents)
-      * [Install](#install)
-         * [Node (use as a dependency in packaging system)](#node-use-as-a-dependency-in-packaging-system)
-      * [Usage](#usage)
-         * [Global plug-in](#global-plug-in)
-         * [Directive only](#directive-only)
-      * [API](#api)
-         * [Options](#options)
-         * [Directive modifiers](#directive-modifiers)
-            * [int](#int)
-            * [pos](#pos)
-      * [Features](#features)
-         * [supported element](#supported-element)
-            * [&lt;input&gt;](#input)
-            * [&lt;textarea&gt;](#textarea)
-            * [contenteditable element](#contenteditable-element)
-            * [Vue component](#vue-component)
-      * [Maintainers](#maintainers)
-      * [Contributing](#contributing)
-      * [ChangeLog](#changelog)
-      * [License](#license)
-
-<!-- Added by: wangmeng, at: 2020年10月 9日 星期五 22时26分13秒 CST -->
-
-<!--te-->
+[TOC]
 
 ## Install
 
@@ -49,7 +21,7 @@ yarn add vue-number-directive
 npm install vue-number-directive --save
 ```
 
-###browser
+### browser
 
 Use the umd.js file in the `dist/`, refer to [UMD example](examples/umd/index.html)
 
@@ -73,7 +45,7 @@ import NumberDirective from 'vue-number-directive'
 // If you want to use source code for projects with esm packaging system, import src
 // import NumberDirective from 'vue-number-directive/src/index'
 
-Vue.use(NumberDirective)
+Vue.use(NumberDirective, globalOptions)
 ```
 
 ### Directive only
@@ -96,27 +68,31 @@ export default {
 ### Options
 
 ```js
-mergeOptions(
-  {
-    el,
-    vnode,
-    debug: config.debug,
-    modelPropPath,
-    scope: config.scope,
+optimizeOptions(
+  mergeOptions(
+    {
+      el,
+      vnode,
+      debug: config.debug,
+      modelPropPath,
+      scope: config.scope,
 
-    integer,
-    positive,
-    sientific: config.sientific,
-    fixed: config.fixed !== void 0 ? config.fixed : 2,
-    flag: config.flag,
-    minimum,
-    maximum,
-    // exclusiveMinimum,
-    // exclusiveMaximum,
-    sep: config.sep
-  },
-  parseSchema(config.schema),
-  globalOptions
+      integer,
+      positive,
+      sientific: config.sientific,
+      fixed: config.fixed,
+      flag: config.flag,
+      min: config.min,
+      max: config.max,
+      minimum: config.minimum,
+      maximum: config.maximum,
+      // exclusiveMinimum,
+      // exclusiveMaximum,
+      sep: config.sep
+    },
+    parseSchema(config.schema),
+    globalOptions
+  )
 )
 ```
 

@@ -1,0 +1,51 @@
+{
+  "minMax": {
+    "base": {
+      "min": -100,
+      "max": 100,
+      "minimum": -101,
+      "maximum": 102
+    }
+  },
+  "schema": {
+    "base": {
+      "type": "integer",
+      "minimum": -101,
+      "maximum": 102,
+      "exclusiveMinimum": true,
+      "exclusiveMaximum": false,
+      "multipleOf": 3
+    }
+  },
+  "binding": {
+    "base": {
+      "value": {},
+      "expression": "{model: input1}",
+      "modifiers": {}
+    },
+    "all": {
+      "value": {
+        "debug": true,
+        "fixed": 3,
+        "flag": false,
+        "intModifier": false,
+        "integer": false,
+        "integerModifier": false,
+        "posModifier": false,
+        "positive": true,
+        "positiveModifier": false,
+        "scope": [{ "a": 1 }, { "b": 2 }],
+        "sep": false,
+        "sientific": false
+      },
+      "expression": "{ ...$props, model: input2, ...options }",
+      "modifiers": {
+        "pos": true,
+        "int": true
+      }
+    }
+  },
+  "globalOptions": {
+    "base": {}
+  }
+}

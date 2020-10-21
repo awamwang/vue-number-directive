@@ -1,23 +1,25 @@
-import Vue from 'vue'
-import genOptions, {
+import Vue from 'vue/dist/vue.common.dev'
+import VueNumber from '../../../src/index.js'
+Vue.use(VueNumber)
+import parseOption, {
   getModelPath,
   getMinMax,
   parseSchema,
   optimizeOptions
 } from '../../../src/number/option'
 
-const vnode = {
-  data: {
-    model: {
-      expression: 'test.model'
+let vnode
+
+beforeEach(function () {
+  vnode = {
+    data: {
+      model: {
+        expression: 'test.model'
+      }
     }
   }
-}
 
-describe('基本检查', function () {
-  it('导出正确', () => {
-    expect(genOptions, 'genOptions').to.be.a('function')
-  })
+  cy.fixture('options').as('config')
 })
 
 describe('getModelPath', () => {
@@ -25,7 +27,7 @@ describe('getModelPath', () => {
     it('简单路径', () => {
       expect(getModelPath('{ model: test.int, }', vnode)).to.eq('test.int')
     })
-    it('简单路径', () => {
+    it('复杂路径', () => {
       expect(
         getModelPath(
           `{ model: test.int[1], }
@@ -48,181 +50,141 @@ describe('getMinMax', () => {
   })
 
   context('正常获取', () => {
-    it('设置min/max', () => {
-      expect(
-        getMinMax(
-          {
-            min: -100,
-            max: 100
-          },
-          'min'
-        )
-      ).to.eq(-100)
-      expect(
-        getMinMax(
-          {
-            min: -100,
-            max: 100
-          },
-          'max'
-        )
-      ).to.eq(100)
+    it('从min/max获取', function () {
+      expect(getMinMax(this.config.minMax.base, 'min')).to.eq(-100)
+      expect(getMinMax(this.config.minMax.base, 'max')).to.eq(100)
     })
 
-    it('设置minimum/maximum', () => {
-      expect(
-        getMinMax(
-          {
-            minimum: -101,
-            maximum: 102
-          },
-          'min'
-        )
-      ).to.eq(-101)
-      expect(
-        getMinMax(
-          {
-            minimum: -101,
-            maximum: 102
-          },
-          'max'
-        )
-      ).to.eq(102)
+    it('从minimum/maximumx获取', function () {
+      expect(getMinMax({ ...this.config.minMax.base, min: null }, 'min')).to.eq(
+        -101
+      )
+      expect(getMinMax({ ...this.config.minMax.base, max: null }, 'max')).to.eq(
+        102
+      )
     })
   })
 
-  it('优先级', () => {
-    expect(
-      getMinMax(
-        {
-          min: -100,
-          max: 100,
-          minimum: -101,
-          maximum: 102
-        },
-        'min'
-      )
-    ).to.eq(-100)
-    expect(
-      getMinMax(
-        {
-          min: -100,
-          max: 100,
-          minimum: -101,
-          maximum: 102
-        },
-        'max'
-      )
-    ).to.eq(100)
+  it('优先级：min 优先于 minimum，max 优先于 maximum', function () {
+    expect(getMinMax(this.config.minMax.base, 'min')).to.eq(-100)
+    expect(getMinMax(this.config.minMax.base, 'max')).to.eq(100)
   })
 })
 
 describe('parseSchema', () => {
-  it('普通输入', () => {
+  it('基本输入', function () {
     // cy.wrap().as('schema')
 
-    expect(
-      parseSchema(
-        {
-          type: 'integer',
-          minimum: -100,
-          maximum: 100,
-          exclusiveMinimum: true,
-          exclusiveMaximum: false,
-          multipleOf: 2
-        },
-        'min'
-      )
-    ).to.deep.equal({
+    expect(parseSchema(this.config.schema.base)).to.deep.equal({
       integer: true,
-      minimum: -100,
-      maximum: 100,
+      minimum: -101,
+      maximum: 102,
       exclusiveMinimum: true,
       exclusiveMaximum: false,
-      multipleOf: 2
+      multipleOf: 3
     })
-    expect(getMinMax({}, 'max')).to.eq(Number.MAX_SAFE_INTEGER)
-  })
-
-  context('正常获取', () => {
-    it('设置min/max', () => {
-      expect(
-        getMinMax(
-          {
-            min: -100,
-            max: 100
-          },
-          'min'
-        )
-      ).to.eq(-100)
-      expect(
-        getMinMax(
-          {
-            min: -100,
-            max: 100
-          },
-          'max'
-        )
-      ).to.eq(100)
-    })
-
-    it('设置minimum/maximum', () => {
-      expect(
-        getMinMax(
-          {
-            minimum: -101,
-            maximum: 102
-          },
-          'min'
-        )
-      ).to.eq(-101)
-      expect(
-        getMinMax(
-          {
-            minimum: -101,
-            maximum: 102
-          },
-          'max'
-        )
-      ).to.eq(102)
-    })
-  })
-
-  it('优先级', () => {
-    expect(
-      getMinMax(
-        {
-          min: -100,
-          max: 100,
-          minimum: -101,
-          maximum: 102
-        },
-        'min'
-      )
-    ).to.eq(-100)
-    expect(
-      getMinMax(
-        {
-          min: -100,
-          max: 100,
-          minimum: -101,
-          maximum: 102
-        },
-        'max'
-      )
-    ).to.eq(100)
   })
 })
 
-// describe('options', () => {
-//   let input
-//   let vnode
+describe('options parse method', () => {
+  let vnode
+  let vm
 
-//   before(() => {
-//     input = document.createElement('input')
-//   })
+  beforeEach(() => {
+    vm = new Vue({
+      template: `<input v-model="input" v-number="{}" ref="myInput">`,
+      data: {
+        input: '123',
+        options: {}
+      },
+      computed: {
+        myInput() {
+          return this.$refs.myInput
+        }
+      }
+    }).$mount()
+  })
 
-//   it('basic', () => {
-//     genOptions(input, {})
-//   })
-// })
+  it('basic', function () {
+    let options = parseOption(
+      vm.myInput,
+      this.config.binding.base,
+      vm._vnode,
+      {}
+    ).options
+    console.log('basic options', options)
+
+    expect(options).to.be.a('object')
+    expect(options.modelPropPath).to.be.equal('input1')
+    expect(options.minimum).to.be.equal(Number.MIN_SAFE_INTEGER)
+    expect(options.maximum).to.be.equal(Number.MAX_SAFE_INTEGER)
+    expect(options.fixed).to.be.equal(2)
+  })
+
+  it('all options', function () {
+    let options = parseOption(
+      vm.myInput,
+      this.config.binding.all,
+      vm._vnode,
+      {}
+    ).options
+    console.log('all options', options)
+
+    expect(options.el).to.be.instanceOf(HTMLElement)
+    expect(options.modelPropPath).to.be.equal('input2')
+    expect(options.fixed).to.be.equal(0)
+    expect(options.vnode).to.be.a('object')
+    expect(options.debug).to.be.equal(true)
+    expect(options.fixed).to.be.equal(0)
+    expect(options.flag).to.be.equal(false)
+    expect(options.integer).to.be.equal(true)
+    expect(options.positive).to.be.equal(true)
+    expect(options.minimum).to.be.equal(0)
+    expect(options.maximum).to.be.equal(Number.MAX_SAFE_INTEGER)
+    expect(options.scope).to.be.deep.equal([{ a: 1 }, { b: 2 }])
+    expect(options.sep).to.be.equal(false)
+    expect(options.sientific).to.be.equal(false)
+  })
+
+  it('global options', function () {
+    let options = parseOption(
+      vm.myInput,
+      this.config.binding.base,
+      vm._vnode,
+      this.config.binding.all.value
+    ).options
+    console.log('global options', options)
+
+    expect(options.el).to.be.instanceOf(HTMLElement)
+    expect(options.modelPropPath).to.be.equal('input1')
+    expect(options.fixed).to.be.equal(3)
+    expect(options.vnode).to.be.a('object')
+    expect(options.debug).to.be.equal(true)
+    expect(options.flag).to.be.equal(false)
+    expect(options.integer).to.be.equal(false)
+    expect(options.positive).to.be.equal(true)
+    expect(options.minimum).to.be.equal(0)
+    expect(options.maximum).to.be.equal(Number.MAX_SAFE_INTEGER)
+    expect(options.scope).to.be.deep.equal([{ a: 1 }, { b: 2 }])
+    expect(options.sep).to.be.equal(false)
+    expect(options.sientific).to.be.equal(false)
+  })
+
+  it('优先级：schema 优先于 options中的min/max配置', function () {
+    let options = parseOption(
+      vm.myInput,
+      {
+        ...this.config.binding.base,
+        value: {
+          ...this.config.binding.base.value,
+          schema: this.config.schema.base
+        }
+      },
+      vm._vnode,
+      {}
+    ).options
+
+    expect(options.minimum).to.be.equal(-101)
+    expect(options.maximum).to.be.equal(102)
+  })
+})

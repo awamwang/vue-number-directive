@@ -17,9 +17,9 @@ install:
 - npm install -g conventional-changelog-cli
 - npm install -g conventional-github-releaser
 script:
+- npm run test
 - npm run build
 - npm run build-doc
-- npm run test
 after_script: cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js
 deploy:
   - provider: pages 

@@ -1,6 +1,6 @@
 {
   "name": "vue-number-directive",
-  "version": "0.0.3-beta.1",
+  "version": "0.0.3",
   "description": "Vue directive plugin to assure number to be number",
   "author": {
     "name": "Awam M Wang",
@@ -93,7 +93,7 @@
   "engines": {
     "node": ">=8"
   },
-  "homepage": "https://github.com/awamwang/vue-number-directive#readme",
+  "homepage": "https://awamwang.github.io/vue-number-directive/",
   "license": "MIT",
   "repository": {
     "type": "git",

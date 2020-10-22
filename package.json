@@ -7,7 +7,7 @@
     "email": "keepgoingwm@gmail.com"
   },
   "scripts": {
-    "start": "concurrently \"npm run dev\" \"npm run storybook\"",
+    "start": "concurrently --kill-others \"npm run dev\" \"npm run storybook\"",
     "storybook": "start-storybook -p 6006",
     "cy-open": "cypress open -C cypress.json",
     "test": "npm run cy-run && npm run coverage-nyc_report",

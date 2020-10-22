@@ -7,6 +7,7 @@
 
 ## 特性
 
++ min/max 支持
 + schema剩余特性, schema优先级更高
 + sientific
 + sep
@@ -24,7 +25,7 @@
 
 ## 疑问
 
-+ modelPath会不会出现./[]以外的字符，例如...、?(es2020)会有
++ modelPath会不会出现./[]以外的字符，例如...、?(es2020)，!会有
 
 
 https://github.com/tuchk4/storybook-readme

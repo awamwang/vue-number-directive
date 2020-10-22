@@ -27,7 +27,7 @@ npm install vue-number-directive --save
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue-number-directive/dist/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-number-directive"></script>
 
 <script>
   // 在浏览器中插件的全局名称为`VueNumber`。
@@ -52,7 +52,7 @@ Vue.use(NumberDirective, globalOptions)
 
 ```js
 import Vue from 'vue'
-import NumberDirective from 'vue-number-directive'
+import { NumberDirective } from 'vue-number-directive'
 
 Vue.directive('{{name}}', NumberDirective)
 // 或者局部指令方式
@@ -66,6 +66,8 @@ export default {
 ## API
 
 ### Options
+
+参考[input example](https://awamwang.github.io/vue-number-directive/?path=/story/vuenumber-nativeinput--basic-usage)，Controls中展示了支持的options
 
 ```js
 optimizeOptions(

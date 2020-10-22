@@ -27,7 +27,7 @@ Use the umd.js file in the `dist/`, refer to [UMD example](examples/umd/index.ht
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue-number-directive/dist/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-number-directive"></script>
 
 <script>
   // The global name of the plugin is `VueNumber`.
@@ -52,7 +52,7 @@ Vue.use(NumberDirective, globalOptions)
 
 ```js
 import Vue from 'vue'
-import NumberDirective from 'vue-number-directive'
+import { NumberDirective } from 'vue-number-directive'
 
 Vue.directive('{{name}}', NumberDirective)
 // or use as a local directive
@@ -66,6 +66,8 @@ export default {
 ## API
 
 ### Options
+
+Refer to [input example](https://awamwang.github.io/vue-number-directive/?path=/story/vuenumber-nativeinput--basic-usage), supported options are shown in Controls
 
 ```js
 optimizeOptions(

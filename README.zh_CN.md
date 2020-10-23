@@ -15,9 +15,9 @@
 ### Node(作为依赖引入打包系统)
 
 ```sh
-# with `yarn` :
+# with `yarn`:
 yarn add vue-number-directive
-# or with `npm` :
+# or with `npm`:
 npm install vue-number-directive --save
 ```
 
@@ -100,9 +100,13 @@ optimizeOptions(
 
 ### 指令 modifiers
 
-#### int 是否整数
+#### int 
 
-#### pos 是否正数
+是否整数
+
+#### pos
+
+是否正数
 
 ## Features
 
@@ -123,7 +127,11 @@ optimizeOptions(
 
 #### contenteditable 的元素
 
-#### 包含上述元素的 Vue 组件
+`contenteditable`属性为真值的元素
+
+#### Vue 组件
+
+包含上述元素的 Vue 组件
 
 - 例如 Element 的 Input 和 NumberInput
 

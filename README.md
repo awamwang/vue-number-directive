@@ -23,7 +23,7 @@ npm install vue-number-directive --save
 
 ### browser
 
-Use the umd.js file in the `dist/`, refer to [UMD example](examples/umd/index.html)
+Use the umd.js file in `dist/`, refer to [UMD example](examples/umd/index.html)
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
@@ -42,7 +42,7 @@ Use the umd.js file in the `dist/`, refer to [UMD example](examples/umd/index.ht
 ```js
 import Vue from 'vue'
 import NumberDirective from 'vue-number-directive'
-// If you want to use source code for projects with esm packaging system, import src
+// If you want to use source code for projects with esm packaging system, import src file
 // import NumberDirective from 'vue-number-directive/src/index'
 
 Vue.use(NumberDirective, globalOptions)
@@ -112,18 +112,18 @@ Whether is a positive number
 
 ### supported element
 
-#### \<input>
+#### \<input\>
 
 only supports the following input types：
 
 - text,
 - tel,
 - password
-- Search
+- search
 - hidden, or
 - no type specified at al
 
-#### <textarea\>
+#### \<textarea\>
 
 #### contenteditable element
 
@@ -153,8 +153,6 @@ see [the CHANGELOG file](./CHANGELOG.md)
 
 [MIT © 2020 Awam M Wang](./LICENSE)
 
-
-
 [build badge]: https://travis-ci.com/awamwang/vue-number-directive.svg?branch=master
 [build page]: https://travis-ci.com/awamwang/vue-number-directive
 [license badge]: https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat-square
@@ -165,5 +163,3 @@ see [the CHANGELOG file](./CHANGELOG.md)
 [npm version badge]: https://img.shields.io/npm/v/vue-number-directive.svg?style=flat-square
 [cover page]: https://coveralls.io/github/awamwang/vue-number-directive?branch=master
 [cover badge]: https://coveralls.io/repos/github/awamwang/vue-number-directive/badge.svg?branch=master
-
-

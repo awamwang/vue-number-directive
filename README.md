@@ -21,6 +21,7 @@ yarn add vue-number-directive
 npm install vue-number-directive --save
 ```
 
+
 ### browser
 
 Use the umd.js file in `dist/`, refer to [UMD example](examples/umd/index.html)

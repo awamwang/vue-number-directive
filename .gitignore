@@ -11,4 +11,5 @@ dist/*
 coverage
 RELEASE_NOTE*.md
 cypress/videos/
+cypress/screenshots/
 docs/

@@ -27,7 +27,7 @@
       "value": {
         "debug": true,
         "fixed": 3,
-        "flag": false,
+        "flag": true,
         "intModifier": false,
         "integer": false,
         "integerModifier": false,

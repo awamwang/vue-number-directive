@@ -76,7 +76,7 @@
     "vue-template-compiler": "^2.6.12"
   },
   "peerDependencies": {
-    "vue": "^2.6.12"
+    "vue": "^2.0.0"
   },
   "browserslist": {
     "production": [

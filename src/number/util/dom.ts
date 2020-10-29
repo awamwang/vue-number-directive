@@ -38,11 +38,11 @@ const AllowedTagList = [
 ]
 const ElementUIClassList = ['el-input__inner']
 
-function isInputLike(el) {
+function isInputLike(el: any) {
   return InputTagList.includes(el.tagName) || el.getAttribute('contenteditable')
 }
 
-function getChildInputs(el) {
+function getChildInputs(el: any): Array<HTMLElement> {
   let res = [],
     child
 
@@ -54,8 +54,8 @@ function getChildInputs(el) {
     res = res.concat(
       Array.prototype.reduce.call(
         el.children,
-        (arr, child) => {
-          return arr.concat(getChildInputs(child))
+        (arr, child: HTMLElement): Array<HTMLElement> => {
+          return (arr as Array<HTMLElement>).concat(getChildInputs(child))
         },
         []
       )
@@ -65,7 +65,7 @@ function getChildInputs(el) {
   return res
 }
 
-function handleElementUI(inputDom, vnode) {
+function handleElementUI(inputDom: any, vnode: any) {
   if (
     ElementUIClassList.some(c =>
       Array.prototype.includes.call(inputDom.classList, c)
@@ -77,27 +77,27 @@ function handleElementUI(inputDom, vnode) {
   }
 }
 
-export const getInputDom = (el, vnode) => {
-  let inputDom = getChildInputs(el)
-  if (!inputDom.length) {
+export const getInputDom = (el: any, vnode: any) => {
+  let inputDomList = getChildInputs(el), inputDom: HTMLElement
+  if (!inputDomList.length) {
     error('no input like element found')
-  } else if (inputDom.length > 1) {
+  } else if (inputDomList.length > 1) {
     warn('more than one input like element found, use first')
   }
-  inputDom = inputDom[0]
-  handleElementUI(el, inputDom, vnode)
+  inputDom = inputDomList[0]
+  handleElementUI(inputDom, vnode)
 
   if (inputDom.tagName === 'INPUT') {
     if (
       inputDom.getAttribute('type') &&
-      !AllowedInputType.includes(inputDom.getAttribute('type'))
+      !AllowedInputType.includes(inputDom.getAttribute('type') || '')
     ) {
       error('wrong INPUT element type')
     }
   } else if (inputDom.tagName === 'TEXTAREA') {
 
   } else if (!inputDom.getAttribute('contenteditable')) {
-    if (AllowedTagList.includes(inputDom.tagName.toLowerCase)) {
+    if (AllowedTagList.includes(inputDom.tagName.toLowerCase())) {
       // warn('once use to format number')
     } else {
       error('wrong element type, or should be contenteditable')
@@ -107,7 +107,7 @@ export const getInputDom = (el, vnode) => {
   return inputDom
 }
 
-export const unshiftEventHandler = (el, eventType, handler) => {
+export const unshiftEventHandler = (el: any, eventType: any, handler: any) => {
   el.addEventListener(eventType, handler)
   // let handlerArr = getEventListeners(el)[eventType]
   // console.log(handlerArr)
@@ -119,11 +119,11 @@ export const unshiftEventHandler = (el, eventType, handler) => {
   // }
 }
 
-export const getDomValue = el => {
+export const getDomValue = (el: any) => {
   return InputTagList.includes(el.tagName) ? el.value : el.innerText
 }
 
-export const setDomValue = (el, value) => {
+export const setDomValue = (el: any, value: any) => {
   InputTagList.includes(el.tagName)
     ? (el.value = value)
     : (el.innerText = value)

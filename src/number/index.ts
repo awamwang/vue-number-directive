@@ -1,16 +1,16 @@
 export const NAME = 'number'
-import parseOption from './option'
-import initFormatter, {destroy as dest} from './formatter'
+import parseOption, { GlobalOptions } from './option'
+import initFormatter from './formatter'
 import { isSameOption } from './util/lang'
 
-export default function(globalOptions = {}) {
+export default function (globalOptions: GlobalOptions = {}) {
   return {
-    bind(el, binding, vnode) {
+    bind(el: any, binding: any, vnode: any) {
       const { options } = parseOption(el, binding, vnode, globalOptions)
 
       initFormatter(el, options)
     },
-    update(el, binding, vnode) {
+    update(el: any, binding: any, vnode: any) {
       const { options } = parseOption(el, binding, vnode, globalOptions)
 
       if (
@@ -20,8 +20,8 @@ export default function(globalOptions = {}) {
         initFormatter(el, options)
       }
     },
-    unbind(el) {
+    unbind(el: any) {
       el.formatter && el.formatter.destroy()
     }
-  }
+  };
 }

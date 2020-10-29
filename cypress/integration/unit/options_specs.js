@@ -1,12 +1,12 @@
 import Vue from 'vue/dist/vue.common.dev'
-import VueNumber from '../../../src/index.js'
+import VueNumber from '../../../dist/index'
 Vue.use(VueNumber)
 import parseOption, {
   getModelPath,
   getMinMax,
   parseSchema,
   optimizeOptions
-} from '../../../src/number/option'
+} from '../../../dist/number/option.js'
 
 let vnode
 

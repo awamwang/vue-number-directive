@@ -1,5 +1,5 @@
 import Vue from 'vue/dist/vue.common.dev'
-import VueNumber, { NumberDirective } from '../../../src/index.js'
+import VueNumber, { NumberDirective } from '../../../dist/index'
 
 beforeEach(function () {
   cy.fixture('options').then((optionsConfig) => {

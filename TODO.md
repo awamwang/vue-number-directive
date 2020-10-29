@@ -2,6 +2,7 @@
 
 ## Bug
 
++ setProp 和 getProp
 + 搜狗输入法
 + 全清空问题
 

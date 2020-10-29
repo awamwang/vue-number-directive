@@ -1,5 +1,5 @@
 import Vue from 'vue/dist/vue.common.dev'
-import VueNumber from '../../../src/index.js'
+import VueNumber from '../../../dist/index'
 Vue.use(VueNumber)
 
 beforeEach(function () {

@@ -2,7 +2,49 @@
 import { configLog, warn } from './util/log'
 const ExpressionRegex = /model:([^,}]+),?/
 
-export function getModelPath(expression, vnode) {
+export interface SchemaOptions {
+  integer?: boolean
+  minimum?: number
+  maximum?: number
+  exclusiveMinimum?: boolean
+  exclusiveMaximum?: boolean
+  multipleOf?: number
+}
+
+export interface Options {
+  el?: HTMLElement
+  vnode?: any
+  debug?: boolean
+  modelPropPath?: string
+  scope?: Array<any>
+
+  integer?: boolean
+  positive?: boolean
+  sientific?: boolean
+  fixed?: number
+  flag?: boolean
+  min?: number
+  max?: number
+  minimum?: number
+  maximum?: number
+  exclusiveMinimum?: number
+  exclusiveMaximum?: number
+  sep?: boolean | string
+
+  [index: string]: any
+}
+
+export interface PaserdOptions extends Options {
+  minimum: number
+  maximum: number
+}
+
+export interface GlobalOptions extends Options {
+  name?: string
+}
+
+
+export function getModelPath(expression: any, vnode: any) {
   let matches = expression.replace(/\s|↵/g, '').match(ExpressionRegex)
   if (matches) {
     return matches[1]
@@ -11,7 +53,7 @@ export function getModelPath(expression, vnode) {
   }
 }
 
-export function parseSchema(schema) {
+export function parseSchema(schema: any): SchemaOptions {
   if (!schema) {
     return {}
   }
@@ -26,30 +68,30 @@ export function parseSchema(schema) {
   }
 }
 
-export function getMinMax(config, type) {
+export function getMinMax(config: any, type: any) {
   if (type === 'min') {
     return typeof config.min === 'number'
       ? config.min
       : typeof config.minimum === 'number'
-      ? config.minimum
-      : Number.MIN_SAFE_INTEGER
+        ? config.minimum
+        : Number.MIN_SAFE_INTEGER
   } else if (type === 'max') {
     return typeof config.max === 'number'
       ? config.max
       : typeof config.maximum === 'number'
-      ? config.maximum
-      : Number.MAX_SAFE_INTEGER
+        ? config.maximum
+        : Number.MAX_SAFE_INTEGER
   }
 }
 
-function mergeOptions(options, schema, globalOptions) {
+function mergeOptions(options: any, schema: any, globalOptions: GlobalOptions) {
   Object.keys(schema).forEach((key) => {
     // schema的优先级高
     if (schema[key] !== void 0 && schema[key] !== null) {
       options[key] = schema[key]
     }
   })
-  Object.keys(globalOptions).forEach((key) => {
+  Object.keys(globalOptions).forEach((key: string) => {
     if (options[key] === void 0 || options[key] === null) {
       options[key] = globalOptions[key]
     }
@@ -68,7 +110,7 @@ function mergeOptions(options, schema, globalOptions) {
   return options
 }
 
-export function optimizeOptions(options) {
+export function optimizeOptions(options: any) {
   options.flag = options.flag !== void 0 ? options.flag : !options.positive
   if (options.fixed && options.integer) {
     // warn('fixed of integer number must be 0')
@@ -83,7 +125,7 @@ export function optimizeOptions(options) {
   return options
 }
 
-export default function (el, binding, vnode, globalOptions) {
+export default function (el: HTMLElement, binding: any, vnode: any, globalOptions: any) {
   const { value: config, expression, modifiers } = binding
 
   let modelPropPath = getModelPath(expression, vnode)

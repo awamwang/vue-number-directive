@@ -1,4 +1,4 @@
-Vue.use(VueNumberFormat)
+Vue.use(VueNumber)
 
 window.onload = () => {
   input1.addEventListener('keyup', function(e) {
@@ -16,8 +16,7 @@ new Vue({
     config2: {
       bind: 'input2',
       min: '-5',
-      max: '100000',
-      local: 'FR'
+      max: '100000'
     },
   },
 

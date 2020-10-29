@@ -7,16 +7,16 @@
     "email": "keepgoingwm@gmail.com"
   },
   "scripts": {
-    "start": "concurrently --kill-others \"npm run dev\" \"npm run storybook\"",
+    "start": "concurrently --kill-others \"tsc -w\" \"npm run dev\" \"npm run storybook\"",
     "storybook": "start-storybook -p 6006",
     "cy-open": "cypress open -C cypress.json",
     "test": "npm run cy-run && npm run coverage-nyc_report",
-    "dev": "parcel watch src/index.js --public-url ./dist/",
+    "dev": "parcel watch src/index.ts --public-url ./dist/ --out-file vue-number-directive.js",
     "version": "npm run build && npm run changelog && git add CHANGELOG.md",
-    "build": "npm run build-cjs && npm run build-umd",
+    "build": "npm run build-cjs && npm run build-umd && tsc",
     "lint": "vue-cli-service lint",
-    "build-cjs": "parcel build src/index.js",
-    "build-umd": "parcel build --global VueNumber src/index.umd.js",
+    "build-cjs": "parcel build src/index.ts --out-file vue-number-directive.js",
+    "build-umd": "parcel build --global VueNumber src/index.umd.js --out-file vue-number-directive.umd.js",
     "build-storybook": "build-storybook -o ./docs/docs",
     "build-readme": "gh-md-toc --insert README.md && gh-md-toc --insert README.zh_CN.md && rm README*.md.orig.* && rm README*.md.toc.*",
     "build-doc": "npm run build-storybook",
@@ -25,12 +25,17 @@
     "release-github": "conventional-github-releaser -p angular -r 1",
     "clean": "rimraf ./dist && mkdir dist",
     "prebuild": "npm run clean",
-    "coverage-nyc_report": "nyc report --reporter=text-summary"
+    "coverage-nyc_report": "nyc report --reporter=text-summary",
+    "ts-migrate": "ts-migrate"
   },
   "source": "src/index.js",
-  "main": "dist/index.js",
+  "main": "dist/vue-number-directive.js",
   "module": "src/index.js",
-  "browser": "dist/index.umd.js",
+  "browser": "dist/vue-number-directive.umd.js",
+  "unpkg": "dist/vue-number-directive.umd.js",
+  "jsnext:main": "dist/vue-number-directive.js",
+  "umd": "dist/vue-number-directive.umd.js",
+  "jsdelivr": "dist/vue-number-directive.umd.js",
   "files": [
     "dist"
   ],

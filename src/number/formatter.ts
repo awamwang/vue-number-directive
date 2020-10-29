@@ -1,3 +1,4 @@
+import { PaserdOptions } from './option'
 import { getInputDom, getDomValue, setDomValue } from './util/dom'
 import { removeItem, cache, setProp } from './util/lang'
 import { debug } from './util/log'
@@ -16,6 +17,10 @@ const AllVailidNumberChar = ['0-9', '+', '-', '\\.', 'e']
 const UniqueChar = ['+|-', '\\.', 'e']
 const ValidSepChar = [',', ' ']
 
+interface NumberInput extends HTMLElement {
+  numberDirOptions?: PaserdOptions
+}
+
 /**
  * 一组用来测试字符唯一性的函数，UniqueChar在字符串中出现小于一次则测试通过
  */
@@ -23,9 +28,9 @@ const UniqueTesters = UniqueChar.map(c => {
   let lastValueRegex = new RegExp(`[${c}]`)
   let newCharRegex = new RegExp(`^[${c}]$`)
 
-  return function isUnique(newChar, value) {
+  return function isUnique(newChar: string, value: string) {
     return !lastValueRegex.test(value) || !newCharRegex.test(newChar)
-  }
+  };
 })
 
 /**
@@ -42,7 +47,7 @@ function genValidCharRegex({
   fixed,
   sep,
   sepChar = []
-}) {
+}: PaserdOptions) {
   if (sep && !Array.isArray(sepChar)) {
     sepChar = ValidSepChar
   }
@@ -61,10 +66,16 @@ function genValidCharRegex({
  * 计算整数数字最大长度（不包括符号）
  * @param {*} param0
  */
-function getMaxIntegerLength({ minimum, maximum, sep, sepChar = [] }) {
+function getMaxIntegerLength({
+  minimum,
+  maximum,
+  sep,
+  sepChar = []
+}: PaserdOptions) {
+
   return Math.max(
-    parseInt(minimum >= 0 ? minimum : -minimum).toString().length,
-    parseInt(maximum >= 0 ? maximum : -maximum).toString().length
+    parseInt((minimum >= 0 ? minimum : -minimum).toString()).toString().length,
+    parseInt((maximum >= 0 ? maximum : -maximum).toString()).toString().length
   )
 }
 
@@ -75,8 +86,17 @@ function getMaxIntegerLength({ minimum, maximum, sep, sepChar = [] }) {
  * @param {*} param0
  */
 function getMaxLength(
-  integerLength,
-  { sientific, integer, flag, minimum, maximum, fixed, sep, sepChar = [] }
+  integerLength: any,
+  {
+    sientific,
+    integer,
+    flag,
+    minimum,
+    maximum,
+    fixed,
+    sep,
+    sepChar = []
+  }: any
 ) {
   flag && integerLength++
   !integer && integerLength++
@@ -92,8 +112,15 @@ function getMaxLength(
  * @param {*} param1
  */
 function genValidRegex(
-  integerLength,
-  { sientific, integer, flag, fixed, sep, sepChar = [] }
+  integerLength: any,
+  {
+    sientific,
+    integer,
+    flag,
+    fixed,
+    sep,
+    sepChar = []
+  }: PaserdOptions
 ) {
   let regexStr = `([1-9]?)([0-9]{0,${integerLength - 1}})?`
 
@@ -104,7 +131,19 @@ function genValidRegex(
 }
 
 export class Formatter {
-  constructor(options) {
+  formatValue: any;
+  input: NumberInput;
+  maxLength: number;
+  oldValue: string;
+  onBlur: any;
+  onKeydown: any;
+  onPaste: any;
+  options: PaserdOptions;
+  validCharRegex: RegExp;
+  validRegex: RegExp;
+  validateAndFixInput: any;
+  validateValue: any;
+  constructor(options: PaserdOptions) {
     this.input = getInputDom(options.el, options.vnode)
     this.options = options
 
@@ -124,7 +163,7 @@ export class Formatter {
     /**
      * 在keydown事件中检测单个字符的合法性，字符的唯一性，max/min(todo)
      */
-    this.onKeydown = function(ev) {
+    this.onKeydown = (ev: KeyboardEvent) => {
       this.oldValue = getDomValue(this.input)
       if (!this.validCharRegex.test(ev.key)) {
         debug(
@@ -143,7 +182,7 @@ export class Formatter {
         )
         ev.preventDefault()
       }
-    }.bind(this)
+    }
 
     /**
      * 在input事件中检测最新值合法性
@@ -153,23 +192,23 @@ export class Formatter {
     /**
      * 限制粘贴操作
      */
-    this.onPaste = function(ev) {
+    this.onPaste = (ev: any) => {
       ev.preventDefault()
-    }.bind(this)
+    }
 
     /**
      * 在blur事件中格式化值
      */
-    this.onBlur = function(ev) {
+    this.onBlur = (ev: any) => {
       this.formatValue(getDomValue(ev.target))
-    }.bind(this)
+    }
   }
 
   /**
    * 初始化
    */
   initValidateMethod() {
-    let validateValue = value => {
+    let validateValue = (value: any) => {
       if (value.length > this.maxLength) {
         debug(`maxLength: value(${value}), maxLength(${this.maxLength})`)
         return false
@@ -193,7 +232,7 @@ export class Formatter {
     /**
      * 整体format todo
      */
-    let formatFullValue = value => {
+    let formatFullValue = (value: any) => {
       return value
     }
 
@@ -206,7 +245,7 @@ export class Formatter {
    * 在input value值变化时调用，用来更正input value
    * @param {*} ev
    */
-  validateAndFixByInputEvent(ev) {
+  validateAndFixByInputEvent(ev: any) {
     let { modelPropPath, scope, vnode } = this.options
     let value = (getDomValue(ev.target) || '').toString()
     let oldValue = (this.oldValue || '').toString()
@@ -254,7 +293,7 @@ export class Formatter {
   }
 }
 
-const init = function(el, options) {
+const init = function (el: any, options: any) {
   el.formatter && el.formatter.destroy()
 
   el.formatter = new Formatter(options).listen()

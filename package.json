@@ -36,7 +36,9 @@
   "jsnext:main": "dist/vue-number-directive.js",
   "umd": "dist/vue-number-directive.umd.js",
   "jsdelivr": "dist/vue-number-directive.umd.js",
+  "typings": "dist/index.d.ts",
   "files": [
+    "src",
     "dist"
   ],
   "publishConfig": {

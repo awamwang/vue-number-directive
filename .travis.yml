@@ -23,14 +23,14 @@ script:
 after_script: cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js
 deploy:
   - provider: pages 
-    skip_cleanup: 'true'
+    skip_cleanup: true
     github_token: $GH_TOKEN
     local_dir: docs
     on:
       repo: awamwang/vue-number-directive
       branch: master
   - provider: npm
-    skip_cleanup: 'true'
+    skip_cleanup: true
     email: wangnew2013@126.com
     api_key:
       secure: Fr102HkMeukqC+JIRxPRTBuCfPrRF66exJasSfJU3jGw8EnfzLbgUUvhnzK1HuwMvLWnv7ZiSyDn1EExV2ejpJG8iM9lWYSS1qeTZR3pruM7Ild0/lKZuraOPauvFLvaeaEeFPjX6csg9QTK6FNSqtQ5niVcLLbwYQXlocSM3dN11dWzxdI/z6OkJ2pQKZ2VsHZzQKr8bKlwuOV4ayLLzGKlFzp+YvEqS5cMjJGOEYijfovJIPEnBvfr6oqiHu+OCmsCFshNc9dx45+Vi1JzNJOcha+gu0iIQK+J9gnePGsmIcqpI698Y0szPCbDFfKjyusEengG37ae9bWn6exvMcFzZydUZZqy+zjsApTb4iTTAgbC15IYtL7/IdEI3uZ4ma9jm0Dj6W9M0KlzdJMjS2EYWwV1Rs3Vb9EAEofNRpvju0r2hrqJQd6IvAugoBzgyoh8DurfXxQFUyeAe3AhOXPVUoKI+Kz0pYWhucY0OFRRQstHK77OpzLkW6Jyo5SD2l1v/pw3f14cVTIyIwQwVbgS5K44C6UK9qyZpKMP0sIUqStEJtGpgOLndd3VYJXyFY3QcvDcYoIibWnOfT9pYTP6JAJY5r25WMOeHFHHQyoSdaq+cpH9hXZ2ytNRrm6g4CaTmlYDU+AgbsTKKvCH2ob2FDEd/WEmRAuh0kosSso=

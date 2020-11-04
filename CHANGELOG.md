@@ -1,3 +1,12 @@
+## [0.0.4-1](https://github.com/awamwang/vue-number-directive/compare/v0.0.4-0...v0.0.4-1) (2020-11-04)
+
+
+### Bug Fixes
+
+* 指令export问题 ([9ff5632](https://github.com/awamwang/vue-number-directive/commit/9ff563255a3293e59f03be399b05130f8436b7bb))
+
+
+
 ## [0.0.4-0](https://github.com/awamwang/vue-number-directive/compare/v0.0.3...v0.0.4-0) (2020-10-21)
 
 

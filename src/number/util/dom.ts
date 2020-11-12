@@ -43,8 +43,7 @@ function isInputLike(el: any) {
 }
 
 function getChildInputs(el: any): Array<HTMLElement> {
-  let res = [],
-    child
+  let res = []
 
   if (isInputLike(el)) {
     res.push(el)
@@ -66,11 +65,7 @@ function getChildInputs(el: any): Array<HTMLElement> {
 }
 
 function handleElementUI(inputDom: any, vnode: any) {
-  if (
-    ElementUIClassList.some(c =>
-      Array.prototype.includes.call(inputDom.classList, c)
-    )
-  ) {
+  if (ElementUIClassList.some((c) => Array.prototype.includes.call(inputDom.classList, c))) {
     if (vnode.data.model && vnode.data.model.value !== undefined) {
       inputDom.value = vnode.data.model.value
     }
@@ -78,13 +73,14 @@ function handleElementUI(inputDom: any, vnode: any) {
 }
 
 export const getInputDom = (el: any, vnode: any) => {
-  let inputDomList = getChildInputs(el), inputDom: HTMLElement
+  const inputDomList = getChildInputs(el)
+  const inputDom: HTMLElement = inputDomList[0]
   if (!inputDomList.length) {
     error('no input like element found')
   } else if (inputDomList.length > 1) {
     warn('more than one input like element found, use first')
   }
-  inputDom = inputDomList[0]
+
   handleElementUI(inputDom, vnode)
 
   if (inputDom.tagName === 'INPUT') {
@@ -94,8 +90,6 @@ export const getInputDom = (el: any, vnode: any) => {
     ) {
       error('wrong INPUT element type')
     }
-  } else if (inputDom.tagName === 'TEXTAREA') {
-
   } else if (!inputDom.getAttribute('contenteditable')) {
     if (AllowedTagList.includes(inputDom.tagName.toLowerCase())) {
       // warn('once use to format number')
@@ -103,6 +97,8 @@ export const getInputDom = (el: any, vnode: any) => {
       error('wrong element type, or should be contenteditable')
     }
   }
+  // else if (inputDom.tagName === 'TEXTAREA') {
+  // }
 
   return inputDom
 }
@@ -124,7 +120,5 @@ export const getDomValue = (el: any) => {
 }
 
 export const setDomValue = (el: any, value: any) => {
-  InputTagList.includes(el.tagName)
-    ? (el.value = value)
-    : (el.innerText = value)
+  InputTagList.includes(el.tagName) ? (el.value = value) : (el.innerText = value)
 }

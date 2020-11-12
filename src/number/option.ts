@@ -34,7 +34,7 @@ export interface Options {
   [index: string]: any
 }
 
-export interface PaserdOptions extends Options {
+export interface ParsedOptions extends Options {
   minimum: number
   maximum: number
 }
@@ -43,9 +43,8 @@ export interface GlobalOptions extends Options {
   name?: string
 }
 
-
-export function getModelPath(expression: any, vnode: any) {
-  let matches = expression.replace(/\s|↵/g, '').match(ExpressionRegex)
+export function getModelPath(expression: any, vnode: any): string {
+  const matches = expression.replace(/\s|↵/g, '').match(ExpressionRegex)
   if (matches) {
     return matches[1]
   } else {
@@ -68,23 +67,25 @@ export function parseSchema(schema: any): SchemaOptions {
   }
 }
 
-export function getMinMax(config: any, type: any) {
+export function getMinMax(config: any, type: any): number {
   if (type === 'min') {
     return typeof config.min === 'number'
       ? config.min
       : typeof config.minimum === 'number'
-        ? config.minimum
-        : Number.MIN_SAFE_INTEGER
+      ? config.minimum
+      : Number.MIN_SAFE_INTEGER
   } else if (type === 'max') {
     return typeof config.max === 'number'
       ? config.max
       : typeof config.maximum === 'number'
-        ? config.maximum
-        : Number.MAX_SAFE_INTEGER
+      ? config.maximum
+      : Number.MAX_SAFE_INTEGER
+  } else {
+    return 0
   }
 }
 
-function mergeOptions(options: any, schema: any, globalOptions: GlobalOptions) {
+function mergeOptions(options: Options, schema: any, globalOptions: GlobalOptions): ParsedOptions {
   Object.keys(schema).forEach((key) => {
     // schema的优先级高
     if (schema[key] !== void 0 && schema[key] !== null) {
@@ -107,10 +108,10 @@ function mergeOptions(options: any, schema: any, globalOptions: GlobalOptions) {
     warn('maximum is unsafe, precision may be lost')
   }
 
-  return options
+  return options as ParsedOptions
 }
 
-export function optimizeOptions(options: any) {
+export function optimizeOptions(options: ParsedOptions): ParsedOptions {
   options.flag = options.flag !== void 0 ? options.flag : !options.positive
   if (options.fixed && options.integer) {
     // warn('fixed of integer number must be 0')
@@ -125,12 +126,19 @@ export function optimizeOptions(options: any) {
   return options
 }
 
-export default function (el: HTMLElement, binding: any, vnode: any, globalOptions: any) {
+export default function (
+  el: HTMLElement,
+  binding: any,
+  vnode: any,
+  globalOptions: any
+): {
+  options: ParsedOptions
+} {
   const { value: config, expression, modifiers } = binding
 
-  let modelPropPath = getModelPath(expression, vnode)
-  let integer = modifiers.int || modifiers.integer || config.integer
-  let positive = modifiers.pos || modifiers.positive || config.positive
+  const modelPropPath = getModelPath(expression, vnode)
+  const integer = modifiers.int || modifiers.integer || config.integer
+  const positive = modifiers.pos || modifiers.positive || config.positive
 
   return {
     options: optimizeOptions(

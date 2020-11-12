@@ -1,8 +1,6 @@
 let logLevel: any
 
-export function configLog({
-  debug
-}: any) {
+export function configLog({ debug }: any) {
   logLevel = debug ? 'debug' : ''
 }
 

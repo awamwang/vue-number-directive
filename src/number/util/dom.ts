@@ -90,6 +90,8 @@ export const getInputDom = (el: any, vnode: any) => {
     ) {
       error('wrong INPUT element type')
     }
+  } else if (inputDom.tagName === 'TEXTAREA') {
+    return inputDom
   } else if (!inputDom.getAttribute('contenteditable')) {
     if (AllowedTagList.includes(inputDom.tagName.toLowerCase())) {
       // warn('once use to format number')
@@ -97,8 +99,6 @@ export const getInputDom = (el: any, vnode: any) => {
       error('wrong element type, or should be contenteditable')
     }
   }
-  // else if (inputDom.tagName === 'TEXTAREA') {
-  // }
 
   return inputDom
 }

@@ -1,12 +1,7 @@
 import Vue from 'vue/dist/vue.common.dev'
 import VueNumber from '../../../dist/index'
 Vue.use(VueNumber)
-import parseOption, {
-  getModelPath,
-  getMinMax,
-  parseSchema,
-  optimizeOptions
-} from '../../../dist/number/option.js'
+import parseOption, { getModelPath, getMinMax, parseSchema } from '../../../dist/number/option.js'
 
 let vnode
 
@@ -14,9 +9,9 @@ beforeEach(function () {
   vnode = {
     data: {
       model: {
-        expression: 'test.model'
-      }
-    }
+        expression: 'test.model',
+      },
+    },
   }
 
   cy.fixture('options').as('config')
@@ -77,13 +72,12 @@ describe('parseSchema', () => {
       maximum: 102,
       exclusiveMinimum: true,
       exclusiveMaximum: false,
-      multipleOf: 3
+      multipleOf: 3,
     })
   })
 })
 
 describe('options parse method', () => {
-  let vnode
   let vm
 
   beforeEach(() => {
@@ -91,13 +85,13 @@ describe('options parse method', () => {
       template: `<input v-model="input" v-number="{}" ref="myInput">`,
       data: {
         input: '123',
-        options: {}
+        options: {},
       },
       computed: {
         myInput() {
           return this.$refs.myInput
-        }
-      }
+        },
+      },
     }).$mount()
   })
 
@@ -161,8 +155,8 @@ describe('options parse method', () => {
         ...this.config.binding.base,
         value: {
           ...this.config.binding.base.value,
-          schema: this.config.schema.base
-        }
+          schema: this.config.schema.base,
+        },
       },
       vm._vnode,
       {}

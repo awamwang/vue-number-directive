@@ -1,15 +1,11 @@
 module.exports = {
   root: true,
-  // parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 2020
-  },
-  plugins: ['cypress'],
+  parser: '@typescript-eslint/parser',
   extends: [
     '@vue/prettier',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    '@vue/prettier/@typescript-eslint'
+    '@vue/prettier/@typescript-eslint',
   ],
-  env: { node: true, 'cypress/globals': true }
+  env: { node: true },
 }

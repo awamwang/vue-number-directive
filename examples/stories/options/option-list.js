@@ -7,13 +7,13 @@ export default [
     fixed: 0,
     flag: true,
     minimum: -100,
-    maximum: 100
+    maximum: 100,
   },
   {
     schema: {
       integer: true,
       minimum: -100,
-      maximum: 100
-    }
-  }
+      maximum: 100,
+    },
+  },
 ]

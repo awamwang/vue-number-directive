@@ -1,10 +1,10 @@
 Vue.use(VueNumber)
 
-window.onload = () => {
-  input1.addEventListener('keyup', function(e) {
-    console.log(e.target.value, 'should be kept')
-  })
-}
+// window.onload = () => {
+//   input1.addEventListener('keyup', function (e) {
+//     console.log(e.target.value, 'should be kept')
+//   })
+// }
 
 new Vue({
   el: '#demo',
@@ -16,13 +16,13 @@ new Vue({
     config2: {
       bind: 'input2',
       min: '-5',
-      max: '100000'
+      max: '100000',
     },
   },
 
-  created: function() {},
+  created: function () {},
 
   watch: {},
 
-  methods: {}
+  methods: {},
 })

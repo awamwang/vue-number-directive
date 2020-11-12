@@ -6,6 +6,6 @@ export const Story = genStory(
   MyExample,
   {},
   {
-    notes: { NoteMd }
+    notes: { NoteMd },
   }
 )

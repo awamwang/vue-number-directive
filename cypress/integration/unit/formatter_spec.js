@@ -7,7 +7,5 @@ beforeEach(function () {
 })
 
 describe('基本检查', function () {
-  it('xxx', () => {
-    
-  });
+  it('xxx', () => {})
 })

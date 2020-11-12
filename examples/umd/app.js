@@ -8,14 +8,14 @@ new Vue({
       input1: '123.00',
       input2: '123',
       config2: {
-        positive: true
-      }
+        positive: true,
+      },
     }
   },
 
-  created: function() {},
+  created: function () {},
 
   watch: {},
 
-  methods: {}
+  methods: {},
 })

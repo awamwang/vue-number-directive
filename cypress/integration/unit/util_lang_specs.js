@@ -6,9 +6,9 @@ const data = {
   list: [
     2,
     {
-      prop1: 'foo'
-    }
-  ]
+      prop1: 'foo',
+    },
+  ],
 }
 const otherData = {
   key2: 2,
@@ -18,14 +18,14 @@ const otherData = {
     20,
     {
       prop1: 'zoo',
-      propName: 'hi'
-    }
-  ]
+      propName: 'hi',
+    },
+  ],
 }
 const otherData1 = {
   key2: 2,
   hi: 'hi',
-  key1: 4
+  key1: 4,
 }
 
 describe('获取prop', () => {

@@ -1,4 +1,4 @@
-import { action } from '@storybook/addon-actions'
+// import { action } from '@storybook/addon-actions'
 import { basic } from './props'
 
 export const OptionsToShow = [
@@ -19,7 +19,7 @@ export const OptionsToShow = [
   'maximum',
   'exclusiveMinimum',
   'exclusiveMaximum',
-  'sep'
+  'sep',
 ]
 
 function getValue(obj, key) {
@@ -35,16 +35,16 @@ export default {
   data() {
     return {
       input1: '123',
-      parsedOptions: null
+      parsedOptions: null,
     }
   },
   computed: {
     shownOptions() {
       return OptionsToShow.map((key) => ({
         key,
-        value: getValue(this.parsedOptions, key)
+        value: getValue(this.parsedOptions, key),
       }))
-    }
+    },
   },
   methods: {
     onFocus(ev) {
@@ -58,6 +58,6 @@ export default {
           return res
         }, {})
       }
-    }
-  }
+    },
+  },
 }

@@ -21,13 +21,13 @@ describe('插件基本检查', function () {
       template: `<input v-model="input" v-custom-name="{}" ref="myInput">`,
       data: {
         input: '123',
-        options: {}
+        options: {},
       },
       computed: {
         myInput() {
           return this.$refs.myInput
-        }
-      }
+        },
+      },
     }).$mount()
 
     expect(Vue.options.directives).to.have.property('custom-name')
@@ -54,17 +54,17 @@ describe('指令基本检查', () => {
     vm = new Vue({
       template: `<input v-model="input" v-local-number="{}" ref="myInput">`,
       directives: {
-        localNumber: NumberDirective
+        localNumber: NumberDirective,
       },
       data: {
         input: '123',
-        options: {}
+        options: {},
       },
       computed: {
         myInput() {
           return this.$refs.myInput
-        }
-      }
+        },
+      },
     }).$mount()
 
     expect(vm.myInput).to.have.property('formatter')

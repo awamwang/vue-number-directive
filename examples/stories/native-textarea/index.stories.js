@@ -5,8 +5,8 @@ export default {
   component: NumberDirectiveWrap,
   parameters: {},
   argTypes: {
-    label: { control: 'text' }
-  }
+    label: { control: 'text' },
+  },
 }
 
 export { Story as BasicUsage } from './basic/index'

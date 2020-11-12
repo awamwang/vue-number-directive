@@ -1,87 +1,129 @@
-const StringPropRegex = /\[['"`]{1}(\S+)['"`]{1}\]/g
-const VarPropRegex = /\[(\S+)\]/g
+const SquareBracketPropRegex = /\[(['"`](\S+)['"`]|\d+)\]/g // 匹配["xx"]/[0]一类普通属性
+const VarPropRegex = /\[(\S+)\]/g // 匹配计算属性（本身也为变量的属性名称）
 
-function runContextChain(contextChain: any, key: any, fn: any) {
-  let context
+interface Context {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any
+}
+// export class PropHandler {}
 
+function getContext(contextChain: Array<Context>, key: string): Context {
   for (let i = 0, len = contextChain.length; i < len; i++) {
     // check scope first, then context
     if (Object.prototype.hasOwnProperty.call(contextChain[i], key)) {
-      context = contextChain[i]
-      break
+      return contextChain[i]
     }
   }
 
-  fn(context)
+  throw new Error('no context found')
 }
 
-function transSquareBracketToDot(contextChain: any, str: any) {
-  str = str.replace(StringPropRegex, '.$1')
-  str = str.replace(VarPropRegex, (word: any, firstMatch: any) => {
+/**
+ * 规范化属性路径
+ *   - 将[]形式转为`.`形式
+ *   - 把计算属性转化为普通属性
+ *
+ * @param contextChain
+ * @param str
+ */
+function normalizePath(contextChain: Array<Context>, str: string) {
+  str = str.trim()
+  str = str.replace(SquareBracketPropRegex, '.$1')
+  str = str.replace(VarPropRegex, (word: string, firstMatch: string) => {
+    // 处理计算属性
     return '.' + getProp(contextChain, firstMatch)
   })
 
   return str
 }
 
-export const getProp = function getProp(contextChain: any, path: any) {
-  path = transSquareBracketToDot(contextChain, path)
-
-  let res
-  let arr = path.split('.')
-  runContextChain(contextChain, arr[0], (context: any) => {
-    while (arr.length > 1) {
-      context = context[arr.shift()]
-    }
-
-    res = context[arr[0]]
-
-  })
-
-  return res
-}
-
-export const setProp = function setProp(contextChain: any, path: any, value: any) {
+/**
+ * 根据属性路径表达式获取属性值
+ *
+ * @param contextChain 可查询属性的对象列表，类似作用域链
+ * @param path 属性路径表达式
+ */
+export const getProp = function getProp(contextChain: Array<Context>, path: string): unknown {
   if (!Array.isArray(contextChain)) {
     contextChain = [contextChain]
   }
 
-  path = transSquareBracketToDot(contextChain, path)
+  // let res
+  const propArr: Array<string> = normalizePath(contextChain, path).split('.')
+  let context: Context = getContext(contextChain, propArr[0])
 
-  let arr = path.split('.')
-  runContextChain(contextChain, arr[0], (context: any) => {
-    while (arr.length > 1) {
-      context = context[arr.shift()]
-    }
+  while (propArr.length > 1) {
+    context = context[propArr.shift() as string]
+  }
 
-    // HACK: 由于events顺序问题，需要在setImmediate设置值；副作用——一些浏览器中回闪现删除的过程
-    setTimeout(() => {
-      context[arr[0]] = value
-    }, 0)
-  })
+  return context[propArr[0]]
 }
 
-export const removeItem = function(arr: any, item: any) {
-  let idx = arr.indexOf(item)
+/**
+ * 根据属性路径表达式设置特定的属性值
+ *
+ * @param contextChain 可查询属性的对象列表，类似作用域链
+ * @param path 属性路径表达式
+ * @param value 给属性设置的值
+ */
+export const setProp = function setProp(
+  contextChain: Array<Context>,
+  path: string,
+  value: string
+): void {
+  if (!Array.isArray(contextChain)) {
+    contextChain = [contextChain]
+  }
+
+  const propArr: Array<string> = normalizePath(contextChain, path).split('.')
+  let context: Context = getContext(contextChain, propArr[0])
+
+  while (propArr.length > 1) {
+    context = context[propArr.shift() as string]
+  }
+
+  // HACK: 由于events顺序问题，需要在setImmediate设置值；副作用——一些浏览器中回闪现删除的过程
+  setTimeout(() => {
+    context[propArr[0]] = value
+  }, 0)
+}
+
+// eslint-disable-next-line
+export const removeItem = function (arr: Array<any>, item: any): void {
+  const idx = arr.indexOf(item)
 
   if (idx > -1) {
     arr.splice(idx, 1)
   }
 }
 
-export const cache = function(fn: any) {
-  let cached: any = []
-  return function(str: any) {
+/**
+ * 返回带有缓存的函数
+ *
+ * @param fn
+ */
+export const cache = function <T>(fn: (str: string) => T): (str: string) => T {
+  const cached: {
+    [key: string]: T
+  } = {}
+
+  return function (str: string): T {
     if (cached[str]) {
       return cached[str]
     } else {
       return (cached[str] = fn(str))
     }
-  };
+  }
 }
 
-export const isSameOption = function(obj1: any, obj2: any) {
-  return Object.keys(obj1).every(key => {
+/**
+ * 判断两个Option对象是否等效
+ *
+ * @param obj1
+ * @param obj2
+ */
+export const isSameOption = function (obj1: Context, obj2: Context): boolean {
+  return Object.keys(obj1).every((key) => {
     if (key === 'vnode') {
       return obj1[key].context._uid === obj2[key].context._uid
     } else if (key === 'scope') {

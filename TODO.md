@@ -18,6 +18,7 @@
 + 默认v-model，或代替v-model
 + 更新AllowedTagList、
 + 转Ts
++ 会不会有xx[``s${var}s``]这样的model——ddd.list[`${ddd.key1
 
 ## 思路
 

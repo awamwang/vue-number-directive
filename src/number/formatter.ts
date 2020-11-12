@@ -1,6 +1,6 @@
 import { ParsedOptions } from './option'
 import { getInputDom, getDomValue, setDomValue } from './util/dom'
-import { removeItem, cache, setProp } from './util/lang'
+import { removeItem, cache, setProp, Context } from './util/lang'
 import { debug } from './util/log'
 
 const UseCache = true
@@ -17,8 +17,9 @@ const AllVailidNumberChar = ['0-9', '+', '-', '\\.', 'e']
 const UniqueChar = ['+|-', '\\.', 'e']
 const ValidSepChar = [',', ' ']
 
-interface NumberInput extends HTMLElement {
+export interface NumberInput extends HTMLElement {
   numberDirOptions?: ParsedOptions
+  formatter?: Formatter
 }
 
 /**
@@ -80,9 +81,9 @@ function getMaxIntegerLength({ minimum, maximum, sep, sepChar = [] }: ParsedOpti
  * @param {*} param0
  */
 function getMaxLength(
-  integerLength: any,
-  { sientific, integer, flag, minimum, maximum, fixed, sep, sepChar = [] }: any
-) {
+  integerLength: number,
+  { sientific, integer, flag, minimum, maximum, fixed, sep, sepChar = [] }: ParsedOptions
+): number {
   flag && integerLength++
   !integer && integerLength++
   fixed && (integerLength += fixed)
@@ -97,7 +98,7 @@ function getMaxLength(
  * @param {*} param1
  */
 function genValidRegex(
-  integerLength: any,
+  integerLength: number,
   { sientific, integer, flag, fixed, sep, sepChar = [] }: ParsedOptions
 ) {
   let regexStr = `([1-9]?)([0-9]{0,${integerLength - 1}})?`
@@ -107,6 +108,10 @@ function genValidRegex(
 
   return new RegExp(`^${regexStr}$`)
 }
+
+// interface MyEventListener {
+//   (evt)
+// }
 
 export class Formatter {
   formatValue: any
@@ -119,8 +124,9 @@ export class Formatter {
   options: ParsedOptions
   validCharRegex: RegExp
   validRegex: RegExp
-  validateAndFixInput: any
-  validateValue: any
+  validateAndFixInput!: (ev: Event) => void
+  validateValue!: (str: string) => boolean
+
   constructor(options: ParsedOptions) {
     this.input = getInputDom(options.el, options.vnode)
     this.options = options
@@ -137,7 +143,7 @@ export class Formatter {
     this.initFormatValueMethod()
   }
 
-  initListenMethods() {
+  initListenMethods(): void {
     /**
      * 在keydown事件中检测单个字符的合法性，字符的唯一性，max/min(todo)
      */
@@ -164,14 +170,14 @@ export class Formatter {
     /**
      * 限制粘贴操作
      */
-    this.onPaste = (ev: any) => {
+    this.onPaste = (ev: Event) => {
       ev.preventDefault()
     }
 
     /**
      * 在blur事件中格式化值
      */
-    this.onBlur = (ev: any) => {
+    this.onBlur = (ev: Event) => {
       this.formatValue(getDomValue(ev.target))
     }
   }
@@ -179,8 +185,8 @@ export class Formatter {
   /**
    * 初始化
    */
-  initValidateMethod() {
-    const validateValue = (value: any) => {
+  initValidateMethod(): void {
+    const validateValue = (value: any): boolean => {
       if (value.length > this.maxLength) {
         debug(`maxLength: value(${value}), maxLength(${this.maxLength})`)
         return false
@@ -196,7 +202,7 @@ export class Formatter {
     this.validateValue = UseCache ? cache(validateValue).bind(this) : validateValue
   }
 
-  initFormatValueMethod() {
+  initFormatValueMethod(): void {
     /**
      * 整体format todo
      */
@@ -211,7 +217,7 @@ export class Formatter {
    * 在input value值变化时调用，用来更正input value
    * @param {*} ev
    */
-  validateAndFixByInputEvent(ev: any) {
+  validateAndFixByInputEvent(ev: Event): void {
     const { modelPropPath, scope, vnode } = this.options
     const value = (getDomValue(ev.target) || '').toString()
     const oldValue = (this.oldValue || '').toString()
@@ -225,12 +231,12 @@ export class Formatter {
     // 如果之前是合法的，本次不合法，则把值回退回去
     if (!this.validateValue(value) && this.validateValue(oldValue)) {
       // 将scope和vnode本身的context合并，作为完整的查询链，类似作用域链的查询，前面的scope优先级高
-      setProp((scope ? [scope] : []).concat(vnode.context), modelPropPath, oldValue)
+      setProp((scope ? [scope] : []).concat([vnode.context as Context]), modelPropPath, oldValue)
       setDomValue(ev.target, oldValue)
     }
   }
 
-  listen() {
+  listen(): Formatter {
     this.input.addEventListener('keydown', this.onKeydown)
     this.validateAndFixInput && this.input.addEventListener('input', this.validateAndFixInput)
     if (!this.options.canPaste) {
@@ -239,7 +245,7 @@ export class Formatter {
 
     return this
   }
-  unlisten() {
+  unlisten(): Formatter {
     this.input.removeEventListener('keydown', this.onKeydown)
     this.validateAndFixInput && this.input.removeEventListener('input', this.validateAndFixInput)
     if (!this.options.canPaste) {
@@ -248,13 +254,13 @@ export class Formatter {
 
     return this
   }
-  destroy() {
+  destroy(): void {
     delete this.input.numberDirOptions
     this.unlisten()
   }
 }
 
-const init = function (el: any, options: any) {
+const init = function (el: NumberInput, options: ParsedOptions): void {
   el.formatter && el.formatter.destroy()
 
   el.formatter = new Formatter(options).listen()

@@ -1,6 +1,14 @@
 // todo 换TS，定义接口
+import { VNode } from 'vue'
+import { DirectiveBinding } from 'vue/types/options'
+import { Context } from './util/lang'
 import { configLog, warn } from './util/log'
 const ExpressionRegex = /model:([^,}]+),?/
+
+interface VNodeData {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  model: { expression: any }
+}
 
 export interface SchemaOptions {
   integer?: boolean
@@ -12,11 +20,8 @@ export interface SchemaOptions {
 }
 
 export interface Options {
-  el?: HTMLElement
-  vnode?: any
   debug?: boolean
-  modelPropPath?: string
-  scope?: Array<any>
+  scope?: Array<Context>
 
   integer?: boolean
   positive?: boolean
@@ -27,14 +32,20 @@ export interface Options {
   max?: number
   minimum?: number
   maximum?: number
-  exclusiveMinimum?: number
-  exclusiveMaximum?: number
+  exclusiveMinimum?: boolean
+  exclusiveMaximum?: boolean
+  multipleOf?: number
   sep?: boolean | string
+  sepChar?: Array<string>
 
-  [index: string]: any
+  [index: string]: unknown
 }
 
 export interface ParsedOptions extends Options {
+  el: HTMLElement
+  vnode: VNode
+  modelPropPath: string
+
   minimum: number
   maximum: number
 }
@@ -43,16 +54,18 @@ export interface GlobalOptions extends Options {
   name?: string
 }
 
-export function getModelPath(expression: any, vnode: any): string {
+// eslint-disable-next-line
+export function getModelPath(expression: any, vnode: VNode): string {
   const matches = expression.replace(/\s|↵/g, '').match(ExpressionRegex)
   if (matches) {
     return matches[1]
   } else {
-    return vnode.data.model ? vnode.data.model.expression : expression
+    return (vnode.data as VNodeData).model ? (vnode.data as VNodeData).model.expression : expression
   }
 }
 
-export function parseSchema(schema: any): SchemaOptions {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parseSchema(schema: Options): SchemaOptions {
   if (!schema) {
     return {}
   }
@@ -67,7 +80,7 @@ export function parseSchema(schema: any): SchemaOptions {
   }
 }
 
-export function getMinMax(config: any, type: any): number {
+export function getMinMax(config: Options, type: 'min' | 'max'): number {
   if (type === 'min') {
     return typeof config.min === 'number'
       ? config.min
@@ -85,6 +98,7 @@ export function getMinMax(config: any, type: any): number {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mergeOptions(options: Options, schema: any, globalOptions: GlobalOptions): ParsedOptions {
   Object.keys(schema).forEach((key) => {
     // schema的优先级高
@@ -128,9 +142,9 @@ export function optimizeOptions(options: ParsedOptions): ParsedOptions {
 
 export default function (
   el: HTMLElement,
-  binding: any,
-  vnode: any,
-  globalOptions: any
+  binding: DirectiveBinding,
+  vnode: VNode,
+  globalOptions: GlobalOptions
 ): {
   options: ParsedOptions
 } {

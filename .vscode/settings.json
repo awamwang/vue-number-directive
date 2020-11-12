@@ -8,6 +8,7 @@
     "git",
     "travis",
     "lint",
-    "readme"
+    "readme",
+    "typescript"
   ]
 }

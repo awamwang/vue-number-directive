@@ -1,7 +1,7 @@
 const SquareBracketPropRegex = /\[(['"`](\S+)['"`]|\d+)\]/g // 匹配["xx"]/[0]一类普通属性
 const VarPropRegex = /\[(\S+)\]/g // 匹配计算属性（本身也为变量的属性名称）
 
-interface Context {
+export interface Context {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
 }

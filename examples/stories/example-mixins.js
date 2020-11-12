@@ -13,7 +13,6 @@ export const OptionsToShow = [
   // 'positiveModifier',
   // 'posModifier',
 
-  'sientific',
   'fixed',
   'flag',
   'minimum',
@@ -41,7 +40,7 @@ export default {
   },
   computed: {
     shownOptions() {
-      return OptionsToShow.map(key => ({
+      return OptionsToShow.map((key) => ({
         key,
         value: getValue(this.parsedOptions, key)
       }))

@@ -56,12 +56,8 @@ describe('getMinMax', () => {
     })
 
     it('从minimum/maximumx获取', function () {
-      expect(getMinMax({ ...this.config.minMax.base, min: null }, 'min')).to.eq(
-        -101
-      )
-      expect(getMinMax({ ...this.config.minMax.base, max: null }, 'max')).to.eq(
-        102
-      )
+      expect(getMinMax({ ...this.config.minMax.base, min: null }, 'min')).to.eq(-101)
+      expect(getMinMax({ ...this.config.minMax.base, max: null }, 'max')).to.eq(102)
     })
   })
 
@@ -106,12 +102,7 @@ describe('options parse method', () => {
   })
 
   it('basic', function () {
-    let options = parseOption(
-      vm.myInput,
-      this.config.binding.base,
-      vm._vnode,
-      {}
-    ).options
+    let options = parseOption(vm.myInput, this.config.binding.base, vm._vnode, {}).options
     console.log('basic options', options)
 
     expect(options).to.be.a('object')
@@ -122,12 +113,7 @@ describe('options parse method', () => {
   })
 
   it('all options', function () {
-    let options = parseOption(
-      vm.myInput,
-      this.config.binding.all,
-      vm._vnode,
-      {}
-    ).options
+    let options = parseOption(vm.myInput, this.config.binding.all, vm._vnode, {}).options
     console.log('all options', options)
 
     expect(options.el).to.be.instanceOf(HTMLElement)
@@ -143,7 +129,6 @@ describe('options parse method', () => {
     expect(options.maximum).to.be.equal(Number.MAX_SAFE_INTEGER)
     expect(options.scope).to.be.deep.equal([{ a: 1 }, { b: 2 }])
     expect(options.sep).to.be.equal(false)
-    expect(options.sientific).to.be.equal(false)
   })
 
   it('global options', function () {
@@ -167,7 +152,6 @@ describe('options parse method', () => {
     expect(options.maximum).to.be.equal(Number.MAX_SAFE_INTEGER)
     expect(options.scope).to.be.deep.equal([{ a: 1 }, { b: 2 }])
     expect(options.sep).to.be.equal(false)
-    expect(options.sientific).to.be.equal(false)
   })
 
   it('优先级：schema 优先于 options中的min/max配置', function () {

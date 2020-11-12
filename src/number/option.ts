@@ -25,7 +25,6 @@ export interface Options {
 
   integer?: boolean
   positive?: boolean
-  sientific?: boolean
   fixed?: number
   flag?: boolean
   min?: number
@@ -166,7 +165,6 @@ export default function (
 
           integer,
           positive,
-          sientific: config.sientific,
           fixed: config.fixed,
           flag: config.flag,
           min: config.min,

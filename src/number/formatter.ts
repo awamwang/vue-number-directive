@@ -57,7 +57,7 @@ function getSepCharList(
  * 通过配置生成合法性校验正则
  * @param {*} param0
  */
-function genValidCharRegex({ positive, sientific, integer, flag, sep, sepChar }: ParsedOptions) {
+function genValidCharRegex({ positive, integer, flag, sep, sepChar }: ParsedOptions) {
   sepChar = getSepCharList(sep, sepChar)
 
   const validChar = [...ValidNumberCharList, ...sepChar]
@@ -65,7 +65,6 @@ function genValidCharRegex({ positive, sientific, integer, flag, sep, sepChar }:
   positive && removeItem(validChar, '-')
   !flag && removeItem(validChar, '-')
   !flag && removeItem(validChar, '+')
-  !sientific && removeItem(validChar, 'e')
   integer && removeItem(validChar, '\\.')
 
   return new RegExp(`^${ValidOperationList.join('|')}|[${validChar.join('')}]$`)
@@ -98,10 +97,7 @@ function getMaxIntegerLength({ minimum, maximum }: ParsedOptions) {
  * @param {*} integerLength
  * @param {*} param0
  */
-function getMaxLength(
-  integerLength: number,
-  { sientific, integer, flag, fixed }: ParsedOptions
-): number {
+function getMaxLength(integerLength: number, { integer, flag, fixed }: ParsedOptions): number {
   flag && integerLength++
   !integer && integerLength++
   fixed && (integerLength += fixed)
@@ -115,7 +111,7 @@ function getMaxLength(
  * @param {*} integerLength
  * @param {*} param1
  */
-function genValidRegex(integerLength: number, { sientific, integer, flag, fixed }: ParsedOptions) {
+function genValidRegex(integerLength: number, { integer, flag, fixed }: ParsedOptions) {
   let regexStr = `([1-9]?)([0-9]{0,${integerLength - 1}})?`
 
   flag && (regexStr = '[+-]?' + regexStr)

@@ -13,7 +13,6 @@ export const OptionsToShow = [
   // 'positiveModifier',
   // 'posModifier',
 
-  'sientific',
   'fixed',
   'flag',
   'minimum',

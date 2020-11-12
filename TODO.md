@@ -12,7 +12,6 @@
 + 一次性检查-parseFloat/Int；在formatter建立后进行检查
 + maxlength
 + formatFullValue
-+ sientific - 去掉
 + 更新AllowedTagList、
 
 ## 思路

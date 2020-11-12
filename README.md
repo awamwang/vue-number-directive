@@ -82,7 +82,6 @@ optimizeOptions(
 
       integer,
       positive,
-      sientific: config.sientific,
       fixed: config.fixed,
       flag: config.flag,
       min: config.min,

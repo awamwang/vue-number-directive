@@ -1,3 +1,19 @@
+## [0.0.4-2](https://github.com/awamwang/vue-number-directive/compare/v0.0.4-1...v0.0.4-2) (2020-11-12)
+
+
+### Bug Fixes
+
+* 修复setProp的问题 ([64f67cc](https://github.com/awamwang/vue-number-directive/commit/64f67cce30b699f9ebf225490682f6fea6d8d2aa))
+* 报错不支持TEXTAREA问题 ([7b2f49f](https://github.com/awamwang/vue-number-directive/commit/7b2f49fd2472f1ee24dbeaa5c0ad61ad3a39acd3))
+
+
+### Features
+
+* seperate支持 ([f08a7d9](https://github.com/awamwang/vue-number-directive/commit/f08a7d9d01d4f6324ed1c8b85857ecc272a29d52))
+* 去掉sientific特性 ([90259d2](https://github.com/awamwang/vue-number-directive/commit/90259d24a1e29bd7b63cb3b6dc6a3506a0126bf5))
+
+
+
 ## [0.0.4-1](https://github.com/awamwang/vue-number-directive/compare/v0.0.4-0...v0.0.4-1) (2020-11-04)
 
 

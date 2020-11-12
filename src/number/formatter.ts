@@ -1,10 +1,10 @@
 import { ParsedOptions } from './option'
 import { getInputDom, getDomValue, setDomValue } from './util/dom'
 import { removeItem, cache, setProp, Context } from './util/lang'
-import { debug } from './util/log'
+import { debug, error } from './util/log'
 
 const UseCache = true
-const ValidOperation = [
+const ValidOperationList = [
   'Backspace',
   'Enter',
   'Tab',
@@ -13,9 +13,9 @@ const ValidOperation = [
   'ArrowUp',
   'ArrowDown'
 ]
-const AllVailidNumberChar = ['0-9', '+', '-', '\\.', 'e']
-const UniqueChar = ['+|-', '\\.', 'e']
-const ValidSepChar = [',', ' ']
+const ValidNumberCharList = ['0-9', '+', '-', '\\.', 'e']
+const UniqueCharList = ['+|-', '\\.', 'e']
+const DefaultSepCharList = [',', ' ']
 
 export interface NumberInput extends HTMLElement {
   numberDirOptions?: ParsedOptions
@@ -25,7 +25,7 @@ export interface NumberInput extends HTMLElement {
 /**
  * 一组用来测试字符唯一性的函数，UniqueChar在字符串中出现小于一次则测试通过
  */
-const UniqueTesters = UniqueChar.map((c) => {
+const UniqueTesters = UniqueCharList.map((c) => {
   const lastValueRegex = new RegExp(`[${c}]`)
   const newCharRegex = new RegExp(`^[${c}]$`)
 
@@ -34,25 +34,33 @@ const UniqueTesters = UniqueChar.map((c) => {
   }
 })
 
+function getSepCharList(
+  sep: string | boolean | undefined,
+  sepChar: Array<string> | undefined
+): Array<string> {
+  if (sep) {
+    if (Array.isArray(sepChar)) {
+      sepChar = sepChar.concat(typeof sep === 'string' ? [sep] : [])
+    } else {
+      sepChar = DefaultSepCharList.concat(typeof sep === 'string' ? [sep] : [])
+    }
+  }
+  sepChar = sepChar || []
+  if (sepChar.some((c) => c.length !== 1)) {
+    error("sep's length mush be 1")
+  }
+
+  return Array.from(new Set(sepChar))
+}
+
 /**
  * 通过配置生成合法性校验正则
  * @param {*} param0
  */
-function genValidCharRegex({
-  positive,
-  sientific,
-  integer,
-  flag,
-  minimum,
-  maximum,
-  fixed,
-  sep,
-  sepChar = []
-}: ParsedOptions) {
-  if (sep && !Array.isArray(sepChar)) {
-    sepChar = ValidSepChar
-  }
-  const validChar = [...AllVailidNumberChar, ...sepChar]
+function genValidCharRegex({ positive, sientific, integer, flag, sep, sepChar }: ParsedOptions) {
+  sepChar = getSepCharList(sep, sepChar)
+
+  const validChar = [...ValidNumberCharList, ...sepChar]
 
   positive && removeItem(validChar, '-')
   !flag && removeItem(validChar, '-')
@@ -60,14 +68,24 @@ function genValidCharRegex({
   !sientific && removeItem(validChar, 'e')
   integer && removeItem(validChar, '\\.')
 
-  return new RegExp(`^${ValidOperation.join('|')}|[${validChar.join('')}]$`)
+  return new RegExp(`^${ValidOperationList.join('|')}|[${validChar.join('')}]$`)
 }
 
 /**
- * 计算整数数字最大长度（不包括符号）
+ * 通过配置生成匹配分隔字符的正则
  * @param {*} param0
  */
-function getMaxIntegerLength({ minimum, maximum, sep, sepChar = [] }: ParsedOptions) {
+function genSegCharRegex({ sep, sepChar }: ParsedOptions) {
+  sepChar = getSepCharList(sep, sepChar)
+
+  return new RegExp(`(${sepChar.join('|')})`)
+}
+
+/**
+ * 计算整数部分最大长度（不包括正负符号及分隔符号）
+ * @param {*} param0
+ */
+function getMaxIntegerLength({ minimum, maximum }: ParsedOptions) {
   return Math.max(
     parseInt((minimum >= 0 ? minimum : -minimum).toString()).toString().length,
     parseInt((maximum >= 0 ? maximum : -maximum).toString()).toString().length
@@ -82,7 +100,7 @@ function getMaxIntegerLength({ minimum, maximum, sep, sepChar = [] }: ParsedOpti
  */
 function getMaxLength(
   integerLength: number,
-  { sientific, integer, flag, minimum, maximum, fixed, sep, sepChar = [] }: ParsedOptions
+  { sientific, integer, flag, fixed }: ParsedOptions
 ): number {
   flag && integerLength++
   !integer && integerLength++
@@ -97,10 +115,7 @@ function getMaxLength(
  * @param {*} integerLength
  * @param {*} param1
  */
-function genValidRegex(
-  integerLength: number,
-  { sientific, integer, flag, fixed, sep, sepChar = [] }: ParsedOptions
-) {
+function genValidRegex(integerLength: number, { sientific, integer, flag, fixed }: ParsedOptions) {
   let regexStr = `([1-9]?)([0-9]{0,${integerLength - 1}})?`
 
   flag && (regexStr = '[+-]?' + regexStr)
@@ -108,10 +123,6 @@ function genValidRegex(
 
   return new RegExp(`^${regexStr}$`)
 }
-
-// interface MyEventListener {
-//   (evt)
-// }
 
 export class Formatter {
   formatValue: any
@@ -123,6 +134,7 @@ export class Formatter {
   onPaste: any
   options: ParsedOptions
   validCharRegex: RegExp
+  sepCharRegex: RegExp
   validRegex: RegExp
   validateAndFixInput!: (ev: Event) => void
   validateValue!: (str: string) => boolean
@@ -134,6 +146,7 @@ export class Formatter {
     const maxIntegerLength = getMaxIntegerLength(options)
     this.maxLength = getMaxLength(maxIntegerLength, options)
     this.validCharRegex = genValidCharRegex(options)
+    this.sepCharRegex = genSegCharRegex(options)
     this.validRegex = genValidRegex(maxIntegerLength, options)
 
     this.oldValue = getDomValue(this.input)
@@ -160,6 +173,23 @@ export class Formatter {
         debug(`UniqueTesters test fail: input key(${ev.key}), value(${getDomValue(ev.target)})`)
         ev.preventDefault()
       }
+
+      // 不允许连续两个分隔字符
+      console.log(
+        'sf',
+        this.sepCharRegex,
+        ev.key,
+        this.sepCharRegex.test(ev.key),
+        `(${this.oldValue[this.oldValue.length - 1]})`,
+        this.sepCharRegex.test(this.oldValue[this.oldValue.length - 1])
+      )
+      if (
+        this.sepCharRegex.test(ev.key) &&
+        this.sepCharRegex.test(this.oldValue[this.oldValue.length - 1].toString())
+      ) {
+        debug(`SepChar test fail: input key(${ev.key}), sepCharRegex(${this.sepCharRegex})`)
+        ev.preventDefault()
+      }
     }
 
     /**
@@ -182,17 +212,27 @@ export class Formatter {
     }
   }
 
+  purifyValue(value: string): string {
+    return value.replace(new RegExp(this.sepCharRegex, 'g'), '')
+  }
+
   /**
    * 初始化
    */
   initValidateMethod(): void {
-    const validateValue = (value: any): boolean => {
-      if (value.length > this.maxLength) {
-        debug(`maxLength: value(${value}), maxLength(${this.maxLength})`)
+    const validateValue = (value: string): boolean => {
+      const pureValue = this.purifyValue(value)
+
+      // 检查长度
+      if (pureValue.length > this.maxLength) {
+        debug(`maxLength: value(${value}), pureValue(${pureValue}), maxLength(${this.maxLength})`)
         return false
       }
-      if (!this.validRegex.test(value)) {
-        debug(`validRegex test fail: value(${value}), validRegex(${this.validRegex})`)
+      // 检查整体合法性
+      if (!this.validRegex.test(pureValue)) {
+        debug(
+          `validRegex test fail: value(${value}), pureValue(${pureValue}), validRegex(${this.validRegex})`
+        )
         return false
       }
 
@@ -206,7 +246,7 @@ export class Formatter {
     /**
      * 整体format todo
      */
-    const formatFullValue = (value: any) => {
+    const formatFullValue = (value: string) => {
       return value
     }
 

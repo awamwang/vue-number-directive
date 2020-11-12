@@ -11,8 +11,8 @@
 + schema剩余特性, schema优先级更高
 + 一次性检查-parseFloat/Int；在formatter建立后进行检查
 + maxlength
-+ sientific
-+ sep
++ formatFullValue
++ sientific - 去掉
 + 更新AllowedTagList、
 
 ## 思路

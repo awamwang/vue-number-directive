@@ -18,6 +18,7 @@ module.exports = {
       }
     },
     '@storybook/addon-essentials',
+    '@storybook/addon-controls',
     '@storybook/addon-links',
     '@storybook/addon-notes',
     '@storybook/addon-knobs'

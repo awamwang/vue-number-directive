@@ -45,6 +45,7 @@ export interface ParsedOptions extends Options {
   vnode: VNode
   modelPropPath: string
 
+  fixed: number
   minimum: number
   maximum: number
 }
@@ -75,7 +76,7 @@ export function parseSchema(schema: Options): SchemaOptions {
     maximum: schema.maximum,
     exclusiveMinimum: schema.exclusiveMinimum,
     exclusiveMaximum: schema.exclusiveMaximum,
-    multipleOf: schema.multipleOf
+    multipleOf: schema.multipleOf,
   }
 }
 
@@ -130,6 +131,9 @@ export function optimizeOptions(options: ParsedOptions): ParsedOptions {
     // warn('fixed of integer number must be 0')
     options.fixed = 0
   }
+  if (options.fixed < 0) {
+    options.fixed = 0
+  }
   if (options.minimum < 0 && options.positive) {
     // warn('minimum of positive number must >= 0')
     options.minimum = 0
@@ -173,11 +177,11 @@ export default function (
           maximum: config.maximum,
           // exclusiveMinimum,
           // exclusiveMaximum,
-          sep: config.sep
+          sep: config.sep,
         },
         parseSchema(config.schema),
         globalOptions
       )
-    )
+    ),
   }
 }

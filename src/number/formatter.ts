@@ -11,7 +11,7 @@ const ValidOperationList = [
   'ArrowLeft',
   'ArrowRight',
   'ArrowUp',
-  'ArrowDown'
+  'ArrowDown',
 ]
 const ValidNumberCharList = ['0-9', '+', '-', '\\.', 'e']
 const UniqueCharList = ['+|-', '\\.', 'e']
@@ -74,10 +74,14 @@ function genValidCharRegex({ positive, integer, flag, sep, sepChar }: ParsedOpti
  * 通过配置生成匹配分隔字符的正则
  * @param {*} param0
  */
-function genSegCharRegex({ sep, sepChar }: ParsedOptions) {
+function genSegCharRegex({ sep, sepChar }: ParsedOptions): RegExp | null {
   sepChar = getSepCharList(sep, sepChar)
 
-  return new RegExp(`(${sepChar.join('|')})`)
+  if (sepChar.length) {
+    return new RegExp(`(${sepChar.join('|')})`)
+  } else {
+    return null
+  }
 }
 
 /**
@@ -130,7 +134,7 @@ export class Formatter {
   onPaste: any
   options: ParsedOptions
   validCharRegex: RegExp
-  sepCharRegex: RegExp
+  sepCharRegex: RegExp | null
   validRegex: RegExp
   validateAndFixInput!: (ev: Event) => void
   validateValue!: (str: string) => boolean
@@ -145,19 +149,23 @@ export class Formatter {
     this.sepCharRegex = genSegCharRegex(options)
     this.validRegex = genValidRegex(maxIntegerLength, options)
 
-    this.oldValue = getDomValue(this.input)
-
     this.initListenMethods()
     this.initValidateMethod()
     this.initFormatValueMethod()
+
+    // 初始化时就format一下，保证格式正确
+    this.oldValue = this.formatValue(getDomValue(this.input))
   }
 
   initListenMethods(): void {
     /**
-     * 在keydown事件中检测单个字符的合法性，字符的唯一性，max/min(todo)
+     * 在keydown事件中检测单个字符的合法性，字符的唯一性，max/min
      */
     this.onKeydown = (ev: KeyboardEvent) => {
       this.oldValue = getDomValue(this.input)
+      const newValueNumber = Number(this.oldValue + ev.key)
+      const { minimum, maximum, exclusiveMinimum, exclusiveMaximum } = this.options
+
       if (!this.validCharRegex.test(ev.key)) {
         debug(
           `validCharRegex test fail: input key(${ev.key}), validCharRegex(${this.validCharRegex})`
@@ -171,20 +179,25 @@ export class Formatter {
       }
 
       // 不允许连续两个分隔字符
-      console.log(
-        'sf',
-        this.sepCharRegex,
-        ev.key,
-        this.sepCharRegex.test(ev.key),
-        `(${this.oldValue[this.oldValue.length - 1]})`,
-        this.sepCharRegex.test(this.oldValue[this.oldValue.length - 1])
-      )
       if (
+        this.sepCharRegex &&
         this.sepCharRegex.test(ev.key) &&
         this.sepCharRegex.test(this.oldValue[this.oldValue.length - 1].toString())
       ) {
         debug(`SepChar test fail: input key(${ev.key}), sepCharRegex(${this.sepCharRegex})`)
         ev.preventDefault()
+      }
+
+      // 新值不能超出范围
+      if (newValueNumber > maximum || (exclusiveMaximum && newValueNumber >= maximum)) {
+        debug(`maximum check fail: input key(${ev.key}), newValueNumber(${newValueNumber})`)
+        ev.preventDefault()
+        this.setValue(maximum.toString())
+      }
+      if (newValueNumber < minimum || (exclusiveMinimum && newValueNumber <= minimum)) {
+        debug(`minimum check fail: input key(${ev.key}), newValueNumber(${newValueNumber})`)
+        ev.preventDefault()
+        this.setValue(minimum.toString())
       }
     }
 
@@ -209,6 +222,10 @@ export class Formatter {
   }
 
   purifyValue(value: string): string {
+    if (!this.sepCharRegex) {
+      return value
+    }
+
     return value.replace(new RegExp(this.sepCharRegex, 'g'), '')
   }
 
@@ -242,8 +259,35 @@ export class Formatter {
     /**
      * 整体format todo
      */
-    const formatFullValue = (value: string) => {
-      return value
+    const formatFullValue = (value: string): string => {
+      const { minimum, maximum, exclusiveMinimum, exclusiveMaximum } = this.options
+      const pureValue = this.purifyValue(value)
+      let parsedValue
+
+      if (this.options.integer || this.options.fixed <= 0) {
+        parsedValue = parseInt(pureValue).toString()
+      } else {
+        parsedValue = parseFloat(pureValue).toString()
+      }
+
+      if (!this.validateValue(parsedValue)) {
+        parsedValue = ''
+      }
+
+      // 不能超出范围
+      const parsedValueNumber = Number(parsedValue)
+      if (parsedValueNumber > maximum || (exclusiveMaximum && parsedValueNumber >= maximum)) {
+        parsedValue = maximum.toString()
+      }
+      if (parsedValueNumber < minimum || (exclusiveMinimum && parsedValueNumber <= minimum)) {
+        parsedValue = minimum.toString()
+      }
+
+      if (parsedValue !== pureValue) {
+        this.setValue(parsedValue)
+      }
+
+      return parsedValue
     }
 
     this.formatValue = UseCache ? cache(formatFullValue).bind(this) : formatFullValue
@@ -254,7 +298,6 @@ export class Formatter {
    * @param {*} ev
    */
   validateAndFixByInputEvent(ev: Event): void {
-    const { modelPropPath, scope, vnode } = this.options
     const value = (getDomValue(ev.target) || '').toString()
     const oldValue = (this.oldValue || '').toString()
 
@@ -266,10 +309,16 @@ export class Formatter {
 
     // 如果之前是合法的，本次不合法，则把值回退回去
     if (!this.validateValue(value) && this.validateValue(oldValue)) {
-      // 将scope和vnode本身的context合并，作为完整的查询链，类似作用域链的查询，前面的scope优先级高
-      setProp((scope ? [scope] : []).concat([vnode.context as Context]), modelPropPath, oldValue)
-      setDomValue(ev.target, oldValue)
+      this.setValue(oldValue)
     }
+  }
+
+  private setValue(oldValue: string) {
+    const { modelPropPath, scope, vnode } = this.options
+
+    // 将scope和vnode本身的context合并，作为完整的查询链，类似作用域链的查询，前面的scope优先级高
+    setProp((scope ? [scope] : []).concat([vnode.context as Context]), modelPropPath, oldValue)
+    setDomValue(this.input, oldValue)
   }
 
   listen(): Formatter {

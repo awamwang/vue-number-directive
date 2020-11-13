@@ -1,7 +1,7 @@
-import MyExample from './basic/MyExample'
+import NumberDirectiveWrap from '../NumberDirectiveWrap'
 
 export default {
-  component: MyExample,
+  component: NumberDirectiveWrap,
   title: 'VueNumber/DebugMode',
 }
 

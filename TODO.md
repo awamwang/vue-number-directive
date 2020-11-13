@@ -12,6 +12,7 @@
 + schema剩余特性, schema优先级更高
 + 一次性检查-parseFloat/Int；在formatter建立后进行检查
 + max/min考虑fixed
++ 修改options后进行一次format
 + 记录问题（超长，错误字符，要考了i18n了）
 + maxlength
 + formatFullValue

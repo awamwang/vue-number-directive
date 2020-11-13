@@ -1,14 +1,16 @@
-import { basic } from './props'
+import { basicProps } from './props'
 
-export default function (component, args, parameters) {
+export default function genStory(component, args = {}, parameters, config = {}) {
   const Story = () => ({
     components: {
       MyExample: component,
     },
-    props: basic(),
-    template: `
-      <my-example v-bind="$props"/>
-      `,
+    // props: basic(args),
+    props: {
+      ...basicProps,
+    },
+    template: `<my-example v-bind="$props" :options="$props"/>`,
+    ...config,
   })
 
   Story.args = args

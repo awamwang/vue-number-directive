@@ -1,13 +1,7 @@
 <template>
-  <NumberWrap ref="wrap">
+  <div>
     <label for="input1">input1: contenteditable</label>
-    <p
-      name="input1"
-      v-model="input1"
-      v-number="{ ...$props }"
-      contenteditable
-      @focus="onFocus"
-    >
+    <p name="input1" v-model="input1" v-number="{ ...options }" contenteditable @focus="onFocus">
       {{ input1 }}
     </p>
 
@@ -15,26 +9,23 @@
     <p
       name="input2"
       v-model="input2"
-      v-number="{ ...$props }"
+      v-number="{ ...options }"
       contenteditable="true"
       @focus="onFocus"
     >
       {{ input2 }}
     </p>
-  </NumberWrap>
+  </div>
 </template>
 
 <script>
-import { Input } from 'element-ui'
-
 export default {
   name: 'MyExample',
-  components: { elInput: Input },
   data() {
     return {
       input1: '123',
-      input2: '123'
+      input2: '123',
     }
-  }
+  },
 }
 </script>

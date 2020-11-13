@@ -1,14 +1,9 @@
 <template>
-  <NumberWrap ref="wrap">
-    <Input
-      v-model="input1"
-      data-cy
-      v-number="{ ...$props, model: input1 }"
-      @focus="onFocus"
-    ></Input>
-  </NumberWrap>
+  <Input v-model="input1" data-cy v-number="{ ...options, model: input1 }" @focus="onFocus"></Input>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {},
+}
 </script>

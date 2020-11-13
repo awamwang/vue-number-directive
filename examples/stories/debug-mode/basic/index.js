@@ -1,10 +1,9 @@
 import MyExample from './MyExample'
 import NoteMd from './Note.md'
-import genStory from '../../basic-story'
 
-export const Story = genStory(
+export const Story = window.genStory(
   MyExample,
-  {},
+  { debug: true },
   {
     notes: { NoteMd },
   }

@@ -1,10 +1,15 @@
-import { storiesOf } from '@storybook/vue'
-import NumberWrap from '../examples/stories/NumberDirectiveWrap'
+
+import { basicPropControls } from '../examples/stories/props'
 import './vue-config'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
-  component: NumberWrap,
   controls: { expanded: true },
-  argTypes: {}
+  argTypes: basicPropControls,
 }
+
+export const decorators = [
+  () => ({
+    template: `<NumberWrap ref="wrap"><story /></NumberWrap>`,
+  }),
+]

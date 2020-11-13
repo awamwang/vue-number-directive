@@ -10,5 +10,8 @@
     "lint",
     "readme",
     "typescript"
-  ]
+  ],
+    "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": false
+  }
 }

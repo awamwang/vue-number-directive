@@ -7,3 +7,4 @@ export default {
 }
 
 export { Story as BasicUsage } from './basic/index'
+// export { Story as Schema } from './schema/index'

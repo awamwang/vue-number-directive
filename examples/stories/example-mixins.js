@@ -1,6 +1,4 @@
 // import { action } from '@storybook/addon-actions'
-import { basic } from './props'
-
 export const OptionsToShow = [
   'debug',
   'model',
@@ -31,7 +29,7 @@ function getValue(obj, key) {
 }
 
 export default {
-  props: basic(),
+  props: ['options'],
   data() {
     return {
       input1: '123',
@@ -49,11 +47,12 @@ export default {
   methods: {
     onFocus(ev) {
       this.parsedOptions = ev.target.numberDirOptions
+      const wrap = this.$root.$children[0].$refs['wrap']
 
-      if (this.parsedOptions && this.$refs['wrap']) {
-        this.$refs['wrap'].myOptions = this.shownOptions
+      if (this.parsedOptions && wrap) {
+        wrap.myOptions = this.shownOptions
         // console.log(this.parsedOptions)
-        this.$refs['wrap'].parsedOptions = OptionsToShow.reduce((res, k) => {
+        wrap.parsedOptions = OptionsToShow.reduce((res, k) => {
           res[k] = this.parsedOptions[k]
           return res
         }, {})

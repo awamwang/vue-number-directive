@@ -15,6 +15,7 @@
     "version": "npm run build && npm run changelog && git add CHANGELOG.md package.json",
     "build": "npm run build-cjs && npm run build-umd && tsc",
     "lint": "eslint && eslint -c examples/.eslintrc.js examples/ && eslint -c cypress/.eslintrc.js cypress",
+    "lint-fix": "eslint --fix && eslint -c examples/.eslintrc.js examples/ --fix && eslint -c cypress/.eslintrc.js cypress --fix",
     "build-cjs": "parcel build src/index.ts --out-file vue-number-directive.js",
     "build-umd": "parcel build --global VueNumber src/index.umd.js --out-file vue-number-directive.umd.js",
     "build-storybook": "build-storybook -o ./docs/docs",

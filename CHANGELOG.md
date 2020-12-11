@@ -1,3 +1,17 @@
+## [0.0.5](https://github.com/awamwang/vue-number-directive/compare/v0.0.4...v0.0.5) (2020-12-11)
+
+
+### Bug Fixes
+
+* **formatter:** 兼容性-低版本vue修改value不成功问题 ([662eb85](https://github.com/awamwang/vue-number-directive/commit/662eb850619af01b53d7be701835d2a98fc4b3fc))
+
+
+### Features
+
+* **formatter:** add format on blur event ([5fe92a0](https://github.com/awamwang/vue-number-directive/commit/5fe92a06ddf95f3626a06e21499e713ef2384932))
+
+
+
 ## [0.0.4](https://github.com/awamwang/vue-number-directive/compare/v0.0.4-1...v0.0.4) (2020-11-20)
 
 

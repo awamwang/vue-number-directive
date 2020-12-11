@@ -257,7 +257,7 @@ export class Formatter {
 
   initFormatValueMethod(): void {
     /**
-     * 整体format todo
+     * 整体format
      */
     const formatFullValue = (value: string): string => {
       const { minimum, maximum, exclusiveMinimum, exclusiveMaximum } = this.options
@@ -284,6 +284,7 @@ export class Formatter {
       }
 
       if (parsedValue !== pureValue) {
+        debug(`formatFullValue: parsedValue(${parsedValue}), pureValue(${pureValue})`)
         this.setValue(parsedValue)
       }
 
@@ -337,6 +338,7 @@ export class Formatter {
     if (!this.options.canPaste) {
       this.input.addEventListener('paste', this.onPaste)
     }
+    this.input.addEventListener('blur', this.onBlur)
 
     return this
   }
@@ -346,6 +348,7 @@ export class Formatter {
     if (!this.options.canPaste) {
       this.input.removeEventListener('paste', this.onPaste)
     }
+    this.input.removeEventListener('blur', this.onBlur)
 
     return this
   }

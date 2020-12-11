@@ -1,4 +1,3 @@
-// todo 换TS，定义接口
 import { VNode } from 'vue'
 import { DirectiveBinding } from 'vue/types/options'
 import { Context } from './util/lang'

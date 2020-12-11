@@ -9,7 +9,8 @@
     "travis",
     "lint",
     "readme",
-    "typescript"
+    "typescript",
+    "formatter"
   ],
     "editor.codeActionsOnSave": {
     "source.fixAll.eslint": false

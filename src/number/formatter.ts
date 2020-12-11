@@ -316,9 +316,19 @@ export class Formatter {
   private setValue(oldValue: string) {
     const { modelPropPath, scope, vnode } = this.options
 
-    // 将scope和vnode本身的context合并，作为完整的查询链，类似作用域链的查询，前面的scope优先级高
-    setProp((scope ? [scope] : []).concat([vnode.context as Context]), modelPropPath, oldValue)
-    setDomValue(this.input, oldValue)
+    const doSet = () => {
+      // 将scope和vnode本身的context合并，作为完整的查询链，类似作用域链的查询，前面的scope优先级高
+      setProp((scope ? [scope] : []).concat([vnode.context as Context]), modelPropPath, oldValue)
+      setDomValue(this.input, oldValue)
+    }
+
+    doSet()
+    // 低版本Vue会出现改不过来情况，在nextTick中再改一遍
+    vnode &&
+      vnode.componentInstance &&
+      vnode.componentInstance.$nextTick(() => {
+        doSet()
+      })
   }
 
   listen(): Formatter {

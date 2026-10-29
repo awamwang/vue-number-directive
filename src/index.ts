@@ -8,7 +8,7 @@ export const NumberDirective = directive()
 export default {
   install(vue: VueConstructor<Vue>, options: GlobalOptions = {}): void {
     vue.directive(options.name || NAME, directive(options))
-  }
+  },
 }
 
 export { GlobalOptions, Options }
